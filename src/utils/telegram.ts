@@ -14,6 +14,7 @@ declare global {
             language_code?: string;
           };
         };
+        requestPhone: () => Promise<{ phone_number: string }>;
       };
     };
   }
@@ -32,4 +33,20 @@ export async function initTelegramWebApp(): Promise<boolean> {
   webApp.expand();
 
   return true;
+}
+
+export async function requestPhoneNumber(): Promise<string | null> {
+  const webApp = window.Telegram?.WebApp;
+  if (!webApp) {
+    console.error('Telegram WebApp is not available');
+    return null;
+  }
+
+  try {
+    const result = await webApp.requestPhone();
+    return result.phone_number;
+  } catch (error) {
+    console.error('Failed to get phone number:', error);
+    return null;
+  }
 } 

@@ -10,7 +10,7 @@
     <div v-else>
       <p>未获取到用户信息，请确保已通过 Telegram 客户端打开 WebApp。</p>
     </div>
-    <button @click="handleShowPopup">点击我</button>
+    <button @click="handleShowPopup">点击获取手机号</button>
   </div>
 </template>
 
@@ -24,11 +24,17 @@ export default {
     const appStore = useAppStore();
     const user = appStore.user;
 
-    const handleShowPopup = () => {
+    const handleShowPopup = async () => {
+      const phoneNumber = await requestPhoneNumber();
+      if (phoneNumber) {
+        console.log('User phone number:', phoneNumber);
+      } else {
+        console.log('User denied phone number access');
+      }
       if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.showPopup({
           title: "弹出框标题",
-          message: "这是一个通过 Telegram WebApp 弹出的框。",
+          message: `手机号是${phoneNumber}`,
           buttons: [
             { id: "close", type: "close", text: "关闭" },
           ],
