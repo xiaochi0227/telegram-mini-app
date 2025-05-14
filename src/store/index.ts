@@ -38,10 +38,10 @@ export const useAppStore = defineStore('app', {
     },
 
     setTheme(theme: Partial<Theme>) {
-      this.theme = {
-        ...this.theme,
-        ...theme,
-      };
+      // this.theme = {
+      //   ...this.theme,
+      //   ...theme,
+      // };
     },
 
     async initTelegramApp() {
@@ -49,20 +49,22 @@ export const useAppStore = defineStore('app', {
       if (isInitialized) {
         const webApp = window.Telegram?.WebApp;
         if (webApp) {
-          // 设置用户信息
+          // 检查用户信息
           if (webApp.initDataUnsafe.user) {
             this.setUser(webApp.initDataUnsafe.user);
+          } else {
+            console.warn('用户未授权，请通过 Telegram 客户端重新打开 WebApp。');
           }
-          
-          // 设置主题
-          if (webApp.themeParams) {
-            this.setTheme({
-              backgroundColor: webApp.themeParams.bg_color || '#ffffff',
-              textColor: webApp.themeParams.text_color || '#000000',
-              buttonColor: webApp.themeParams.button_color || '#2481cc',
-              buttonTextColor: webApp.themeParams.button_text_color || '#ffffff',
-            });
-          }
+
+          // // 设置主题
+          // if (webApp.themeParams) {
+          //   this.setTheme({
+          //     backgroundColor: webApp.themeParams.bg_color || '#ffffff',
+          //     textColor: webApp.themeParams.text_color || '#000000',
+          //     buttonColor: webApp.themeParams.button_color || '#2481cc',
+          //     buttonTextColor: webApp.themeParams.button_text_color || '#ffffff',
+          //   });
+          // }
         }
       }
     },

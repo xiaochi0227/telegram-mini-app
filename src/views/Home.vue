@@ -1,90 +1,41 @@
 <template>
   <div class="home">
-    <van-nav-bar
-      title="Home"
-      :style="navBarStyle"
-    />
-    
-    <div class="content" :style="contentStyle">
-      <van-cell-group inset>
-        <van-cell title="Welcome to Telegram Mini App" />
-        <van-cell v-if="user" :title="`Hello, ${user.firstName}!`" />
-        <van-cell v-else title="Please login with Telegram" />
-      </van-cell-group>
-
-      <div class="button-group">
-        <van-button
-          v-if="user"
-          type="primary"
-          block
-          :style="buttonStyle"
-          @click="goToProfile"
-        >
-          View Profile
-        </van-button>
-        <van-button
-          v-else
-          type="primary"
-          block
-          :style="buttonStyle"
-          @click="initTelegram"
-        >
-          Login with Telegram
-        </van-button>
-      </div>
+    <h1>欢迎来到 Telegram Mini App</h1>
+    <div v-if="user">
+      <p>{{ JSON.stringify(user) }}</p>
+      <p><strong>用户 ID:</strong> {{ user.id }}</p>
+      <p><strong>用户名:</strong> {{ user.username || '未设置' }}</p>
+      <p><strong>姓名:</strong> {{ user.firstName }} {{ user.lastName || '' }}</p>
+    </div>
+    <div v-else>
+      <p>未获取到用户信息，请确保已通过 Telegram 客户端打开 WebApp。</p>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAppStore } from '../store';
+<script>
+import { useAppStore } from '@/store';
 
-const router = useRouter();
-const store = useAppStore();
+export default {
+  name: 'Home',
+  setup() {
+    const appStore = useAppStore();
+    const user = appStore.user;
 
-const user = computed(() => store.userInfo);
-const theme = computed(() => store.theme);
-
-const navBarStyle = computed(() => ({
-  backgroundColor: theme.value?.backgroundColor || '#ffffff',
-  color: theme.value?.textColor || '#000000',
-}));
-
-const contentStyle = computed(() => ({
-  backgroundColor: theme.value?.backgroundColor || '#ffffff',
-  color: theme.value?.textColor || '#000000',
-}));
-
-const buttonStyle = computed(() => ({
-  backgroundColor: theme.value?.buttonColor || '#2481cc',
-  color: theme.value?.buttonTextColor || '#ffffff',
-}));
-
-const goToProfile = () => {
-  router.push('/profile');
-};
-
-const initTelegram = () => {
-  store.initTelegramApp();
+    return {
+      user,
+    };
+  },
 };
 </script>
 
 <style scoped>
 .home {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  padding: 20px;
 }
 
-.content {
-  flex: 1;
-  padding: 16px;
+p {
+  font-size: 16px;
+  margin: 5px 0;
 }
-
-.button-group {
-  margin-top: 24px;
-  padding: 0 16px;
-}
-</style> 
+</style>
