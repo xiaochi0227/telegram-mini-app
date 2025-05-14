@@ -4,17 +4,19 @@
     <div v-if="user">
       <p>{{ JSON.stringify(user) }}</p>
       <p><strong>用户 ID:</strong> {{ user.id }}</p>
-      <p><strong>用户名:</strong> {{ user.username || '未设置' }}</p>
-      <p><strong>姓名:</strong> {{ user.firstName }} {{ user.lastName || '' }}</p>
+      <p><strong>用户名:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+      <img :src="user.photo_url" />
     </div>
     <div v-else>
       <p>未获取到用户信息，请确保已通过 Telegram 客户端打开 WebApp。</p>
     </div>
+    <button @click="handleShowPopup">点击我</button>
   </div>
 </template>
 
 <script>
 import { useAppStore } from '@/store';
+import { ref } from 'vue';
 
 export default {
   name: 'Home',
@@ -22,8 +24,23 @@ export default {
     const appStore = useAppStore();
     const user = appStore.user;
 
+    const handleShowPopup = () => {
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.showPopup({
+          title: "弹出框标题",
+          message: "这是一个通过 Telegram WebApp 弹出的框。",
+          buttons: [
+            { id: "close", type: "close", text: "关闭" },
+          ],
+        });
+      } else {
+        console.error("Telegram WebApp 对象不可用");
+      }
+    };
+
     return {
       user,
+      handleShowPopup,
     };
   },
 };
@@ -37,5 +54,12 @@ export default {
 p {
   font-size: 16px;
   margin: 5px 0;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
 }
 </style>
