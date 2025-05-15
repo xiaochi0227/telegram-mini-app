@@ -15,9 +15,16 @@ service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // 从 Telegram WebApp 获取 initData
     const initData = window.Telegram?.WebApp?.initData;
+    
     if (initData) {
       config.headers['X-Telegram-Init-Data'] = initData;
     }
+
+    const locale = localStorage.getItem('locale') || 'russian'
+
+    // Add language to headers
+    config.headers['Think-Lang'] = locale == 'zh' ? 'zh-cn' : 'ru'
+
     return config;
   },
   (error) => {

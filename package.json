@@ -17,6 +17,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^6.0.8",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/tsconfig": "^0.7.0",
     "autoprefixer": "^10.4.21",
@@ -24,7 +25,8 @@
     "postcss-nesting": "^13.0.1",
     "tailwindcss": "^3.4.1",
     "typescript": "~5.8.3",
-    "vite": "^6.3.5",
+    "vite": "^5.2.3",
+    "vue-i18n": "^9.14.4",
     "vue-tsc": "^2.2.8"
   }
 }
