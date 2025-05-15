@@ -4,8 +4,8 @@ interface Config {
 }
 
 const config: Config = {
-  botToken: import.meta.env.VITE_BOT_TOKEN || '',
-  apiBaseUrl: import.meta.env.VITE_API_BASE_URL || '',
+  botToken: process.env.VITE_BOT_TOKEN || '',
+  apiBaseUrl: process.env.VITE_API_BASE_URL || '',
 };
 
 export default config; 

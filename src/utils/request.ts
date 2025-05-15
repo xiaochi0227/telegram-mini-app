@@ -1,10 +1,11 @@
 import axios from 'axios';
-import type { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosRequestConfig, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
+console.log(import.meta.env.DEV, import.meta.env.VITE_API_BASE_URL)
 // 创建 axios 实例
 const service = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-  timeout: 15000,
+  baseURL: import.meta.env.DEV ? '/api' : import.meta.env.VITE_API_BASE_URL,
+  timeout: 60000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -19,6 +20,8 @@ service.interceptors.request.use(
     if (initData) {
       config.headers['X-Telegram-Init-Data'] = initData;
     }
+
+    config.headers['Ba-User-Token'] = 'd2c51577-4de2-4339-a82d-90e2424aa893'
 
     const locale = localStorage.getItem('locale') || 'russian'
 
@@ -37,9 +40,9 @@ service.interceptors.response.use(
   (response: AxiosResponse) => {
     const res = response.data;
     // 这里可以根据后端的响应结构进行相应的处理
-    if (res.code !== 0) {
+    if (res.code !== 1) {
       // 处理错误情况
-      return Promise.reject(new Error(res.message || 'Error'));
+      return Promise.reject(new Error(res.msg || 'Error'));
     }
     return res;
   },
@@ -61,11 +64,28 @@ service.interceptors.response.use(
           message = 'Internal Server Error';
           break;
         default:
-          message = `Error: ${error.response.status}`;
+          message = `Error: ${error.response.msg}`;
       }
     }
     return Promise.reject(new Error(message));
   }
 );
+
+// Request methods with type safety
+export const http = {
+  get: <T = unknown>(url: string, config?: AxiosRequestConfig) => service.get<T, T>(url, config),
+
+  post: <T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig) =>
+    service.post<T, T>(url, data, config),
+
+  put: <T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig) =>
+    service.put<T, T>(url, data, config),
+
+  delete: <T = unknown>(url: string, config?: AxiosRequestConfig) =>
+    service.delete<T, T>(url, config),
+
+  patch: <T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig) =>
+    service.patch<T, T>(url, data, config),
+}
 
 export default service; 
