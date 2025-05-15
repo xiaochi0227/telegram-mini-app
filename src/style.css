@@ -32,20 +32,28 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* 覆盖组件字体大小 */
-  /* 没有更多了 */
-  --van-list-text-font-size: 28px !important; 
-  /* 提示 */
-  --van-toast-font-size: 28px !important;
-  /* 释放后刷新 */
-  --van-pull-refresh-head-font-size: 28px !important;
-  /* 加载中 */
-  --van-loading-text-font-size: 28px !important;
-  --van-list-loading-icon-size: 24px !important;
+   /* 覆盖组件字体大小 */
+  --van-font-size-xs: 20px !important;
+  --van-font-size-sm: 24px !important;
+  --van-font-size-md: 28px !important;
+  --van-font-size-lg: 32px !important;
+  --van-font-size-xl: 36px !important;
+
 
   /* actionsheet 字体 */
   --van-action-sheet-item-font-size: 28px !important;
   --van-action-sheet-item-line-height: 46px !important;
+
+  /* 按钮字体 */
+  --van-button-large-height: 92px !important;
+  --van-button-round-border-radius: 24px !important;
+
+  /* checkbox */
+  --van-checkbox-size: 36px !important;
+  --van-checkbox-label-margin: 32px !important;
+
+  /* cell  */
+  --van-cell-icon-size: 24px !important;
 }
 
 a {

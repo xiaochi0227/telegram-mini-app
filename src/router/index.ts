@@ -15,8 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Account',
     component: () => import('../views/account.vue'),
     meta: {
-      title: '账户中心',
-      // showback: true,
+      title: '账户中心'
     },
   },
   {
@@ -25,6 +24,15 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/inquiry/index.vue'),
     meta: {
       title: '我的询价'
+    },
+  },
+  {
+    path: '/inquiryDetail',
+    name: 'InquiryDetail',
+    component: () => import('../views/inquiry/detail.vue'),
+    meta: {
+      title: '询价详情',
+      showback: true,
     },
   },
   {

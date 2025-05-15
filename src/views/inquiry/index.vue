@@ -12,7 +12,7 @@
           <span class="flex-1">{{ selectedLabel }}</span>
           <van-icon name="arrow-down" class="text-[#9EA1AA]" />
         </div>
-        <ActionSheet
+        <van-action-sheet
           v-model:show="showActionSheet"
           :actions="actions"
           @select="onSelect"
@@ -31,18 +31,25 @@
           v-for="item in list"
           :key="item.id"
           class="bg-white rounded-[24px] shadow px-[20px] py-[24px] mb-[24px]"
+          @click="handleDetail(item.id)"
         >
           <p class="text-[32px] text-[#212121] font-bold mb-[16px]">
             {{ item.order_no }}
           </p>
 
           <div class="flex justify-between items-center mb-[8px]">
-            <span class="text-[#212121] text-[28px]">{{ t('myInquiries.add_time') }}</span>
+            <span class="text-[#212121] text-[28px]">{{
+              t('myInquiries.add_time')
+            }}</span>
             <span class="text-[#515360] text-[24px]">{{ item.add_time }}</span>
           </div>
           <div class="flex justify-between items-center">
-            <span class="text-[#212121] text-[28px]">{{ t('myInquiries.product_count') }}/已报价</span>
-            <span class="text-[#515360] text-[24px]">{{ item.product_count }}/{{ item.quotation_num }}</span>
+            <span class="text-[#212121] text-[28px]">
+              {{ t('myInquiries.product_count') }}/已报价
+            </span>
+            <span class="text-[#515360] text-[24px]">
+              {{ item.product_count }}/{{ item.quotation_num }}
+            </span>
           </div>
         </div>
       </van-list>
@@ -52,11 +59,10 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import Toast from 'vant/es/toast'
 import NavBar from '@/components/nav-bar/index.vue'
-import { ActionSheet } from '@/plugins/vant'
 import { inquiryApi } from '@/api'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 interface InquiryItem {
   id: string
@@ -65,6 +71,7 @@ interface InquiryItem {
 }
 
 const { t } = useI18n()
+const router = useRouter()
 
 const list = ref<InquiryItem[]>([])
 const page = ref(1)
@@ -109,7 +116,7 @@ const fetchMyInquiryList = async () => {
 
   if (res.code != 1) return
 
-  list.value = list.value.concat(res.data?.list || []);
+  list.value = list.value.concat(res.data?.list || [])
   total.value = res.data?.total || 0
 
   // 判断是否加载完所有数据
@@ -122,17 +129,21 @@ const onLoad = () => {
 }
 
 const onRefresh = async () => {
-  page.value = 1;
-  list.value = [];
-  finished.value = false;
-  await fetchMyInquiryList();
-  refreshing.value = false;
+  page.value = 1
+  list.value = []
+  finished.value = false
+  await fetchMyInquiryList()
+  refreshing.value = false
+}
+
+const handleDetail = (id) => {
+  router.push('/inquiryDetail?id=' + id)
 }
 
 // ... 其他代码
 onMounted(() => {
-  onRefresh();
-});
+  onRefresh()
+})
 </script>
 
 <style scoped>
