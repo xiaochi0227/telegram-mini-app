@@ -25,19 +25,19 @@
         <van-checkbox
           v-model="checkAll"
           checked-color="#FF356D"
-          @change="toggleAll"
+          @click="toggleAll"
           class="mb-[36px]"
         >
           全选
         </van-checkbox>
 
         <!-- 商品列表 -->
-        <div v-for="item in goodsList" :key="item.id">
+        <div class="good-item" v-for="item in goodsList" :key="item.id">
           <div class="flex items-start">
             <van-checkbox
               checked-color="#FF356D"
               :model-value="selectedRowKeys.includes(item.id)"
-              @change="onSelectItem(item.id)"
+              @click="() => onSelectItem(item)"
               :name="item.id"
               class="mt-1"
             />
@@ -99,7 +99,7 @@
       </van-button>
       <!-- 购物车图标 -->
       <div class="relative">
-        <van-badge :dot="cartCount > 0">
+        <van-badge :content="totalItems">
           <van-icon name="cart-o" size="28" />
         </van-badge>
       </div>
@@ -110,18 +110,22 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import NavBar from '@/components/nav-bar/index.vue'
-import { inquiryApi } from '@/api'
+import { carApi, inquiryApi } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+import { useCart } from '@/hooks/cart'
+import { useCartStore } from '@/store/cart'
 
 const { t } = useI18n()
 const route = useRoute()
+const { totalItems, items } = useCartStore()
+const { initItems, removeItem, clearCart } = useCart()
+
 const inquiry_sheet = ref({})
-const selectedRowKeys = ref([])
+const selectedRowKeys = ref<number[]>([])
 const checkAll = ref(false)
-const goodsList = ref([])
+const goodsList = ref<any[]>([])
 const loading = ref(false)
-const cartCount = ref(0)
 
 const id = computed(() => {
   return route.query.id || ''
@@ -143,36 +147,68 @@ const fetchInquiryDetail = async () => {
   }
 
   if (item_data) {
-    const checkedIds = item_data
-      .filter((item) => item.is_quotation)
-      .map((item) => item.id)
+    // const checkedIds = item_data
+    //   .filter((item) => item.is_quotation)
+    //   .map((item) => item.id)
 
-    if (checkedIds.length && checkedIds.length == item_data.length)
-      checkAll.value = true
+    // if (checkedIds.length && checkedIds.length == item_data.length)
+    //   checkAll.value = true
 
-    selectedRowKeys.value = checkedIds
+    // selectedRowKeys.value = checkedIds
     goodsList.value = item_data
   }
 }
 
-// 全选
-const toggleAll = (val: boolean) => {
-  checkAll.value = val
-  selectedRowKeys.value = val
-    ? goodsList.value.filter((item) => item.is_quotation).map((item) => item.id)
-    : []
+// 加入购物车
+const addCart = async (ids) => {
+  const params = {
+    inquiry_sheet_id: id.value,
+    inquiry_sheet_item_ids: ids,
+  }
+
+  const res = await carApi.addCart(params)
+
+  if (res.code != 1) return
+
+  // 重新请求一下
+  initItems(true, false)
+
+  // todo 动画效果
 }
 
-const onSelectItem = (id: number) => (checked: boolean) => {
-  // 选中的id
-  const newSelectedRowKeys = selectedRowKeys.value.includes(id)
-    ? selectedRowKeys.value.filter((key) => key !== id)
-    : [...selectedRowKeys.value, id]
+// 全选
+const toggleAll = () => {
+  selectedRowKeys.value = checkAll.value
+    ? goodsList.value.filter((item) => item.is_quotation).map((item) => item.id)
+    : []
 
-  selectedRowKeys.value = newSelectedRowKeys
-  checkAll.value = goodsList.value.every(({ id }) =>
-    newSelectedRowKeys.includes(id)
-  )
+  // 全部选中
+  checkAll.value
+    ? addCart(selectedRowKeys.value)
+    : clearCart(selectedRowKeys.value)
+}
+
+const onSelectItem = (item) => {
+  const { id, is_quotation } = item
+
+  // 未报价
+  if (!is_quotation) return
+
+  if (selectedRowKeys.value.includes(id)) {
+    const idx = selectedRowKeys.value.indexOf(id)
+    if (idx > -1) {
+      selectedRowKeys.value.splice(idx, 1)
+      removeItem(idx)
+    }
+  } else {
+    selectedRowKeys.value.push(id)
+    // 添加到购物车
+    addCart([id])
+  }
+
+  checkAll.value = goodsList.value
+    .filter((item) => item.is_quotation)
+    .every((item) => selectedRowKeys.value.includes(item.id))
 }
 
 // 立即购买
@@ -182,6 +218,18 @@ fetchInquiryDetail()
 </script>
 
 <style scoped lang="scss">
+.van-checkbox ::v-deep .van-badge__wrapper {
+  border-radius: 10px !important;
+}
+
+.good-item {
+  & + .good-item {
+    padding-top: 32px;
+    margin-top: 32px;
+    border-top: 2px solid #f4f4f4;
+  }
+}
+
 .view-cell {
   margin-top: 26px;
   padding: 16px 24px;
@@ -195,7 +243,7 @@ fetchInquiryDetail()
   margin-top: 26px;
   padding: 24px 28px;
   border-radius: 12px;
-	font-weight: 500;
+  font-weight: 500;
   font-size: 30px;
   color: #212121;
 }

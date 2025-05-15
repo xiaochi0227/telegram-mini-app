@@ -6,7 +6,10 @@
       >
         <nav-bar />
         <div class="flex items-center space-x-2">
-          <van-icon name="cart-o" size="32" color="#212121" />
+          <van-badge :content="totalItems">
+            <van-icon name="cart-o" size="28" color="#212121" />
+          </van-badge>
+
           <van-image
             round
             width="32px"
@@ -163,9 +166,17 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, nextTick, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import NavBar from '@/components/nav-bar/index.vue'
+import { useCart } from '@/hooks/cart'
+import { useCartStore } from '@/store/cart'
+
 const router = useRouter()
+const { initItems } = useCart()
+// const { totalItems, items } = useCartStore()
+const cartStore = useCartStore()
+const totalItems = computed(() => cartStore.totalItems)
 
 const goBack = () => {
   router.back()
@@ -174,6 +185,11 @@ const goBack = () => {
 const goHome = () => {
   router.push('/')
 }
+
+// 请求购物车数据
+onMounted(() => {
+  initItems(true, false)
+})
 </script>
 
 <style scoped lang="scss">
