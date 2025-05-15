@@ -8,7 +8,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Home.vue'),
     meta: {
       title: 'Home',
-      requiresAuth: false,
     },
   },
   {
@@ -17,7 +16,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/account.vue'),
     meta: {
       title: '账户中心',
-      requiresAuth: false,
+      // showback: true,
     },
   },
   {

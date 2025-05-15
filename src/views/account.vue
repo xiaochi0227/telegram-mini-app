@@ -1,5 +1,7 @@
 <template>
   <div class="account mx-[1rem]">
+    <nav-bar />
+
     <div class="text-center mb-6 bg-white px-[20px] pb-[32px]">
       <div class="text-sm py-3 text-left">资金余额</div>
       <div class="flex justify-center items-center bg-[#F4F4F4] rounded-full  h-[64px]">
@@ -116,6 +118,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import NavBar from '@/components/nav-bar/index.vue';
 const router = useRouter();
 
 const goBack = () => {
