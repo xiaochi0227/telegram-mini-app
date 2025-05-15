@@ -1,7 +1,20 @@
 <template>
   <div class="account mx-[1rem]">
-    <div class="text-center mb-6 bg-white px-[20px] pb-[40px] rounded-b-[24px]">
-      <div class=" font-bold py-3 text-left">资金余额</div>
+    <div class=" bg-white  px-[20px]">
+      <div class=" border-b border-[#f4f4f4] flex justify-between items-center h-[100px]">
+        <nav-bar />
+        <div class="flex items-center space-x-2">
+          <van-icon name="cart-o" size="32" color="#212121" />
+          <van-image round width="32px" height="32px" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+          <div>
+            mike
+            <van-icon name="arrow-down" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mb-6 bg-white px-[20px] pb-[32px]">
+      <div class="text-sm py-3 text-left">资金余额</div>
       <div class="flex justify-center items-center bg-[#F4F4F4] rounded-full  h-[64px]">
         <div class="px-4 flex-1 text-[#515360] active account-tab">
           <span>USD</span>
@@ -119,8 +132,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import NavBar from '@/components/nav-bar/index.vue';
 const router = useRouter();
 
 const goBack = () => {
@@ -200,6 +213,7 @@ const goHome = () => {
     color: #FF356D;
   }
 }
+
 .contact {
   .iconfont {
     font-size: 48px;

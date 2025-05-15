@@ -31,6 +31,21 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* 覆盖组件字体大小 */
+  /* 没有更多了 */
+  --van-list-text-font-size: 28px !important; 
+  /* 提示 */
+  --van-toast-font-size: 28px !important;
+  /* 释放后刷新 */
+  --van-pull-refresh-head-font-size: 28px !important;
+  /* 加载中 */
+  --van-loading-text-font-size: 28px !important;
+  --van-list-loading-icon-size: 24px !important;
+
+  /* actionsheet 字体 */
+  --van-action-sheet-item-font-size: 28px !important;
+  --van-action-sheet-item-line-height: 46px !important;
 }
 
 a {

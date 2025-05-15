@@ -1,7 +1,12 @@
 <template>
   <div class="fund-manage mx-[1rem]">
-    <van-tabs v-model:active="active" swipeable>
-      <van-tab v-for="index in 2" :title="'选项 ' + index">
+    <div class=" bg-white px-[20px]">
+      <div class=" border-b border-[#f4f4f4] flex justify-between items-center h-[100px]">
+        <nav-bar />
+      </div>
+    </div>
+    <van-tabs v-model:active="active" swipeable @change="onChange">
+      <van-tab v-for="item in tabs" :title="item.title" :key="item.id">
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
             <div v-for="item in list" :key="item" class="bg-white rounded-lg shadow p-4 mt-4">
@@ -40,6 +45,7 @@
 </template>
 
 <script setup lang="ts">
+import NavBar from '@/components/nav-bar/index.vue';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 const router = useRouter();
@@ -47,11 +53,23 @@ const router = useRouter();
 const goBack = () => {
   router.back();
 };
+const tabs = ref([
+  { title: '消费记录', id: 1 },
+  { title: '充值记录', id: 2 },
+]);
 const active = ref(0);
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);
 const refreshing = ref(false);
+const onChange = (index: number) => {
+  console.log('onChange', index);
+  active.value = index;
+  finished.value = false;
+  list.value = [];
+  loading.value = true;
+  onLoad();
+};
 const onLoad = () => {
   setTimeout(() => {
     if (refreshing.value) {

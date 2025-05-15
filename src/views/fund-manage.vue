@@ -1,7 +1,12 @@
 <template>
   <div class="fund-manage mx-[1rem]">
+    <div class=" bg-white px-[20px]">
+      <div class=" border-b border-[#f4f4f4] flex justify-between items-center h-[100px]">
+        <nav-bar />
+      </div>
+    </div>
     <div class="text-center mb-6 bg-white px-[20px] pb-[40px] rounded-b-[24px]">
-      <div class=" font-bold py-3 text-left">资金管理</div>
+      <div class=" font-bold py-3 text-left">资金余额</div>
       <div class="flex justify-center items-center bg-[#F4F4F4] rounded-full  h-[64px]">
         <div class="px-4 flex-1 text-[#515360] active account-tab">
           <span>USD</span>
@@ -45,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import NavBar from '@/components/nav-bar/index.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 

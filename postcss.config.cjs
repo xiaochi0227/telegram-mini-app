@@ -9,6 +9,7 @@ module.exports = {
       // 默认所有属性都转化
       propList: ['*'],
       replace: true, // 替换 px 为 rem
+      include: /node_modules\/vant/,
     },
   },
 } 

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>{{ t('welcome') }}</h1>
+    <h1>{{ t('aboutus.service.li1') }}</h1>
     <div class="language-switch">
       <button @click="switchLanguage('zh')" :class="{ active: locale === 'zh' }">中文</button>
       <button @click="switchLanguage('russian')" :class="{ active: locale === 'russian' }">russian</button>
