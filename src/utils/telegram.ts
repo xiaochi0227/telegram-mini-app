@@ -14,12 +14,21 @@ declare global {
             language_code?: string;
           };
         };
-        requestPhone: () => Promise<{ phone_number: string }>;
+        showPopup: (params: {
+          title: string;
+          message: string;
+          buttons: Array<{ id: string; type: string; text: string }>;
+        }) => void;
+        MainButton: {
+          text: string;
+          show: () => void;
+          hide: () => void;
+          onClick: (callback: () => void) => void;
+        };
       };
     };
   }
 }
-
 
 export async function initTelegramWebApp(): Promise<boolean> {
   const webApp = window.Telegram?.WebApp;
@@ -35,18 +44,4 @@ export async function initTelegramWebApp(): Promise<boolean> {
   return true;
 }
 
-export async function requestPhoneNumber(): Promise<string | null> {
-  const webApp = window.Telegram?.WebApp;
-  if (!webApp) {
-    console.error('Telegram WebApp is not available');
-    return null;
-  }
-
-  try {
-    const result = await webApp.requestPhone();
-    return result.phone_number;
-  } catch (error) {
-    console.error('Failed to get phone number:', error);
-    return null;
-  }
-} 
+// 注意：获取手机号需要通过 Bot API 实现，这里只提供获取用户基本信息的函数 

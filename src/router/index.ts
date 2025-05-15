@@ -12,15 +12,6 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: () => import('../views/Profile.vue'),
-    meta: {
-      title: 'Profile',
-      requiresAuth: true,
-    },
-  },
-  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFound.vue'),
