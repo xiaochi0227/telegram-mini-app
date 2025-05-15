@@ -5,6 +5,7 @@
       <button @click="switchLanguage('zh')" :class="{ active: locale === 'zh' }">中文</button>
       <button @click="switchLanguage('russian')" :class="{ active: locale === 'russian' }">russian</button>
     </div>
+    <i class="iconfont icon-Payment"></i>
     <div v-if="user">
       <p><strong>用户 ID:</strong> {{ user.id }}</p>
       <p><strong>用户名:</strong> {{ user.first_name }} {{ user.last_name }}</p>

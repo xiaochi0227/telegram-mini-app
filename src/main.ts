@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import './style.css'
+import './assets/iconfont/iconfont.css'
 import App from './App.vue'
 import router from './router'
 import * as Vant from './plugins/vant'
