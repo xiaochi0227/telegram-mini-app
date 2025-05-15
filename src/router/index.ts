@@ -28,6 +28,25 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/fund-manage',
+    name: 'FundManage',
+    component: () => import('../views/fund-manage.vue'),
+    meta: {
+      title: '资金管理',
+      requiresAuth: false,
+    },
+  },
+  {
+    path: '/fund-list',
+    name: 'FundList',
+    component: () => import('../views/fund-list.vue'),
+    meta: {
+      title: '资金明细',
+      requiresAuth: false,
+      showback:true,
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFound.vue'),

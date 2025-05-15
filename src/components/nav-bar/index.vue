@@ -9,6 +9,7 @@
         @click="router.back()"
       />
       <van-icon
+       v-else
         name="bars"
         size="24"
         color="#212121"

@@ -10,10 +10,10 @@
     <div class="content" :style="contentStyle">
       <van-empty
         description="Page not found"
-        :style="{ color: theme.value?.textColor || '#000000' }"
+        :style="{ color: theme?.value?.textColor || '#000000' }"
       >
         <template #image>
-          <van-icon name="warning-o" size="64" :style="{ color: theme.value?.textColor || '#000000' }" />
+          <van-icon name="warning-o" size="64" :style="{ color: theme?.value?.textColor || '#000000' }" />
         </template>
         <van-button
           round
