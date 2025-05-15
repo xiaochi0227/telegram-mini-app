@@ -2,7 +2,7 @@
   <div class="flex flex-col px-[32px] min-h-screen">
 		<div class="nav-header px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
 			<nav-bar />
-			<div class="relative mt-2 mb-2">
+			<div class="relative pb-[28px] pt-[24px] border-t-[#F4F4F4] border-t-[1px]">
 				<div
 					class="flex items-center w-full h-[62px] rounded-[12px] border border-[#F4F4F4] bg-[#fff] px-4 text-[#212121] text-[28px] cursor-pointer select-none"
 					@click="showActionSheet = true"
