@@ -12,6 +12,9 @@
     "@types/node": "^22.15.17",
     "axios": "^1.9.0",
     "pinia": "^2.1.7",
+    "postcss-pxtorem": "^6.1.0",
+    "postcss-rem-to-responsive-pixel": "^6.0.2",
+    "sass": "^1.88.0",
     "vant": "^3.4.3",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
