@@ -27,8 +27,9 @@ onMounted(() => {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   transition: background-color 0.3s, color 0.3s;
+  width: 100%;
+  background-color: #F9FAFC!important;
 }
 
 * {

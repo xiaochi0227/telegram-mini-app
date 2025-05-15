@@ -2,53 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 基础字体大小设置 */
-html {
-  font-size: 14px; /* 移动端基础字体大小 */
-}
-
-/* 小屏幕手机 */
-@media screen and (min-width: 320px) {
-  html {
-    font-size: calc(14px + 2 * ((100vw - 320px) / 320));
-  }
-}
-
-/* 大屏幕手机 */
-@media screen and (min-width: 375px) {
-  html {
-    font-size: calc(14px + 4 * ((100vw - 375px) / 375));
-  }
-}
-
-/* 平板 */
-@media screen and (min-width: 768px) {
-  html {
-    font-size: calc(14px + 6 * ((100vw - 768px) / 768));
-  }
-}
-
-/* 小屏幕电脑 */
-@media screen and (min-width: 1024px) {
-  html {
-    font-size: calc(14px + 8 * ((100vw - 1024px) / 1024));
-  }
-}
-
-/* 大屏幕电脑 */
-@media screen and (min-width: 1440px) {
-  html {
-    font-size: 20px; /* 最大字体大小 */
-  }
-}
-
-/* 超大屏幕 */
-@media screen and (min-width: 1920px) {
-  html {
-    font-size: 22px; /* 超大屏幕字体大小 */
-  }
-}
-
 /* 暗色模式适配 */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -125,9 +78,3 @@ button:focus-visible {
   padding: 2em;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
