@@ -20,6 +20,14 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/inquiry',
+    name: 'Inquiry',
+    component: () => import('../views/inquiry/index.vue'),
+    meta: {
+      title: '我的询价'
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFound.vue'),
