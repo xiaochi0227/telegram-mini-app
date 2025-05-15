@@ -12,6 +12,15 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/account',
+    name: 'Account',
+    component: () => import('../views/account.vue'),
+    meta: {
+      title: '账户中心',
+      requiresAuth: false,
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFound.vue'),
