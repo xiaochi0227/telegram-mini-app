@@ -27,9 +27,27 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/inquiryDetail',
+    path: '/inquiry-detail',
     name: 'InquiryDetail',
     component: () => import('../views/inquiry/detail.vue'),
+    meta: {
+      title: '询价详情',
+      showback: true,
+    },
+  },
+  {
+    path: '/goods-detail',
+    name: 'GoodsDetail',
+    component: () => import('../views/inquiry/goods-detail.vue'),
+    meta: {
+      title: '商品详情',
+      showback: true,
+    },
+  },
+  {
+    path: '/inquiry-info',
+    name: 'InquiryInfo',
+    component: () => import('../views/inquiry/inquiry-info.vue'),
     meta: {
       title: '询价详情',
       showback: true,

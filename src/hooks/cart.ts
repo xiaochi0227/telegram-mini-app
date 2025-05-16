@@ -59,9 +59,9 @@ export const useCart = () => {
 		setItems(items.value)
 	}
 
-	const updateQuantity = (id: number, product_num: number) => {
+	const updateQuantity = async (id: number, product_num: number) => {
 		items.value = items.value.map(item => item.id === id ? { ...item, product_num } : item)
-		debouncedUpdateCart(id, product_num)
+		await debouncedUpdateCart(id, product_num)
 
 		setItems(items.value)
 	}

@@ -4,106 +4,117 @@
       <nav-bar />
     </div>
 
-    <div class="flex-1 overflow-y-auto">
-      <!-- Contact Section -->
-      <div
-        class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[32px] contact"
-      >
-        <h2 class="font-bold mb-2">在线咨询</h2>
-        <div class="flex justify-center items-center gap-14">
-          <div class="text-center">
-            <i class="iconfont icon-telegram text-[#28A7E7]"></i>
-          </div>
-          <div class="text-center">
-            <i class="iconfont icon-Phone text-[#FF356D]"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-4 bg-white rounded-[24px] p-[32px]">
-        <!-- 全选 -->
-        <van-checkbox
-          v-model="checkAll"
-          checked-color="#FF356D"
-          @click="toggleAll"
-          class="mb-[36px]"
+    <van-skeleton title row="6" :loading="loading">
+      <div class="flex-1 overflow-y-auto">
+        <!-- Contact Section -->
+        <div
+          class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[32px] contact"
         >
-          全选
-        </van-checkbox>
-
-        <!-- 商品列表 -->
-        <div class="good-item" v-for="item in goodsList" :key="item.id">
-          <div class="flex items-start">
-            <van-checkbox
-              checked-color="#FF356D"
-              :model-value="selectedRowKeys.includes(item.id)"
-              @click="() => onSelectItem(item)"
-              :name="item.id"
-              class="mt-1"
-            />
-            <div class="flex-1 ml-[32px]">
-              <div class="flex justify-between items-center">
-                <div class="font-bold text-[32px]">{{ item.product_name }}</div>
-                <div class="text-[#2563eb] font-bold text-lg">
-                  ¥{{ item.total_price }}
-                </div>
-              </div>
-              <div class="flex justify-between items-center mt-2">
-                <span class="text-[#515360] text-[28px]">购买数量</span>
-                <span class="text-[#212121] text-[32px] font-bold">
-                  {{ item.product_num }}
-                </span>
-              </div>
-
-              <div class="flex justify-between items-center mt-1">
-                <span class="text-[#515360] text-[28px]">单价</span>
-                <span class="text-[#2563eb] text-[32px] font-bold">
-                  ￥{{ item.unit_price }}
-                </span>
-              </div>
-
-              <div class="flex justify-between items-center mt-1">
-                <span class="text-[#515360] text-[28px]">货期</span>
-                <span class="text-[#212121] text-[32px] font-bold">
-                  {{ item.lead_time }} {{ t('inquiriesDetails.day') }}
-                </span>
-              </div>
+          <h2 class="font-bold mb-2">在线咨询</h2>
+          <div class="flex justify-center items-center gap-14">
+            <div class="text-center">
+              <i class="iconfont icon-telegram text-[#28A7E7]"></i>
+            </div>
+            <div class="text-center">
+              <i class="iconfont icon-Phone text-[#FF356D]"></i>
             </div>
           </div>
-
-          <van-cell
-            class="view-cell"
-            title="查看商品详情"
-            is-link
-            to="/goodsDetail"
-          />
         </div>
+
+        <div class="mb-4 bg-white rounded-[24px] p-[32px]">
+          <!-- 全选 -->
+          <van-checkbox
+            v-model="checkAll"
+            checked-color="#FF356D"
+            @click="toggleAll"
+            class="mb-[36px]"
+          >
+            全选
+          </van-checkbox>
+
+          <!-- 商品列表 -->
+          <div class="good-item" v-for="item in goodsList" :key="item.id">
+            <div class="flex items-start">
+              <van-checkbox
+                checked-color="#FF356D"
+                :model-value="selectedRowKeys.includes(item.id)"
+                @click="() => onSelectItem(item)"
+                :name="item.id"
+                class="mt-1"
+              />
+              <div class="flex-1 ml-[32px]">
+                <div class="flex justify-between items-center">
+                  <div class="font-bold text-[32px]">
+                    {{ item.product_name }}
+                  </div>
+                  <div class="text-[#2563eb] font-bold text-lg">
+                    ¥{{ item.total_price }}
+                  </div>
+                </div>
+                <div class="flex justify-between items-center mt-2">
+                  <span class="text-[#515360] text-[28px]">购买数量</span>
+                  <span class="text-[#212121] text-[32px] font-bold">
+                    {{ item.product_num }}
+                  </span>
+                </div>
+
+                <div class="flex justify-between items-center mt-1">
+                  <span class="text-[#515360] text-[28px]">单价</span>
+                  <span class="text-[#2563eb] text-[32px] font-bold">
+                    ￥{{ item.unit_price }}
+                  </span>
+                </div>
+
+                <div class="flex justify-between items-center mt-1">
+                  <span class="text-[#515360] text-[28px]">货期</span>
+                  <span class="text-[#212121] text-[32px] font-bold">
+                    {{ item.lead_time }} {{ t('inquiriesDetails.day') }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <van-cell
+              class="view-cell"
+              title="查看商品详情"
+              is-link
+              @click="handleViewGoodsDetail(item)"
+            />
+          </div>
+        </div>
+
+        <van-cell class="view-detail" title="详细" is-link to="/inquiry-info" />
       </div>
 
-      <van-cell class="view-detail" title="详细" is-link to="/goodsDetail" />
-    </div>
-
-    <div
-      class="flex justify-between items-center gap-[24px] px-[20px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow"
-    >
-      <!-- 购买按钮 -->
-      <van-button
-        class="flex-1 font-bold"
-        color="#FF356D"
-        round
-        block
-        size="large"
-        @click="handleBuy"
+      <div
+        class="flex justify-between items-center gap-[24px] px-[20px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow"
       >
-        直接购买
-      </van-button>
-      <!-- 购物车图标 -->
-      <div class="relative">
-        <van-badge :content="totalItems">
-          <van-icon name="cart-o" size="28" />
-        </van-badge>
+        <!-- 购买按钮 -->
+        <van-button
+          class="flex-1 font-bold"
+          color="#FF356D"
+          round
+          block
+          size="large"
+          @click="handleBuy"
+          :disabled="!selectedRowKeys.length || btnLoading"
+        >
+          直接购买
+        </van-button>
+        <van-button
+          class="flex-1 font-bold"
+          color="#FF356D"
+          plain
+          round
+          block
+          size="large"
+          @click="handleAddCart"
+          :disabled="!selectedRowKeys.length || btnLoading"
+        >
+          加入购物车
+        </van-button>
       </div>
-    </div>
+    </van-skeleton>
   </div>
 </template>
 
@@ -112,20 +123,23 @@ import { ref, computed } from 'vue'
 import NavBar from '@/components/nav-bar/index.vue'
 import { carApi, inquiryApi } from '@/api'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useCart } from '@/hooks/cart'
-import { useCartStore } from '@/store/cart'
+import { encryptParams } from '@/utils/encryption'
+import { Toast } from 'vant'
+import { useInquiryStore } from '@/store/inquiry'
 
 const { t } = useI18n()
 const route = useRoute()
-const { totalItems, items } = useCartStore()
-const { initItems, removeItem, clearCart } = useCart()
+const router = useRouter()
+const { initItems } = useCart()
+const { setGood, setInquiry } = useInquiryStore()
 
-const inquiry_sheet = ref({})
 const selectedRowKeys = ref<number[]>([])
 const checkAll = ref(false)
 const goodsList = ref<any[]>([])
 const loading = ref(false)
+const btnLoading = ref(false)
 
 const id = computed(() => {
   return route.query.id || ''
@@ -140,40 +154,41 @@ const fetchInquiryDetail = async () => {
 
   if (res.code !== 1) return
 
-  const { inquiry_sheet: inquiry, item_data } = res.data?.list || {}
+  const { inquiry_sheet, item_data } = res.data?.list || {}
 
-  if (inquiry) {
-    inquiry_sheet.value = inquiry
+  if (inquiry_sheet) {
+    setInquiry(inquiry_sheet)
   }
 
   if (item_data) {
-    // const checkedIds = item_data
-    //   .filter((item) => item.is_quotation)
-    //   .map((item) => item.id)
+    const checkedIds = item_data
+      .filter((item) => item.is_quotation)
+      .map((item) => item.id)
 
-    // if (checkedIds.length && checkedIds.length == item_data.length)
-    //   checkAll.value = true
+    if (checkedIds.length && checkedIds.length == item_data.length)
+      checkAll.value = true
 
-    // selectedRowKeys.value = checkedIds
+    selectedRowKeys.value = checkedIds
     goodsList.value = item_data
   }
 }
 
-// 加入购物车
-const addCart = async (ids) => {
-  const params = {
-    inquiry_sheet_id: id.value,
-    inquiry_sheet_item_ids: ids,
+// 获取提交参数
+const getPostParams = () => {
+  if (!id) {
+    return
   }
 
-  const res = await carApi.addCart(params)
+  if (!selectedRowKeys.value.length) {
+    return
+  }
 
-  if (res.code != 1) return
+  const params = {
+    inquiry_sheet_id: +id,
+    inquiry_sheet_item_ids: selectedRowKeys.value,
+  }
 
-  // 重新请求一下
-  initItems(true, false)
-
-  // todo 动画效果
+  return params
 }
 
 // 全选
@@ -181,11 +196,6 @@ const toggleAll = () => {
   selectedRowKeys.value = checkAll.value
     ? goodsList.value.filter((item) => item.is_quotation).map((item) => item.id)
     : []
-
-  // 全部选中
-  checkAll.value
-    ? addCart(selectedRowKeys.value)
-    : clearCart(selectedRowKeys.value)
 }
 
 const onSelectItem = (item) => {
@@ -198,12 +208,9 @@ const onSelectItem = (item) => {
     const idx = selectedRowKeys.value.indexOf(id)
     if (idx > -1) {
       selectedRowKeys.value.splice(idx, 1)
-      removeItem(idx)
     }
   } else {
     selectedRowKeys.value.push(id)
-    // 添加到购物车
-    addCart([id])
   }
 
   checkAll.value = goodsList.value
@@ -211,13 +218,63 @@ const onSelectItem = (item) => {
     .every((item) => selectedRowKeys.value.includes(item.id))
 }
 
+// 商品信息
+const handleViewGoodsDetail = (item) => {
+  setGood(item)
+  router.push({
+    path: '/goods-detail'
+  })
+}
+
+// 加入购物车
+const handleAddCart = async () => {
+  const params = getPostParams()
+
+  // 如果没选择商品，则不提交
+  if (!params) return
+
+  btnLoading.value = true
+
+  const res = await carApi.addCart(params)
+
+  if (res.code != 1) return
+
+  // 重新请求一下
+  initItems(true, false)
+  Toast.success(t('inquiriesDetails.addCartSuccess'))
+  router.push('/cart')
+}
+
 // 立即购买
-const handleBuy = () => {}
+const handleBuy = () => {
+  const params = getPostParams()
+
+  // 如果没选择商品，则不提交
+  if (!params) return
+
+  btnLoading.value = true
+
+  // 添加多个参数
+  const encrypted = encryptParams({ ...params, entry: 3 })
+}
 
 fetchInquiryDetail()
 </script>
 
 <style scoped lang="scss">
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+}
+
 .van-checkbox ::v-deep .van-badge__wrapper {
   border-radius: 10px !important;
 }

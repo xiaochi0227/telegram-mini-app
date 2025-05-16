@@ -57,6 +57,9 @@
 
   /* badge */
   --van-badge-padding: 2px 10px !important;
+
+  /* skeleton */
+  --van-skeleton-row-height: 32px !important;
 }
 
 a {
