@@ -280,7 +280,7 @@
 	"address.province": "省份",
 	"address.city": "城市",
 	"address.address": "地址",
-	"address.addressPlaceholder": "请输入详细地址信息，如道路、门牌号、小区、楼栋号、单元等",
+	"address.addressPlaceholder": "请输入详细地址信息",
 	"address.postcode": "邮政编码",
 	"address.postcodePlaceholder": "请输入6位数字的邮政编码",
 	"address.recipientName": "收货人姓名",

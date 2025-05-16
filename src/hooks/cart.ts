@@ -1,7 +1,6 @@
 import { ref, computed, watch, type Ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 import { carApi } from '@/api'
-import { useRoute } from 'vue-router'
 import { useCartStore } from '@/store/cart'
 
 
@@ -22,7 +21,6 @@ export const useCart = () => {
 	const items = ref<CartItem[]>([])
 	const selectedRowKeys = ref<number[]>([])
 	const loading = ref(false)
-	const route = useRoute()
 
 	// 防抖更新
 	const debouncedUpdateCart = useDebounceFn(async (id: number, product_num: number) => {
@@ -66,11 +64,14 @@ export const useCart = () => {
 		setItems(items.value)
 	}
 
-	const toggleSelect = (selected: boolean, id: number) => {
-		if (selected) {
-			selectedRowKeys.value = [...selectedRowKeys.value, id]
+	const toggleSelect = ( id: number) => {
+		if (selectedRowKeys.value.includes(id)) {
+			const idx = selectedRowKeys.value.indexOf(id)
+			if (idx > -1) {
+				selectedRowKeys.value.splice(idx, 1)
+			}
 		} else {
-			selectedRowKeys.value = selectedRowKeys.value.filter(item => item !== id)
+			selectedRowKeys.value.push(id)
 		}
 	}
 
@@ -87,7 +88,6 @@ export const useCart = () => {
 		setItems(items.value)
 	}
 
-	const totalItems = computed(() => items.value.length)
 	const isAllSelected = computed(() =>
 		items.value.length > 0 && items.value.every(item => selectedRowKeys.value.includes(item.id))
 	)

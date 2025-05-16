@@ -19,6 +19,78 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('../views/cart/index.vue'),
+    meta: {
+      title: '购物车',
+      showBack: true
+    },
+  },
+  {
+    path: '/shipping',
+    name: 'Shipping',
+    component: () => import('../views/order/shipping.vue'),
+    meta: {
+      title: '确认运输要求',
+      showBack: true,
+    },
+  },
+  {
+    path: '/goods',
+    name: 'Goods',
+    component: () => import('../views/order/goods.vue'),
+    meta: {
+      title: '商品信息',
+      showBack: true,
+    },
+  },
+  {
+    path: '/address',
+    name: 'Address',
+    component: () => import('../views/order/address.vue'),
+    meta: {
+      title: '地址信息',
+      showBack: true,
+    },
+  },
+  {
+    path: '/address-list',
+    name: 'AddressList',
+    component: () => import('../views/address/address-list.vue'),
+    meta: {
+      title: '选择地址',
+      showBack: true
+    },
+  },
+  {
+    path: '/edit-address',
+    name: 'EditAddress',
+    component: () => import('../views/address/edit-address.vue'),
+    meta: {
+      title: '编辑地址',
+      showBack: true
+    },
+  },
+  {
+    path: '/confirm',
+    name: 'Confirm',
+    component: () => import('../views/order/confirm.vue'),
+    meta: {
+      title: '订单确认',
+      showBack: true,
+    },
+  },
+  {
+    path: '/memo',
+    name: 'Memo',
+    component: () => import('../views/address/memo.vue'),
+    meta: {
+      title: '包装与配送要求',
+      showBack: true
+    },
+  },
+  {
     path: '/inquiry',
     name: 'Inquiry',
     component: () => import('../views/inquiry/index.vue'),
@@ -32,7 +104,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/inquiry/detail.vue'),
     meta: {
       title: '询价详情',
-      showback: true,
+      showBack: true,
     },
   },
   {
@@ -41,7 +113,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/inquiry/goods-detail.vue'),
     meta: {
       title: '商品详情',
-      showback: true,
+      showBack: true,
     },
   },
   {
@@ -50,7 +122,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/inquiry/inquiry-info.vue'),
     meta: {
       title: '询价详情',
-      showback: true,
+      showBack: true,
     },
   },
   {
@@ -69,7 +141,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '资金明细',
       requiresAuth: false,
-      showback:true,
+      showBack: true,
     },
   },
   {

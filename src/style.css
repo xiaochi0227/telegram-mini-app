@@ -24,7 +24,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: #212121;
   background-color: #242424;
 
   font-synthesis: none;
@@ -45,8 +45,9 @@
   --van-action-sheet-item-line-height: 46px !important;
 
   /* 按钮字体 */
+  --van-button-small-height: 64px !important;
   --van-button-large-height: 92px !important;
-  --van-button-round-border-radius: 24px !important;
+  --van-button-round-border-radius: 12px !important;
 
   /* checkbox */
   --van-checkbox-size: 36px !important;
@@ -60,6 +61,24 @@
 
   /* skeleton */
   --van-skeleton-row-height: 32px !important;
+
+  /* stepper */
+  --van-stepper-border-radius: 10px !important;
+  --van-stepper-input-height: 66px !important;
+  --van-stepper-input-width: 120px !important;
+
+  /* dialog */
+  --van-dialog-width: 70vw !important;
+  --van-dialog-button-height: 92px !important;
+
+  /* form */
+  --van-field-error-message-font-size: 24px !important;
+
+  /* picker */
+  --van-picker-toolbar-height: 60px !important;
+  --van-picker-cancel-action-color: #333 !important;
+  --van-picker-confirm-action-color: #FF356D !important;
+  --van-picker-action-padding: 20px !important;
 }
 
 a {
@@ -103,5 +122,9 @@ button:focus-visible {
 
 .card {
   padding: 2em;
+}
+
+.van-dialog .van-dialog__content {
+  padding: 60px 0 !important;
 }
 

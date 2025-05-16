@@ -59,14 +59,18 @@
                 </div>
 
                 <div class="flex justify-between items-center mt-1">
-                  <span class="text-[#515360] text-[28px]">单价</span>
+                  <span class="text-[#515360] text-[28px]">{{
+                    t('inquiriesDetails.unitPprice')
+                  }}</span>
                   <span class="text-[#2563eb] text-[32px] font-bold">
                     ￥{{ item.unit_price }}
                   </span>
                 </div>
 
                 <div class="flex justify-between items-center mt-1">
-                  <span class="text-[#515360] text-[28px]">货期</span>
+                  <span class="text-[#515360] text-[28px]">{{
+                    t('inquiriesDetails.deliveryDate')
+                  }}</span>
                   <span class="text-[#212121] text-[32px] font-bold">
                     {{ item.lead_time }} {{ t('inquiriesDetails.day') }}
                   </span>
@@ -99,7 +103,7 @@
           @click="handleBuy"
           :disabled="!selectedRowKeys.length || btnLoading"
         >
-          直接购买
+          {{ t('inquiriesDetails.placeOrder') }}
         </van-button>
         <van-button
           class="flex-1 font-bold"
@@ -111,7 +115,7 @@
           @click="handleAddCart"
           :disabled="!selectedRowKeys.length || btnLoading"
         >
-          加入购物车
+          {{ t('inquiriesDetails.addCart') }}
         </van-button>
       </div>
     </van-skeleton>
@@ -124,15 +128,13 @@ import NavBar from '@/components/nav-bar/index.vue'
 import { carApi, inquiryApi } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
-import { useCart } from '@/hooks/cart'
 import { encryptParams } from '@/utils/encryption'
-import { Toast } from 'vant'
+import { Notify } from 'vant'
 import { useInquiryStore } from '@/store/inquiry'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const { initItems } = useCart()
 const { setGood, setInquiry } = useInquiryStore()
 
 const selectedRowKeys = ref<number[]>([])
@@ -175,7 +177,7 @@ const fetchInquiryDetail = async () => {
 
 // 获取提交参数
 const getPostParams = () => {
-  if (!id) {
+  if (!id.value) {
     return
   }
 
@@ -184,7 +186,7 @@ const getPostParams = () => {
   }
 
   const params = {
-    inquiry_sheet_id: +id,
+    inquiry_sheet_id: id.value,
     inquiry_sheet_item_ids: selectedRowKeys.value,
   }
 
@@ -222,7 +224,7 @@ const onSelectItem = (item) => {
 const handleViewGoodsDetail = (item) => {
   setGood(item)
   router.push({
-    path: '/goods-detail'
+    path: '/goods-detail',
   })
 }
 
@@ -239,9 +241,7 @@ const handleAddCart = async () => {
 
   if (res.code != 1) return
 
-  // 重新请求一下
-  initItems(true, false)
-  Toast.success(t('inquiriesDetails.addCartSuccess'))
+  Notify({ type: 'success', message: t('inquiriesDetails.addCartSuccess') });
   router.push('/cart')
 }
 
@@ -256,25 +256,14 @@ const handleBuy = () => {
 
   // 添加多个参数
   const encrypted = encryptParams({ ...params, entry: 3 })
+
+  router.push(`/shipping?query=${encodeURIComponent(encrypted)}`)
 }
 
 fetchInquiryDetail()
 </script>
 
 <style scoped lang="scss">
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.7);
-  z-index: 9999;
-}
-
 .van-checkbox ::v-deep .van-badge__wrapper {
   border-radius: 10px !important;
 }

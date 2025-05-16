@@ -2,7 +2,7 @@
   <div>
     <div class="flex items-center py-[32px]">
       <van-icon
-        v-if="route.meta.showback"
+        v-if="route.meta.showBack"
         name="arrow-left"
         size="24"
         color="#FF356D"

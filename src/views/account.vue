@@ -6,7 +6,7 @@
       >
         <nav-bar />
         <div class="flex items-center space-x-2">
-          <van-badge :content="totalItems">
+          <van-badge :content="cartStore.totalItems">
             <van-icon name="cart-o" size="28" color="#212121" />
           </van-badge>
 
@@ -174,9 +174,7 @@ import { useCartStore } from '@/store/cart'
 
 const router = useRouter()
 const { initItems } = useCart()
-// const { totalItems, items } = useCartStore()
 const cartStore = useCartStore()
-const totalItems = computed(() => cartStore.totalItems)
 
 const goBack = () => {
   router.back()

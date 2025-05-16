@@ -37,7 +37,7 @@
         商品描述：
       </div>
       <div class="text-[#212121] text-[28px] whitespace-pre-line">
-        {{ description }}
+        {{ good.desc }}
       </div>
     </div>
   </div>
