@@ -73,6 +73,15 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/memo',
+    name: 'Memo',
+    component: () => import('../views/address/memo.vue'),
+    meta: {
+      title: '包装与配送要求',
+      showBack: true
+    },
+  },
+  {
     path: '/confirm',
     name: 'Confirm',
     component: () => import('../views/order/confirm.vue'),
@@ -82,12 +91,30 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/memo',
-    name: 'Memo',
-    component: () => import('../views/address/memo.vue'),
+    path: '/payment',
+    name: 'Payment',
+    component: () => import('../views/order/payment.vue'),
     meta: {
-      title: '包装与配送要求',
-      showBack: true
+      title: '支付',
+      showBack: true,
+    },
+  },
+  {
+    path: '/complete',
+    name: 'Complete',
+    component: () => import('../views/order/complete.vue'),
+    meta: {
+      title: '支付成功',
+      showBack: true,
+    },
+  },
+  {
+    path: '/recharge',
+    name: 'Recharge',
+    component: () => import('../views/recharge.vue'),
+    meta: {
+      title: '充值',
+      showBack: true,
     },
   },
   {
