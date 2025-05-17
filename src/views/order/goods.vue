@@ -7,64 +7,57 @@
     </div>
 
     <div class="flex-1 overflow-y-auto">
-      <div class="mx-[32px] rounded-[12px] bg-white shadow-sm">
+      <div class="pt-[2px] mx-[32px] rounded-[12px] bg-white shadow-sm">
         <div
-          v-for="item in orderStore.products"
+          v-for="(item, idx) in orderStore.products"
           :key="item.id"
-          class="p-[24px]"
+          :class="[
+            'm-[24px] pb-[24px]',
+            idx !== orderStore.products.length - 1
+              ? 'border-b border-[#F4F4F4]'
+              : '',
+          ]"
         >
-          <!-- Product Card -->
-          <div class="flex items-start">
-            <!-- Product Image -->
-            <van-image
-              :src="item.image"
-              class="w-[160px] h-[160px] rounded-[8px] mr-[16px]"
-              fit="cover"
-            />
-
-            <!-- Product Info -->
-            <div class="flex-1">
-              <h3 class="text-[28px] font-medium text-[#212121] mb-[12px]">
-                {{ item.name }}
-              </h3>
-
-              <div class="flex justify-between items-center mb-[12px]">
-                <span class="text-[24px] text-[#515360]">单价</span>
-                <span class="text-[28px] font-medium text-[#212121]"
-                  >¥{{ item.price }}</span
-                >
-              </div>
-
-              <div class="flex justify-between items-center mb-[12px]">
-                <span class="text-[24px] text-[#515360]">服务费</span>
-                <span class="text-[28px] font-medium text-[#212121]"
-                  >¥100.00</span
-                >
-              </div>
-
-              <div class="flex justify-between items-center">
-                <span class="text-[24px] text-[#515360]">装箱数量</span>
-                <span class="text-[28px] font-medium text-[#212121]">{{
-                  item.quantity
-                }}</span>
-              </div>
-            </div>
+          <div class="flex justify-between items-center text-[28px] font-[600]">
+            <span>{{ item.product_name }}</span>
+            <span class="text-[#004CE0]"
+              >CNY ¥{{ item.total_product_price }}</span
+            >
           </div>
 
-          <!-- Total Price -->
-          <div class="mt-[24px] pt-[24px] border-t border-[#EBEDF0]">
-            <div class="flex justify-between items-center">
-              <span class="text-[24px] text-[#515360]">总箱数</span>
-              <span class="text-[32px] font-bold text-[#212121]">{{
-                item.quantity
-              }}</span>
-            </div>
-            <div class="flex justify-between items-center mt-[12px]">
-              <span class="text-[24px] text-[#515360]">总金额</span>
-              <span class="text-[32px] font-bold text-[#FF356D]"
-                >¥{{ item.price * item.quantity + 100 }}</span
-              >
-            </div>
+          <div
+            class="flex justify-between items-center mt-1 text-[24px] text-[#515360]"
+          >
+            <span>单价</span>
+            <span>¥{{ item.price }}</span>
+          </div>
+
+          <div
+            class="flex justify-between items-center mt-1 text-[24px] text-[#515360]"
+          >
+            <span>商品数量</span>
+            <span>{{ item.product_num }}</span>
+          </div>
+
+          <div
+            class="flex justify-between items-center mt-1 text-[24px] text-[#515360]"
+          >
+            <span>{{ t('cart.serviceFee') }}</span>
+            <span>¥{{ item.service_price }}</span>
+          </div>
+
+          <div
+            class="flex flex-col bg-[#F4F4F4] mt-2 rounded-[10px] px-[20px] py-[12px] text-[#515360] text-[24px]"
+            v-if="entry == 4"
+          >
+            <span
+              >{{ t('checkout.packingQuantity') }}&nbsp;{{
+                item.packing_quantity
+              }}</span
+            >
+            <span class="mt-1"
+              >{{ t('checkout.totalBoxes') }}&nbsp;{{ item.package_num }}</span
+            >
           </div>
         </div>
       </div>
@@ -76,6 +69,16 @@
 import NavBar from '@/components/nav-bar/index.vue'
 import { Image as VanImage } from 'vant'
 import { useOrderStore } from '@/store/order'
+import { useI18n } from '../../hooks/useI18n'
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
 const orderStore = useOrderStore()
+const { t } = useI18n()
+const route = useRoute()
+
+// 是否已下单查看
+const entry = computed(() => {
+  return route.query.entry || ''
+})
 </script>

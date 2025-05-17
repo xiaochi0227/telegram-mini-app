@@ -142,7 +142,7 @@
       </div>
 
       <!-- 商品信息 -->
-      <van-cell title="商品信息" is-link class="view-detail mb-[28px]" to="/goods" />
+      <van-cell title="商品信息" is-link class="view-detail mb-[28px]" :to="`/goods?entry=${decryptedData.entry}`" />
     </div>
 
     <div
@@ -164,13 +164,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineOptions } from 'vue'
-import { ref, onMounted, watch } from 'vue'
+import { ref, defineOptions } from 'vue'
 import NavBar from '@/components/nav-bar/index.vue'
 import { Notify } from 'vant'
 import { orderApi, inquiryApi, balanceApi } from '@/api'
 import { decryptParams, encryptParams } from '@/utils/encryption'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAddressStore } from '@/store/address'
 import { useOrderStore } from '@/store/order'
@@ -189,6 +188,15 @@ const { setProducts } = useOrderStore()
 const decryptedData = ref({})
 const orderInfo = ref({})
 const balanceInfo = ref({})
+
+onBeforeRouteLeave((to, from, next) => {
+  const { path } = to
+  // 如果是跳转到内页则不清空store否则清空store中的shippingaddress
+  if (!['/address-list', '/goods', '/memo'].includes(path)) {
+    addressStore.setShippingAddressList([])
+  }
+  next()
+})
 
 // 选择地址 要过滤掉已选的地址
 const handleSelectAddress = () => {
@@ -253,7 +261,7 @@ const getDetail = async () => {
   }
 
   if (!Object.keys(params).length) {
-    Notify({ type: 'success', message: '路由参数错误' })
+    Notify({ type: 'danger', message: '路由参数错误' })
     return
   }
 
@@ -276,7 +284,6 @@ const getDetail = async () => {
     pay_status = 0,
     order_status = 0,
   } = entry == 5 ? res.data : res.data.list
-  console.log(item_data)
 
   setProducts(item_data)
 

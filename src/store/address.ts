@@ -3,22 +3,17 @@ import { addressApi } from '@/api'
 import type { Address } from '@/api/types'
 
 interface AddressState {
-  defaultAddress: Address | null
+  // 所有地址列表信息
   addressList: Address[]
+  // 下单页面地址列表
   shippingAddress: Address[]
 }
 
 export const useAddressStore = defineStore('address', {
   state: (): AddressState => ({
     addressList: [],
-    defaultAddress: null,
     shippingAddress: []
   }),
-
-  getters: {
-    getAddressList: (state) => state.addressList,
-    getDefaultAddress: (state) => state.defaultAddress
-  },
 
   actions: {
     // 更新地址的memo
@@ -62,10 +57,6 @@ export const useAddressStore = defineStore('address', {
       this.shippingAddress = addresses
     },
 
-    setDefaultAddress(address: Address | null) {
-      this.defaultAddress = address;
-    },
-
     // 获取默认地址
     async fetchDefaultAddress() {
       try {
@@ -74,7 +65,6 @@ export const useAddressStore = defineStore('address', {
         if (res.code != 1) return
 
         const defaultAddress = res.data?.list?.[0]
-        this.setDefaultAddress(defaultAddress)
 
         // 如果有默认地址，并且 shippingAddress 为空，则添加默认地址到 shippingAddress
         if (defaultAddress && this.shippingAddress.length === 0) {
@@ -94,7 +84,6 @@ export const useAddressStore = defineStore('address', {
         if (res.code != 1) return
 
         let list = (res.data?.list || []).filter(item => {
-          console.log(';sids', sids)
           return !sids.map(Number).includes(+item.id)
         })
 

@@ -6,7 +6,10 @@
 
     <van-skeleton title row="6" :loading="loading">
       <div class="flex-1 overflow-y-auto">
-        <div class="mb-4 bg-white rounded-[24px] p-[32px]">
+        <div
+          class="mb-4 bg-white rounded-[24px] p-[32px]"
+          v-if="cartStore.items.length"
+        >
           <!-- 全选 -->
           <van-checkbox
             v-model="checkAll"
@@ -78,6 +81,9 @@
             </div>
           </div>
         </div>
+
+        <!-- 空状态 -->
+        <van-empty v-else description="购物车没有商品啦，快去添加吧~" />
       </div>
 
       <div
