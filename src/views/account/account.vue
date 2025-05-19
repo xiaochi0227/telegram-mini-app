@@ -15,18 +15,7 @@
     </div>
     <div class="text-center mb-6 bg-white px-[20px] pb-[32px]">
       <div class="text-sm py-3 text-left">资金余额</div>
-      <div class="flex justify-center items-center bg-[#F4F4F4] rounded-full  h-[64px]">
-        <div class="px-4 flex-1 text-[#515360] active account-tab">
-          <span>USD</span>
-        </div>
-        <div class="px-4 flex-1 text-[#515360] account-tab">
-          <span>CNY</span>
-        </div>
-        <div class="px-4 flex-1 text-[#515360] account-tab">
-          <span>已用授信</span>
-        </div>
-      </div>
-      <div class="text-blue-500 text-4xl font-bold py-[2rem]">456246.00 <span class="text-xl">¥</span></div>
+      <Financial />
       <div class="flex justify-center space-x-4">
         <button class="bg-[#FF356D] text-white px-6 py-2 rounded-[12px] w-[240px] h-[72px]">充值</button>
         <button
@@ -38,58 +27,32 @@
     <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
       <h2 class=" font-bold mb-2">进行中的采购订单</h2>
       <div class="grid grid-cols-2 gap-4">
-        <div class="order-status">
-          <div class="flex items-center justify-between">
-            <i class="iconfont icon-Enquiry"></i>
-            <div class="num">3</div>
+        <template v-if="orderStatusCards.length">
+          <div class="order-status" v-for="(item, index) in orderStatusCards" :key="index">
+            <div class="flex items-center justify-between">
+              <i :class="`iconfont ${item.icon}`"></i>
+              <div class="num">{{ item.count }}</div>
+            </div>
+            <div class="pt-[16px]">{{ item.title }}</div>
           </div>
-          <div class="pt-[16px]">询价中</div>
-        </div>
-        <div class="order-status">
-          <div class="flex items-center justify-between">
-            <i class="iconfont icon-Confirm"></i>
-            <div class="num">3</div>
-          </div>
-          <div class="pt-[16px]">待确认</div>
-        </div>
-        <div class="order-status">
-          <div class="flex items-center justify-between">
-            <i class="iconfont icon-Payment"></i>
-            <div class="num">3</div>
-          </div>
-          <div class="pt-[16px]">待支付</div>
-        </div>
-        <div class="order-status">
-          <div class="flex items-center justify-between">
-            <i class="iconfont icon-Purchase"></i>
-            <div class="num">3</div>
-          </div>
-          <div class="pt-[16px]">采购中</div>
-        </div>
+        </template>
       </div>
     </div>
     <!-- Logistics Section -->
     <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
       <h2 class="font-bold mb-2">物流订单</h2>
-      <div class="grid grid-cols-3 gap-4">
-        <div class="text-center logis-status">
-          <i class="iconfont icon-Time"></i>
-          <div class="mt-[28px]">已签收</div>
-        </div>
-        <div class="text-center logis-status">
-          <i class="iconfont icon-Transport"></i>
-          <div class="mt-[28px]">运输中</div>
-        </div>
-        <div class="text-center logis-status">
-          <i class="iconfont icon-Sorting"></i>
-          <div class="mt-[28px]">待分货</div>
+      <div class="grid grid-cols-3 gap-4" v-if="logisticsStatusCards.length">
+        <div class="text-center logis-status" v-for="(item, index) in logisticsStatusCards" :key="index">
+          <i :class="`iconfont ${item.icon}`"></i>
+          <div class="num">{{ item.count }}</div>
+          <div class="mt-[28px]">{{ item.title }}</div>
         </div>
       </div>
       <div class="font-bold mt-[40px]">待支付的物流费</div>
       <div class="text-center mt-[16px] text-[#004CE0] font-bold">$ 42456.56</div>
     </div>
     <!-- Logistics Status -->
-    <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
+    <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]" v-if="false">
       <h2 class="font-bold mb-2">物流动态</h2>
       <div class="space-y-4">
         <div>
@@ -132,51 +95,100 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import NavBar from '@/components/nav-bar/index.vue';
+import Financial from './components/Financial.vue';
+import { accountApi } from '@/api'
+import { useI18n } from 'vue-i18n';
 const router = useRouter();
+const { t } = useI18n()
 
-const goBack = () => {
-  router.back();
-};
+const allTotalPrice = ref(0);
+const orderStatusCards = ref([]);
+const logisticsStatusCards = ref([]);
 
-const goHome = () => {
-  router.push('/');
+const ORDER_STATUS_MAP = [
+  {
+    key: 'inquiry_sheet_count',
+    titleKey: 'accountCenter.inquiry',
+    icon: 'icon-Enquiry',
+    path:''
+  },
+  {
+    key: 'confirmation_count',
+    titleKey: 'accountCenter.pendingConfirmation',
+    icon: 'icon-Confirm',
+    path:''
+  },
+  {
+    key: 'need_pay_count',
+    titleKey: 'accountCenter.pendingPayment',
+    icon: 'icon-Payment',
+    path:''
+  },
+  {
+    key: 'buy_order_count',
+    titleKey: 'accountCenter.procurement',
+    icon: 'icon-Purchase',
+    path:''
+  }
+];
+
+const LOGISTICS_STATUS_MAP = [
+  {
+    key: 'transit_count',
+    titleKey: 'accountCenter.inTransit',
+    icon: 'icon-Transport',
+    path:'/account/logistics'
+  },
+  {
+    key: 'allocation_count',
+    titleKey: 'accountCenter.pendingAllocation',
+    icon: 'icon-Sorting'
+  },
+  {
+    key: 'signed_for_count',
+    titleKey: 'accountCenter.signed',
+    icon: 'icon-Time'
+  }
+];
+
+const fetchAccountIndex = async () => {
+  try {
+    const { data } = await accountApi.getAccountIndex();
+
+    // Update all total price
+    allTotalPrice.value = data.all_total_price;
+
+    // Update order status cards
+    orderStatusCards.value = ORDER_STATUS_MAP.map(item => ({
+      title: t(item.titleKey),
+      count: data[item.key] || 0,
+      icon: item.icon
+    }));
+
+    // Update logistics status cards
+    logisticsStatusCards.value = LOGISTICS_STATUS_MAP.map(item => ({
+      title: t(item.titleKey),
+      count: data[item.key] || 0,
+      icon: item.icon
+    }));
+    console.log('logisticsStatusCards', orderStatusCards.value, logisticsStatusCards.value);
+  } catch (error) {
+    console.error('Failed to fetch account index:', error);
+    // You might want to handle errors here, e.g., show a notification
+  }
 };
+onMounted(() => {
+  fetchAccountIndex();
+});
 </script>
 
 <style scoped lang="scss">
 .account {
   font-size: 28px;
   color: #515360;
-}
-
-.account-tab {
-  position: relative;
-  height: 100%;
-  line-height: 64px;
-
-  &.active {
-    color: #212121;
-
-    &:after {
-      position: absolute;
-      content: '';
-      left: 2px;
-      right: 0;
-      height: 60px;
-      top: 2px;
-      background-color: #fff;
-      border-radius: 30px;
-      z-index: 1;
-    }
-  }
-
-  span {
-    position: relative;
-    z-index: 2;
-  }
-
 }
 
 .order-status {
