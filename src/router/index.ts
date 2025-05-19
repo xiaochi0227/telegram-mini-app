@@ -127,35 +127,35 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/inquiry',
+    path: '/account/inquiry',
     name: 'Inquiry',
-    component: () => import('../views/inquiry/index.vue'),
+    component: () => import('../views/account/inquiry/index.vue'),
     meta: {
       title: '我的询价'
     },
   },
   {
-    path: '/inquiry-detail',
+    path: '/account/inquiry-detail',
     name: 'InquiryDetail',
-    component: () => import('../views/inquiry/detail.vue'),
+    component: () => import('../views/account/inquiry/detail.vue'),
     meta: {
       title: '询价详情',
       showBack: true,
     },
   },
   {
-    path: '/goods-detail',
+    path: '/account/goods-detail',
     name: 'GoodsDetail',
-    component: () => import('../views/inquiry/goods-detail.vue'),
+    component: () => import('../views/account/inquiry/goods-detail.vue'),
     meta: {
       title: '商品详情',
       showBack: true,
     },
   },
   {
-    path: '/inquiry-info',
+    path: '/account/inquiry-info',
     name: 'InquiryInfo',
-    component: () => import('../views/inquiry/inquiry-info.vue'),
+    component: () => import('../views/account/inquiry/inquiry-info.vue'),
     meta: {
       title: '询价详情',
       showBack: true,
@@ -225,6 +225,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/account/purchase/purchase-ads.vue'),
     meta: {
       title: '地址信息',
+      requiresAuth: false,
+      showBack:true,
+    },
+  },
+  {
+    path: '/account/purchase/payment',
+    name: 'PurchaseOrderPayment',
+    component: () => import('../views/account/purchase/payment.vue'),
+    meta: {
+      title: '付尾款',
       requiresAuth: false,
       showBack:true,
     },

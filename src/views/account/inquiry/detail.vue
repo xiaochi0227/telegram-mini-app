@@ -87,7 +87,7 @@
           </div>
         </div>
 
-        <van-cell class="view-detail" title="详情" is-link to="/inquiry-info" />
+        <van-cell class="view-detail" title="详情" is-link to="/account/inquiry-info" />
       </div>
 
       <div
@@ -224,7 +224,7 @@ const onSelectItem = (item) => {
 const handleViewGoodsDetail = (item) => {
   setGood(item)
   router.push({
-    path: '/goods-detail',
+    path: '/account/goods-detail',
   })
 }
 

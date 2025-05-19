@@ -73,10 +73,10 @@ const showPopup = ref(false)
 // 菜单项数组
 const menuItems = [
   { title: '账户中心', icon: 'user-o', path: '/account' },
-  { title: '我的询价', icon: 'comment-o', path: '/inquiry' },
-  { title: '采购订单', icon: 'icon-caigou' },
-  { title: '物流订单', icon: 'logistics' },
-  { title: '资金管理', icon: 'balance-o' },
+  { title: '我的询价', icon: 'comment-o', path: '/account/inquiry' },
+  { title: '采购订单', icon: 'icon-caigou', path: '/account/purchase' },
+  { title: '物流订单', icon: 'logistics', path: '/account/logistics' },
+  { title: '资金管理', icon: 'balance-o', path: '/account/finance' },
 ]
 
 function onMenuClick(item: any) {
