@@ -22,12 +22,12 @@
                 <span>{{ item.serial_no }}</span>
               </div>
               <!-- 消费类型 -->
-              <div class="flex justify-between text-gray-700 text-base mb-2">
+              <div class="flex justify-between text-gray-700 text-base mb-2"  v-if="active === 0">
                 <span>消费类型</span>
                 <span>{{ item.pay_type_str }}</span>
               </div>
               <!-- 关联订单号 -->
-              <div class="flex justify-between text-gray-700 text-base mb-2">
+              <div class="flex justify-between text-gray-700 text-base mb-2"  v-if="active === 0">
                 <span>关联订单号</span>
                 <span>{{ item.entity_no }}</span>
               </div>
