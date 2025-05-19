@@ -82,6 +82,10 @@
 
   /* loading */
   --van-button-loading-icon-size: 40px !important;
+
+  --van-tabbar-height: 120px !important;
+  --van-tabbar-item-line-height: 60px !important;
+  --van-tabbar-item-font-size: 40px !important;
 }
 
 a {

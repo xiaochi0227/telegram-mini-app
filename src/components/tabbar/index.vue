@@ -1,30 +1,46 @@
 <template>
-  <div class="app-container">
-    <!-- 页面内容 -->
-    <router-view />
-    
-    <!-- 底部导航栏 -->
-    <van-tabbar v-model="active" route active-color="#ee0a24" inactive-color="#000">
-      <van-tabbar-item name="home" icon="home-o" to="/">首页</van-tabbar-item>
-      <van-tabbar-item name="search" icon="search" to="/search">搜索</van-tabbar-item>
-      <van-tabbar-item name="cart" to="/cart">
-        <template #icon="props">
-          <van-icon :name="props.active ? 'shopping-cart' : 'shopping-cart-o'" />
-          <van-badge :content="cartCount" v-if="cartCount > 0" />
-        </template>
-        购物车
-      </van-tabbar-item>
-      <van-tabbar-item name="user" icon="user-o" dot to="/user">我的</van-tabbar-item>
-    </van-tabbar>
-  </div>
+  <!-- 底部导航栏 -->
+  <van-tabbar
+    v-model="active"
+    route
+    active-color="#ee0a24"
+    inactive-color="#000"
+  >
+    <van-tabbar-item
+      name="cart"
+      v-for="(item, index) of tabbar"
+      :key="index"
+      :to="item.path"
+    >
+      <template #icon="props">
+        <i class="iconfont" :class="item.icon"></i>
+      </template>
+    </van-tabbar-item>
+  </van-tabbar>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue'
 
 const active = ref('/')
-const tabbar = reactive([])
-
+const tabbar = reactive([
+  {
+    icon: 'icon-Home',
+    path: '/',
+  },
+  {
+    icon: 'icon-Inquiry',
+    path: '/inquiry',
+  },
+  {
+    icon: 'icon-Basket',
+    path: '/cart',
+  },
+  {
+    icon: 'icon-Account',
+    path: '/account/center',
+  },
+])
 </script>
 
 <style>

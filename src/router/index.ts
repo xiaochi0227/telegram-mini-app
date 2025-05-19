@@ -8,6 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Home.vue'),
     meta: {
       title: 'Home',
+      active: 'home'
     },
   },
   {
@@ -15,7 +16,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Account',
     component: () => import('../views/account/account.vue'),
     meta: {
-      title: '账户中心'
+      title: '账户中心',
+      active: 'user'
     },
   },
   {
@@ -24,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/cart/index.vue'),
     meta: {
       title: '购物车',
-      showBack: true
+      active: 'cart'
     },
   },
   {
@@ -131,7 +133,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Inquiry',
     component: () => import('../views/account/inquiry/index.vue'),
     meta: {
-      title: '我的询价'
+      title: '我的询价',
+      active: 'user'
     },
   },
   {
@@ -168,6 +171,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '资金管理',
       requiresAuth: false,
+      active: 'user'
     },
   },
   {
@@ -177,7 +181,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '资金明细',
       requiresAuth: false,
-      showBack: true,
+      showBack: true
     },
   },
   {
@@ -187,7 +191,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '设置支付密码',
       requiresAuth: false,
-      showBack:true,
+      showBack: true
     },
   },
   {
@@ -197,6 +201,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '采购订单',
       requiresAuth: false,
+      active: 'user'
     },
   },
   {
@@ -206,7 +211,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '采购订单详情',
       requiresAuth: false,
-      showBack:true,
+      showBack: true,
     },
   },
   {
@@ -216,7 +221,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '采购信息',
       requiresAuth: false,
-      showBack:true,
+      showBack: true,
     },
   },
   {
@@ -226,7 +231,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '地址信息',
       requiresAuth: false,
-      showBack:true,
+      showBack: true,
     },
   },
   {
@@ -236,7 +241,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '付尾款',
       requiresAuth: false,
-      showBack:true,
+      showBack: true,
     },
   },
   {
@@ -246,6 +251,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '物流订单',
       requiresAuth: false,
+      active: 'user'
     },
   },
   {
@@ -255,7 +261,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '物流订单详情',
       requiresAuth: false,
-      showBack:true,
+      showBack: true,
     },
   },
   {
@@ -265,7 +271,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '物流详情',
       requiresAuth: false,
-      showBack:true,
+      showBack: true,
     },
   },
   {
@@ -275,7 +281,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '运输商品',
       requiresAuth: false,
-      showBack:true,
+      showBack: true,
     },
   },
   {

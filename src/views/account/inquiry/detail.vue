@@ -1,11 +1,13 @@
 <template>
-  <div class="flex flex-col px-[32px] min-h-screen">
-    <div class="nav-header px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
-      <nav-bar />
-    </div>
+  <div class="flex flex-col h-full overflow-y-auto">
+    <van-sticky>
+      <div class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
+        <nav-bar />
+      </div>
+    </van-sticky>
 
     <van-skeleton title row="6" :loading="loading">
-      <div class="flex-1 overflow-y-auto">
+      <div class="flex-1 px-[32px] pb-4 overflow-y-auto">
         <!-- Contact Section -->
         <div
           class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[32px] contact"
@@ -87,11 +89,16 @@
           </div>
         </div>
 
-        <van-cell class="view-detail" title="详情" is-link to="/account/inquiry-info" />
+        <van-cell
+          class="view-detail"
+          title="详情"
+          is-link
+          to="/account/inquiry-info"
+        />
       </div>
 
       <div
-        class="flex justify-between items-center gap-[24px] px-[20px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow"
+        class="flex justify-between items-center mx-[32px] gap-[24px] px-[20px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow"
       >
         <!-- 购买按钮 -->
         <van-button
@@ -241,7 +248,7 @@ const handleAddCart = async () => {
 
   if (res.code != 1) return
 
-  Notify({ type: 'success', message: t('inquiriesDetails.addCartSuccess') });
+  Notify({ type: 'success', message: t('inquiriesDetails.addCartSuccess') })
   router.push('/cart')
 }
 
