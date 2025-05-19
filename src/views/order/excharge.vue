@@ -62,6 +62,7 @@
         <PasswordInput
           v-model="form.pay_password"
 					ref="passwordInput"
+					:loading="btnLoading"
           :auto-submit="false"
           @submit="handleSubmit"
           title="支付密码"
@@ -96,6 +97,7 @@ const price = computed(() => {
   return (numValue * rmb_to_usd_rate).toFixed(2)
 })
 
+const btnLoading = ref(false)
 const form = ref({})
 const formRef = ref<FormInstance>()
 const passwordInput = ref()
@@ -152,14 +154,17 @@ const validateForm = async () => {
 }
 
 const handleSubmit = async () => {
-  console.log(11)
   const valid = await validateForm()
 
   if (!valid) return
 
   const params = { ...form.value, change_type: 1 }
 
+	btnLoading.value = true
+
   const res = await inquiryApi.exchangeCurrency(params)
+
+	btnLoading.value = false
 
   if (res.code != 1) {
 		// 调用passwordinpupt的clearPassword方法

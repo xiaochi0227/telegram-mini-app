@@ -45,7 +45,7 @@
       <h2 class="font-bold mb-2">进行中的采购订单</h2>
       <div class="grid grid-cols-2 gap-4">
         <template v-if="orderStatusCards.length">
-          <div class="order-status" v-for="(item, index) in orderStatusCards" :key="index">
+          <div class="order-status" v-for="(item, index) in orderStatusCards" :key="index" @click="goPath(item.path)">
             <div class="flex items-center justify-between">
               <i :class="`iconfont ${item.icon}`"></i>
               <div class="num">{{ item.count }}</div>
@@ -59,9 +59,8 @@
     <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
       <h2 class="font-bold mb-2">物流订单</h2>
       <div class="grid grid-cols-3 gap-4" v-if="logisticsStatusCards.length">
-        <div class="text-center logis-status" v-for="(item, index) in logisticsStatusCards" :key="index">
+        <div class="text-center logis-status" v-for="(item, index) in logisticsStatusCards" :key="index" @click="goPath(item.path)">
           <i :class="`iconfont ${item.icon}`"></i>
-          <div class="num">{{ item.count }}</div>
           <div class="mt-[28px]">{{ item.title }}</div>
         </div>
       </div>
@@ -147,25 +146,25 @@ const ORDER_STATUS_MAP = [
     key: 'inquiry_sheet_count',
     titleKey: 'accountCenter.inquiry',
     icon: 'icon-Enquiry',
-    path:''
+    path:'/account/inquiries?status=2'
   },
   {
     key: 'confirmation_count',
     titleKey: 'accountCenter.pendingConfirmation',
     icon: 'icon-Confirm',
-    path:''
+    path:'/account/purchase?status=1'
   },
   {
     key: 'need_pay_count',
     titleKey: 'accountCenter.pendingPayment',
     icon: 'icon-Payment',
-    path:''
+    path:'/account/purchase?status=2'
   },
   {
     key: 'buy_order_count',
     titleKey: 'accountCenter.procurement',
     icon: 'icon-Purchase',
-    path:''
+    path:'/account/purchase?status=4'
   }
 ];
 
@@ -174,17 +173,19 @@ const LOGISTICS_STATUS_MAP = [
     key: 'transit_count',
     titleKey: 'accountCenter.inTransit',
     icon: 'icon-Transport',
-    path:'/account/logistics'
+    path:'/account/logistics?status=2'
   },
   {
     key: 'allocation_count',
     titleKey: 'accountCenter.pendingAllocation',
-    icon: 'icon-Sorting'
+    icon: 'icon-Sorting',
+    path:'/account/logistics?status=3'
   },
   {
     key: 'signed_for_count',
     titleKey: 'accountCenter.signed',
-    icon: 'icon-Time'
+    icon: 'icon-Time',
+    path:'/account/logistics?status=4'
   }
 ];
 
@@ -199,14 +200,16 @@ const fetchAccountIndex = async () => {
     orderStatusCards.value = ORDER_STATUS_MAP.map(item => ({
       title: t(item.titleKey),
       count: data[item.key] || 0,
-      icon: item.icon
+      icon: item.icon,
+      path: item.path
     }));
 
     // Update logistics status cards
     logisticsStatusCards.value = LOGISTICS_STATUS_MAP.map(item => ({
       title: t(item.titleKey),
       count: data[item.key] || 0,
-      icon: item.icon
+      icon: item.icon,
+      path: item.path
     }));
     console.log('logisticsStatusCards', orderStatusCards.value, logisticsStatusCards.value);
   } catch (error) {
@@ -214,6 +217,11 @@ const fetchAccountIndex = async () => {
     // You might want to handle errors here, e.g., show a notification
   }
 };
+
+const goPath = (path: string) =>{
+  console.log('path', path)
+  router.push(path);
+}
 onMounted(() => {
   initItems();
   fetchAccountIndex();

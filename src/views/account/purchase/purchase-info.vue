@@ -5,13 +5,6 @@
         <nav-bar />
       </div>
     </div>
-    <div class="bg-white rounded-2xl shadow p-4 mt-[24px]">
-      <div class="flex justify-between items-center">
-        <p class="text-lg font-bold">土豆</p>
-        <p class="text-[#FF356D] text-sm">采购中</p>
-      </div>
-      <p class="text-sm text-gray-500 mt-2">更新时间: 15.02.2014</p>
-    </div>
 
     <div class="bg-white rounded-2xl shadow p-4 mt-[24px]">
       <div class="flex justify-between items-center">
@@ -31,8 +24,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import NavBar from '@/components/nav-bar/index.vue';
+import { orderApi } from '@/api';
 import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router';
+const router = useRouter();
+const route = useRoute();
 const { t } = useI18n()
+
+const id = route.query.id
+const order = ref({});
+
+const getOrderDetail = async () => {
+  const res = (await orderApi.getPaidOrderDetail(id))
+  order.value = res.data || {};
+};
+//getOrderDetail()
 
 </script>
 

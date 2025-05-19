@@ -10,33 +10,22 @@
       <div>{{ result }}</div>
       <i class="iconfont icon-Right"></i>
     </div>
+    <van-empty image-size="160" description="暂无数据" v-if="isEmpty" />
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-      <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]" v-for="item in list" :key="item">
+      <van-list v-model:loading="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
+        <div class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]" v-for="item in list" :key="item" @click="handleDetail(item.id)">
           <!-- 顶部信息 -->
-          <p class="text-[32px] text-[#212121] font-bold">{{ item.tracking_no }}</p>
-          <p class=" text-[#FF8A21] pt-[12px]">{{ item.tracking_status_str }}</p>
+          <p class="text-[32px] text-[#212121] font-bold">{{ item.order_no }}</p>
+          <p class=" text-[#FF8A21] pt-[12px]">{{ item.order_status_str }}</p>
 
           <!-- 底部信息 -->
           <div class="flex justify-between items-center pt-[12px]">
-            <p>{{ t('logistics.trackingPrice') }}</p>
-            <p>USD ${{ item.total_price }}</p>
+            <p>{{ t('order.orderTime') }}</p>
+            <p>{{ item.add_time }}</p>
           </div>
-          <!-- 分隔线 -->
-          <div class="border-t border-[#F4F4F4] my-[24px]"></div>
-          <div class="flex justify-between items-center h-[88px] bg-[#f4f4f4] rounded-[20px] px-[20px]">
-            <template v-if="item.tracking_status == 2">
-              <p>{{ t('accountCenter.estimatedTime') }}</p>
-              <p class="text-[#212121]">{{ item.estimated_time }}</p>
-            </template>
-            <template v-else-if="item.tracking_status == 3">
-              <p>{{ t('logistics.allocationTime') }}</p>
-              <p class="text-[#212121] ">{{ item.allocation_time }}</p>
-            </template>
-            <template v-else-if="item.tracking_status == 4">
-              <p>{{ t('logistics.endTime') }}</p>
-              <p class="text-[#212121">{{ item.signed_for_time }}</p>
-            </template>
+          <div class="flex justify-between items-center pt-[12px]">
+            <p>{{ t('order.orderAmount') }}</p>
+            <p>CNY ￥{{ item.total_price }}</p>
           </div>
 
 
@@ -51,18 +40,20 @@
     </van-pull-refresh>
   </div>
   <van-popup v-model:show="showPicker" round position="bottom">
-    <van-picker :columns="orderStatusOptions" @cancel="showPicker = false" @confirm="onConfirm" />
+    <van-picker :columns="orderStatusOptions" @cancel="showPicker = false" :default-index="defaultIdx"
+      @confirm="onConfirm" />
   </van-popup>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import NavBar from '@/components/nav-bar/index.vue';
-import { logisticsApi } from '@/api';
+import { orderApi } from '@/api';
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
-const router = useRoute(); 
+const router = useRouter();
+const route = useRoute();
 
 const { t } = useI18n()
 
@@ -72,14 +63,30 @@ const pagination = ref({
   total: 0,
 });
 
+const orderStatusOptions = [
+  { value: '', text: t('order.allOrders') },
+  { value: '1', text: t('order.confirming') },
+  { value: '2', text: t('order.pendingPayment') },
+  { value: '3', text: t('order.paid') },
+  { value: '4', text: t('order.sorting') },
+  { value: '5', text: t('order.completed') },
+  { value: '-1', text: t('order.cancelled') },
+];
+const defaultIdx = ref(0);
+const result = ref(t('order.allOrders'));
+const showPicker = ref(false);
+
+
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);
+const finishedText = ref('没有更多了');
 const refreshing = ref(false);
-
+const isEmpty = ref(false);
 const status = ref('');
-status.value = router.query.status || '';
-
+status.value = route.query.status || '';
+result.value = orderStatusOptions.find((item) => item.value == status.value)?.text || t('order.allOrders');
+defaultIdx.value = orderStatusOptions.findIndex((item) => item.value == status.value);
 const onLoad = () => {
   setTimeout(async () => {
     if (refreshing.value) {
@@ -92,11 +99,20 @@ const onLoad = () => {
     let params = {
       page: pagination.value.page,
       limit: pagination.value.limit,
-      tracking_status_arr: status.value ? [status.value] : [2, 3, 4],
+      order_status: status.value,
     };
-    let res = await logisticsApi.getLogisticsList(params);
+    let res = await orderApi.getMyOrderList(params);
 
     if (res.code !== 1) return;
+    if (res.data.list.length === 0&&list.value.length === 0) {
+      isEmpty.value = true;
+      finishedText.value = '';
+      finished.value = true;
+      return;
+    }else{
+      isEmpty.value = false;
+      finishedText.value = '没有更多了';
+    }
     const { list: data = [], total = 0 } = res.data || {};
     pagination.value.total = total;
     list.value = [...list.value, ...data];
@@ -119,15 +135,6 @@ const onRefresh = () => {
   onLoad();
 };
 
-const orderStatusOptions = [
-  { value: '', text: t('order.allOrders') },
-  { value: '2', text: t('accountCenter.inTransit') },
-  { value: '3', text: t('logistics.arrived') },
-  { value: '4', text: t('accountCenter.signed') },
-];
-
-const result = ref(t('order.allOrders'));
-const showPicker = ref(false);
 
 const onConfirm = (value: any) => {
   console.log('选中的值:', value);
@@ -140,6 +147,9 @@ const onConfirm = (value: any) => {
   list.value = [];
   loading.value = true;
   onLoad();
+};
+const handleDetail = (id: number) => {
+  router.push({ path: '/account/purchase/' + id });
 };
 </script>
 

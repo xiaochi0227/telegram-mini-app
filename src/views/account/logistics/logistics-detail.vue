@@ -10,20 +10,20 @@
       <div class="bg-white rounded-[24px] shadow p-4">
         <div class="space-y-2 text-sm">
           <div class="flex justify-between">
-            <p>开始运输</p>
-            <p class="text-[#212121]">24.02.2017,07:10</p>
+            <p>{{ t('logistics.startTransportation') }}</p>
+            <p class="text-[#212121]">{{ order.add_time }}</p>
           </div>
           <div class="flex justify-between">
-            <p>到达时间</p>
-            <p class="text-[#212121]">24.02.2017,07:10</p>
+            <p>{{ t('logistics.arriveTime') }}</p>
+            <p class="text-[#212121]">{{ order.actual_time }}</p>
           </div>
           <div class="flex justify-between">
-            <p>分货时间</p>
-            <p class="text-[#212121]">24.02.2017,07:10</p>
+            <p>{{ t('logistics.allocationTime') }}</p>
+            <p class="text-[#212121]">{{ order.allocation_time }}</p>
           </div>
           <div class="flex justify-between">
-            <p>分货地址</p>
-            <p class="text-[#212121]">萨沃达市场</p>
+            <p>{{ t('logistics.shippingAddress') }}</p>
+            <p class="text-[#212121]">{{ order.allocation_address_str }}</p>
           </div>
         </div>
       </div>
@@ -35,8 +35,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import NavBar from '@/components/nav-bar/index.vue';
+import { logisticsApi } from '@/api';
 import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router';
+;
+const router = useRouter();
+const route = useRoute();
 const { t } = useI18n()
+
+const id = route.query.id
+const order = ref({});
+
+const getOrderDetail = async () => {
+  const res = (await logisticsApi.getLogisticsDetail({ id }))
+  order.value = res.data || {};
+};
+getOrderDetail()
 
 
 </script>

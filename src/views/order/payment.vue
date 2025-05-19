@@ -5,78 +5,95 @@
     >
       <nav-bar />
     </div>
-    <div class="px-[32px] flex-1 overflow-y-auto">
-      <div class="px-[24px] mb-[28px] bg-white rounded-[12px] shadow-sm">
-        <p class="py-[20px] text-[28px] font-[600] border-b border-[#F4F4F4]">
-          采购订单号：{{ balanceInfo.order_no }}
-        </p>
-
-        <div class="py-[40px]">
-          <van-count-down
-            :time="calculateRemaining"
-            class="mt-2 mb-[40px] text-center !text-[#FF356D] !text-[48px] font-[500]"
-          />
-          <p class="mb-4 text-[28px] text-[#515360] text-center">
-            请在倒计时结束前完成支付
+    <van-skeleton title row="6" :loading="loading">
+      <div class="px-[32px] flex-1 overflow-y-auto">
+        <div class="px-[24px] mb-[28px] bg-white rounded-[12px] shadow-sm">
+          <p class="py-[20px] text-[28px] font-[600] border-b border-[#F4F4F4]">
+            采购订单号：{{ balanceInfo.order_no }}
           </p>
-        </div>
-      </div>
 
-      <div class="px-[24px] mb-[28px] py-4 bg-white rounded-[12px] shadow-sm">
-        <div class="flex justify-between items-center font-[600]">
-          <span class="text-[28px]">资金余额：</span>
-          <span class="text-[32px] text-[#004CE0]">
-            ￥{{ balanceInfo?.rmb_balance }}
-          </span>
-        </div>
-
-        <div
-          class="flex flex-col my-[20px] px-[28px] py-[24px] rounded-[12px] bg-[#F4F4F4] text-[28px]"
-          v-if="is_insufficient"
-        >
-          <span class="text-[#ED2323]">人民币余额不足</span>
-
-          <span class="mt-1 text-[#FF356D] underline" @click="handleExcharge">
-            使用美元兑换人民币
-          </span>
+          <div class="py-[40px]">
+            <van-count-down
+              :time="calculateRemaining"
+              class="mt-2 mb-[40px] text-center !text-[#FF356D] !text-[48px] font-[500]"
+            />
+            <p class="mb-4 text-[28px] text-[#515360] text-center">
+              请在倒计时结束前完成支付
+            </p>
+          </div>
         </div>
 
-        <!-- 如何充值按钮 -->
-        <div class="flex justify-end items-center">
-          <span class="mr-4 text-[#FF356D] underline text-[28px]" v-if="!hasPayPassword">
-            设置支付密码
-          </span>
+        <div class="px-[24px] mb-[28px] py-4 bg-white rounded-[12px] shadow-sm">
+          <div class="flex justify-between items-center font-[600]">
+            <span class="text-[28px]">资金余额：</span>
+            <span class="text-[32px] text-[#004CE0]">
+              ￥{{ balanceInfo?.rmb_balance }}
+            </span>
+          </div>
 
-          <span
-            class="text-[#0066CC] underline text-[28px]"
-            @click="handleRecharge"
+          <div
+            class="flex flex-col my-[20px] px-[28px] py-[24px] rounded-[12px] bg-[#F4F4F4] text-[28px]"
+            v-if="is_insufficient"
           >
-            如何充值？
-          </span>
+            <span class="text-[#ED2323]">人民币余额不足</span>
+
+            <span class="mt-1 text-[#FF356D] underline" @click="handleExcharge">
+              使用美元兑换人民币
+            </span>
+          </div>
+
+          <PasswordInput
+            v-model="pay_password"
+            ref="passwordInput"
+            class="mb-[28px]"
+            :loading="btnLoading"
+            :auto-submit="false"
+            @submit="handlePay"
+            title=""
+            v-else
+          />
+
+          <!-- 如何充值按钮 -->
+          <div class="flex justify-end items-center">
+            <span
+              class="mr-4 text-[#FF356D] underline text-[28px]"
+              v-if="!hasPayPassword"
+            >
+              设置支付密码
+            </span>
+
+            <span
+              class="text-[#0066CC] underline text-[28px]"
+              @click="handleRecharge"
+            >
+              如何充值？
+            </span>
+          </div>
         </div>
+
+        <!-- 商品信息 -->
+        <van-cell
+          title="商品信息"
+          is-link
+          class="view-detail mb-[28px]"
+          :to="`/goods?entry=${decryptedData.entry}`"
+        />
+
+        <!-- 地址信息 -->
+        <van-cell
+          title="地址信息"
+          is-link
+          class="view-detail mb-[28px]"
+          to="/address"
+        />
       </div>
-
-      <!-- 商品信息 -->
-      <van-cell
-        title="商品信息"
-        is-link
-        class="view-detail mb-[28px]"
-        :to="`/goods?entry=${decryptedData.entry}`"
-      />
-
-      <!-- 地址信息 -->
-      <van-cell
-        title="地址信息"
-        is-link
-        class="view-detail mb-[28px]"
-        to="/address"
-      />
-    </div>
+    </van-skeleton>
   </div>
 </template>
 
 <script setup lang="ts">
 import NavBar from '@/components/nav-bar/index.vue'
+import PasswordInput from '@/components/PasswordInput/index.vue'
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { decryptParams, encryptParams } from '@/utils/encryption'
@@ -89,9 +106,13 @@ const router = useRouter()
 const decryptedData = ref({})
 const hasPayPassword = ref(false)
 const balanceInfo = ref({})
+// 支付密码
+const pay_password = ref('')
+const passwordInput = ref()
 // 余额不足
 const is_insufficient = ref(false)
 const btnLoading = ref(false)
+const loading = ref(false)
 
 const { setProducts, setAddressList, setBalance } = useOrderStore()
 
@@ -174,21 +195,23 @@ const handleRecharge = () => {
 const handlePay = async (values: any) => {
   const { purchase_order_id } = decryptedData.value
   const { total_price } = balanceInfo.value
-  const { pay_password } = values
-
-  btnLoading.value = true
 
   const params = {
     purchase_order_id,
     balance_pay_money: total_price,
-    pay_password,
+    pay_password: pay_password.value,
   }
+
+  btnLoading.value = true
 
   const res = await inquiryApi.payOrder(params)
 
   btnLoading.value = false
 
-  if (res.code != 1) return
+  if (res.code != 1) {
+    passwordInput.value.clearPassword()
+    return
+  }
 
   // 添加多个参数
   const encrypted = encryptParams({ purchase_order_id })
@@ -196,19 +219,36 @@ const handlePay = async (values: any) => {
   router.replace(`/complete?query=${encodeURIComponent(encrypted)}`)
 }
 
-const init = () => {
+const fetchData = async (): Promise<FetchDataResult> => {
+  try {
+    const results = await Promise.all([
+      // 是否有支付密码
+      getHasPayPassword(),
+      // 获取用户金额信息
+      getPendingPayment(),
+      // 获取地址商品信息
+      getPurchaseOrderDetail(),
+    ])
+
+    return results
+  } catch (error) {
+    console.error('获取数据失败:', error)
+    throw error
+  }
+}
+
+const init = async () => {
   const encryptedData = route.query.query || ''
   // 解密后的传参
   decryptedData.value = encryptedData
     ? decryptParams(decodeURIComponent(encryptedData))
     : {}
 
-  // 是否有支付密码
-  getHasPayPassword()
-  // 获取用户金额信息
-  getPendingPayment()
-  // 获取地址商品信息
-  getPurchaseOrderDetail()
+  loading.value = true
+
+  await fetchData()
+
+  loading.value = false
 }
 
 init()

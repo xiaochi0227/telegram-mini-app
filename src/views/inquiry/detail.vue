@@ -87,7 +87,7 @@
           </div>
         </div>
 
-        <van-cell class="view-detail" title="详细" is-link to="/inquiry-info" />
+        <van-cell class="view-detail" title="详情" is-link to="/inquiry-info" />
       </div>
 
       <div

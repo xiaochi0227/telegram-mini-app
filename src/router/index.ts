@@ -187,13 +187,13 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '设置支付密码',
       requiresAuth: false,
-      showback:true,
+      showBack:true,
     },
   },
   {
     path: '/account/purchase',
     name: 'Purchase',
-    component: () => import('../views/account/purchase.vue'),
+    component: () => import('../views/account/purchase/purchase.vue'),
     meta: {
       title: '采购订单',
       requiresAuth: false,
@@ -202,37 +202,37 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/account/purchase/:id',
     name: 'PurchaseOrder',
-    component: () => import('../views/account/purchase-order.vue'),
+    component: () => import('../views/account/purchase/purchase-order.vue'),
     meta: {
       title: '采购订单详情',
       requiresAuth: false,
-      showback:true,
+      showBack:true,
     },
   },
   {
     path: '/account/purchase/purchase-info',
     name: 'PurchaseInfo',
-    component: () => import('../views/account/purchase-info.vue'),
+    component: () => import('../views/account/purchase/purchase-info.vue'),
     meta: {
       title: '采购信息',
       requiresAuth: false,
-      showback:true,
+      showBack:true,
     },
   },
   {
     path: '/account/purchase/purchase-ads',
-    name: 'PurchaseOrder',
-    component: () => import('../views/account/purchase-ads.vue'),
+    name: 'PurchaseAds',
+    component: () => import('../views/account/purchase/purchase-ads.vue'),
     meta: {
       title: '地址信息',
       requiresAuth: false,
-      showback:true,
+      showBack:true,
     },
   },
   {
     path: '/account/logistics',
     name: 'Logistics',
-    component: () => import('../views/account/logistics.vue'),
+    component: () => import('../views/account/logistics/logistics.vue'),
     meta: {
       title: '物流订单',
       requiresAuth: false,
@@ -241,31 +241,31 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/account/logistics/:id',
     name: 'LogisticsOrder',
-    component: () => import('../views/account/logistics-order.vue'),
+    component: () => import('../views/account/logistics/logistics-order.vue'),
     meta: {
       title: '物流订单详情',
       requiresAuth: false,
-      showback:true,
+      showBack:true,
     },
   },
   {
     path: '/account/logistics/detail',
     name: 'LogisticsDetail',
-    component: () => import('../views/account/logistics-detail.vue'),
+    component: () => import('../views/account/logistics/logistics-detail.vue'),
     meta: {
       title: '物流详情',
       requiresAuth: false,
-      showback:true,
+      showBack:true,
     },
   },
   {
     path: '/account/logistics/goods',
     name: 'Goods',
-    component: () => import('../views/account/goods.vue'),
+    component: () => import('../views/goods.vue'),
     meta: {
       title: '运输商品',
       requiresAuth: false,
-      showback:true,
+      showBack:true,
     },
   },
   {

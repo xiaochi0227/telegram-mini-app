@@ -79,6 +79,9 @@
   --van-picker-cancel-action-color: #333 !important;
   --van-picker-confirm-action-color: #FF356D !important;
   --van-picker-action-padding: 20px !important;
+
+  /* loading */
+  --van-button-loading-icon-size: 40px !important;
 }
 
 a {

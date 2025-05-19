@@ -155,6 +155,7 @@
         round
         block
         size="large"
+        :loading="btnLoading"
         @click="handleConfirm"
       >
         {{ t('checkout.submitOrder') }}
@@ -188,6 +189,7 @@ const { setProducts } = useOrderStore()
 const decryptedData = ref({})
 const orderInfo = ref({})
 const balanceInfo = ref({})
+const btnLoading= ref(false)
 
 onBeforeRouteLeave((to, from, next) => {
   const { path } = to
@@ -332,6 +334,8 @@ const handleConfirm = async () => {
 
   let res = null
 
+  btnLoading.value = true
+
   switch (entry) {
     // 购物车下单
     case 1:
@@ -354,6 +358,8 @@ const handleConfirm = async () => {
       })
       break
   }
+
+  btnLoading.value = false
 
   if (!res || res.code !== 1) return
 
