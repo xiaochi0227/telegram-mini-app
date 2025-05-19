@@ -164,7 +164,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/account/finance',
     name: 'Finance',
-    component: () => import('../views/account/finance.vue'),
+    component: () => import('../views/account/finance/finance.vue'),
     meta: {
       title: '资金管理',
       requiresAuth: false,
@@ -173,7 +173,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/account/finance/operation-records',
     name: 'FinanceList',
-    component: () => import('../views/account/finance-list.vue'),
+    component: () => import('../views/account/finance/finance-list.vue'),
     meta: {
       title: '资金明细',
       requiresAuth: false,
@@ -183,7 +183,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/account/finance/pay-password',
     name: 'PayPassword',
-    component: () => import('../views/account/pay-password.vue'),
+    component: () => import('../views/account/finance/pay-password.vue'),
     meta: {
       title: '设置支付密码',
       requiresAuth: false,
@@ -230,6 +230,26 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/account/purchase/purchase-voucher',
+    name: 'PurchaseVoucher',
+    component: () => import('../views/account/purchase/purchase-voucher.vue'),
+    meta: {
+      title: '入库凭证',
+      requiresAuth: false,
+      showBack:true,
+    },
+  },
+  {
+    path: '/account/purchase/goods',
+    name: 'PurchaseGoods',
+    component: () => import('../views/account/purchase/goods.vue'),
+    meta: {
+      title: '采购商品',
+      requiresAuth: false,
+      showBack:true,
+    },
+  },
+  {
     path: '/account/purchase/payment',
     name: 'PurchaseOrderPayment',
     component: () => import('../views/account/purchase/payment.vue'),
@@ -270,8 +290,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/account/logistics/goods',
-    name: 'Goods',
-    component: () => import('../views/goods.vue'),
+    name: 'LogisticsGoods',
+    component: () => import('../views/account/logistics/goods.vue'),
     meta: {
       title: '运输商品',
       requiresAuth: false,

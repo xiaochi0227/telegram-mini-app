@@ -7,8 +7,9 @@
     </div>
     <van-tabs v-model:active="active" swipeable @change="onChange">
       <van-tab v-for="item in tabs" :title="item.title" :key="item.id">
-        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <van-empty image-size="160" description="暂无数据" v-if="isEmpty" />
+        <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-else>
+          <van-list v-model:loading="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
             <div v-for="item in list" :key="item" class="bg-white rounded-lg shadow p-4 mt-4">
               <!-- 时间 -->
               <div class="flex items-center text-gray-500 text-sm mb-4">
@@ -91,6 +92,8 @@ const pagination = ref({
   total: 0,
 });
 const active = ref(0);
+const isEmpty = ref(false);
+const finishedText = ref('没有更多了');
 active.value = Number(router.query.active) || 0;
 const list = ref([]);
 const loading = ref(false);
@@ -135,6 +138,15 @@ const onLoad = () => {
 
 
     if (res.code !== 1) return;
+    if (res.data.list.length === 0&&list.value.length === 0) {
+      isEmpty.value = true;
+      finishedText.value = '';
+      finished.value = true;
+      return;
+    }else{
+      isEmpty.value = false;
+      finishedText.value = '没有更多了';
+    }
     const { list: data = [], total = 0 } = res.data || {};
     pagination.value.total = total;
     list.value = [...list.value, ...data];
@@ -144,7 +156,7 @@ const onLoad = () => {
     if (list.value.length >= total) {
       finished.value = true;
     }
-  }, 1000);
+  }, 200);
 };
 
 const onRefresh = () => {

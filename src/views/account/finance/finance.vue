@@ -9,18 +9,27 @@
       <div class=" font-bold py-3 text-left">资金余额</div>
       <Financial />
       <div class="flex justify-center space-x-4">
-        <button class="bg-[#FF356D] text-white px-6 py-2 rounded-[12px] w-[240px] h-[72px]">充值</button>
-        <button
-          class="border border-[#E7E7E9] bg-white text-[#212121] px-6 py-2 rounded-[12px] w-[240px] h-[72px]">资金明细</button>
+        <button class="bg-[#FF356D] text-white px-6 py-2 rounded-[12px] w-[260px] h-[72px] text-[24px]"
+          @click="() => router.push('/recharge')"
+        >
+          充值
+        </button>
+        <button class="border border-[#E7E7E9] bg-white text-[#212121] px-6 py-2 rounded-[12px] w-[260px] h-[72px] text-[24px]"
+          @click="() => router.push('/account/finance/pay-password')"
+        >
+          修改支付密码
+        </button>
       </div>
     </div>
 
-    <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]' @click="(()=> router.push('/account/finance/operation-records?active=0'))">
+    <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]'
+      @click="(() => router.push('/account/finance/operation-records?active=0'))">
       <div>消费记录</div>
       <i class="iconfont icon-Right"></i>
     </div>
 
-    <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]' @click="(()=> router.push('/account/finance/operation-records?active=1'))">
+    <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]'
+      @click="(() => router.push('/account/finance/operation-records?active=1'))">
       <div>充值记录</div>
       <i class="iconfont icon-Right"></i>
     </div>
@@ -40,7 +49,7 @@ const router = useRouter();
 const { t } = useI18n()
 
 onMounted(() => {
-  
+
 })
 </script>
 
@@ -54,5 +63,4 @@ onMounted(() => {
     color: #515360;
   }
 }
-
 </style>

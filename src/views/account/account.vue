@@ -29,11 +29,13 @@
       <div class="flex justify-center space-x-4">
         <button
           class="bg-[#FF356D] text-white px-6 py-2 rounded-[12px] w-[240px] h-[72px]"
+          @click="() => router.push('/recharge')"
         >
           充值
         </button>
         <button
           class="border border-[#E7E7E9] bg-white text-[#212121] px-6 py-2 rounded-[12px] w-[240px] h-[72px]"
+          @click="() => router.push('/account/finance/operation-records')"
         >
           资金明细
         </button>

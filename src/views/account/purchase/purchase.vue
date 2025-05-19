@@ -11,7 +11,7 @@
       <i class="iconfont icon-Right"></i>
     </div>
     <van-empty image-size="160" description="暂无数据" v-if="isEmpty" />
-    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+    <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-else>
       <van-list v-model:loading="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
         <div class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]" v-for="item in list" :key="item" @click="handleDetail(item.id)">
           <!-- 顶部信息 -->
@@ -122,7 +122,7 @@ const onLoad = () => {
     if (list.value.length >= total) {
       finished.value = true;
     }
-  }, 500);
+  }, 200);
 };
 
 const onRefresh = () => {

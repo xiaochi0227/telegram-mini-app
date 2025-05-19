@@ -32,14 +32,16 @@
       <p class="text-[24px] text-[##ED2323] mt-2" v-if="item.is_exception">
         {{ item.exception_str }} {{ item.exception_memo }}
       </p>
-      <div class="mt-4 bg-gray-100 rounded-lg px-[24px] flex items-center" v-if="item.is_exception">
+      <div class="mt-4 bg-gray-100 rounded-lg px-[24px] flex items-center" v-if="item.is_exception"
+        @click="handleImagePreview(item.exception_images)">
         <i class="iconfont icon-Picture text-gray-500 mr-[8px]"></i>
         <p class="text-sm text-gray-500 flex-1" v-if="item.is_exception">{{ t('orderDetail.exceptionVoucher') }}</p>
         <i class="iconfont icon-Right text-gray-500"></i>
       </div>
-      <div class="mt-4 bg-gray-100 rounded-lg px-[24px] flex items-center" v-if="item.status === 4">
+      <div class="mt-4 bg-gray-100 rounded-lg px-[24px] flex items-center" v-if="item.status === 4"
+        @click="handleImagePreview(item.receipt_images)">
         <i class="iconfont icon-Voucher text-gray-500 mr-[8px]"></i>
-        <p class="text-sm text-gray-500 flex-1" v-if="item.status===4">{{ t('orderDetail.storeVoucher') }}</p>
+        <p class="text-sm text-gray-500 flex-1" v-if="item.status === 4">{{ t('orderDetail.storeVoucher') }}</p>
         <i class="iconfont icon-Right text-gray-500"></i>
       </div>
     </div>
@@ -52,12 +54,22 @@ import NavBar from '@/components/nav-bar/index.vue';
 import { orderApi } from '@/api';
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router';
+import { ImagePreview } from 'vant';
+
+
 const router = useRouter();
 const route = useRoute();
 const { t } = useI18n()
 
 const id = route.query.id
 const order = ref({});
+
+const handleImagePreview = (imageList) => {
+  ImagePreview({
+    images: imageList, // 图片数组，支持多张
+    startPosition: 0,   // 初始位置（第几张）
+  });
+};
 
 const getOrderDetail = async () => {
   const res = (await orderApi.getPaidOrderDetail(id))
@@ -68,9 +80,11 @@ getOrderDetail()
 </script>
 
 <style scoped>
-.icon-Voucher,.icon-Picture{
+.icon-Voucher,
+.icon-Picture {
   font-size: 36px;
 }
+
 .icon-Right {
   font-size: 64px;
   color: #515360;

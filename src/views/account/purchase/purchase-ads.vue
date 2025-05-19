@@ -14,10 +14,12 @@
         <p class="text-sm text-gray-500 mb-1">+{{ item.country_code }} {{ item.phone_num }}</p>
         <p class="text-sm text-gray-500 mb-4">{{ item.landline_num }}</p>
         <!-- 包装与配送要求 -->
-        <!-- <p class="text-lg font-bold mb-2">{{ t('checkout.packagingRequirements') }}</p>
-        <p class="text-sm text-gray-500 leading-relaxed">
-          XXXXXXXXXXXXXXXXXXXXX
-        </p> -->
+        <template v-if="item.memo">
+          <p class="text-lg font-bold mb-2">{{ t('checkout.packagingRequirements') }}</p>
+          <p class="text-sm text-gray-500 leading-relaxed">
+            {{ item.memo }}
+          </p>
+        </template>
       </div>
     </div>
   </div>

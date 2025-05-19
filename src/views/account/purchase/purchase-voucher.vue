@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="text-[28px] text-[#515360] mt-[24px]">
-      <div class="w-full h-[400px] space-y-4" v-for="(item, index) in order.receipt_images" :key="index">
+      <div class="w-full h-[400px] space-y-4" v-for="(item, index) in order.buy_order.receipt_images" :key="index">
         <van-image class="w-full h-full rounded-[16px]" fit="contain" :src="item" />
       </div>
     </div>

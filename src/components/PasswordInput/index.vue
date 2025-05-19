@@ -3,7 +3,7 @@
     class="flex flex-col items-center justify-center gap-[40px] p-4 pb-[100px] bg-white rounded-lg shadow-md"
   >
     <h2 class="text-[28px] font-bold w-full">{{ title }}</h2>
-    <div class="flex space-x-2">
+    <div class="flex space-x-4">
       <input
         v-for="(_, index) in Array(length).fill(0)"
         :key="index"

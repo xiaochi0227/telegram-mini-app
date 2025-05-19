@@ -20,4 +20,7 @@ export const logisticsApi = {
 
   // 发货单详情
   getBillExcelInfo: (params: any) => http.post('/transPortBill/getBillExcelInfo', params),
+
+  // 发货单图片链接
+  getBillImage: (params: any) => http.post('/transPortBill/getBillImage', params),
 };
