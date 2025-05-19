@@ -131,9 +131,13 @@ import NavBar from '@/components/nav-bar/index.vue';
 import Financial from './components/Financial.vue';
 import { accountApi } from '@/api'
 import { useI18n } from 'vue-i18n';
+import { useCart } from '@/hooks/cart';
+import { useCartStore } from '@/store/cart';
 const router = useRouter();
 const { t } = useI18n()
 
+const { initItems } = useCart()
+const cartStore = useCartStore()
 const allTotalPrice = ref(0);
 const orderStatusCards = ref([]);
 const logisticsStatusCards = ref([]);
@@ -211,6 +215,7 @@ const fetchAccountIndex = async () => {
   }
 };
 onMounted(() => {
+  initItems();
   fetchAccountIndex();
 });
 </script>
