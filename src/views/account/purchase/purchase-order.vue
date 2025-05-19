@@ -107,10 +107,13 @@
         </div>
       </div>
     </div>
-    <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px] text-[#212121]'>
+    <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px] text-[#212121]'
+       v-if="order.buy_order&&order.buy_order.length"
+      @click="() => router.push({ path: '/account/purchase/purchase-info', query: { id} })"
+    >
       <div>
         {{t('orderDetail.purchaseInfo')}} 
-        ：2/5
+        ：2/{{ order.buy_order.length }}
       </div>
       <i class="iconfont icon-Right"></i>
     </div>
