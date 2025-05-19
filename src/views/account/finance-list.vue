@@ -13,29 +13,56 @@
               <!-- 时间 -->
               <div class="flex items-center text-gray-500 text-sm mb-4">
                 <i class="iconfont icon-Time mr-2"></i>
-                <span>24.02.2017, 07:10</span>
+                <span>{{ item.add_time }}</span>
               </div>
               <!-- 资金单号 -->
               <div class="flex justify-between text-gray-700 text-base mb-2">
                 <span>资金单号</span>
-                <span>123456789125</span>
+                <span>{{ item.serial_no }}</span>
               </div>
               <!-- 消费类型 -->
               <div class="flex justify-between text-gray-700 text-base mb-2">
                 <span>消费类型</span>
-                <span>退款</span>
+                <span>{{ item.pay_type_str }}</span>
               </div>
               <!-- 关联订单号 -->
               <div class="flex justify-between text-gray-700 text-base mb-2">
                 <span>关联订单号</span>
-                <span>123456789125</span>
+                <span>{{ item.entity_no }}</span>
               </div>
-              <!-- 金额 -->
-              <div class="flex justify-between text-gray-700 text-base">
+              <!-- 消费记录 -->
+              <div class="flex justify-between text-gray-700 text-base" v-if="active === 0">
                 <span>金额</span>
-                <span class="text-blue-500 font-bold">USD $42456.56</span>
+                <template v-if="item.change_type === 5">
+                  <section v-if="item.entity_type === 6">
+                    
+                    <div class="text-blue-500 font-bold">-¥{{ item.rmb_money }}</div>
+                    <div class="text-blue-500 font-bold">+${{ item.usd_money }}</div>
+
+                  </section>
+                  <section v-else>
+
+                    <div class="text-blue-500 font-bold">-${{ item.usd_money }}</div>
+                    <div class="text-blue-500 font-bold">+¥{{ item.rmb_money }}</div>
+
+                  </section>
+                </template>
+                <template v-else>
+                  <div class="text-blue-500 font-bold">
+                    {{ item.change_type === 3 ? '+' : '-' }}
+                    {{ item.change_money ? `¥${item.change_money}` : '' }}
+                  </div>
+                </template>
               </div>
-            </div>
+               <!-- 充值记录 -->
+              <div class="flex justify-between text-gray-700 text-base" v-else>
+                <span>金额</span>
+                <div class="text-blue-500 font-bold">
+                  {{item.currency_type == 1 ? 'USD $' : 'CNY ￥'}}
+                  {{item.change_money}}
+                </div>
+              </div>
+            </div> 
           </van-list>
         </van-pull-refresh>
       </van-tab>
@@ -48,22 +75,30 @@
 import NavBar from '@/components/nav-bar/index.vue';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-const router = useRouter();
-
-const goBack = () => {
-  router.back();
-};
+import { useI18n } from 'vue-i18n';
+import { balanceApi } from '@/api';
+import { useRoute } from 'vue-router';
+const router = useRoute(); 
+console.log(router)
+const { t } = useI18n();
 const tabs = ref([
-  { title: '消费记录', id: 1 },
+  { title: '消费记录', id: 1, change_type_arr: [2, 3, 5] },
   { title: '充值记录', id: 2 },
 ]);
+const pagination = ref({
+  page: 1,
+  limit: 10,
+  total: 0,
+});
 const active = ref(0);
+active.value = Number(router.query.active) || 0;
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);
 const refreshing = ref(false);
 const onChange = (index: number) => {
-  console.log('onChange', index);
+  pagination.value.page = 1;
+  pagination.value.total = 0;
   active.value = index;
   finished.value = false;
   list.value = [];
@@ -71,18 +106,42 @@ const onChange = (index: number) => {
   onLoad();
 };
 const onLoad = () => {
-  setTimeout(() => {
+  setTimeout(async () => {
     if (refreshing.value) {
+      pagination.value.page = 1;
+      pagination.value.total = 0;
       list.value = [];
       refreshing.value = false;
     }
 
-    for (let i = 0; i < 10; i++) {
-      list.value.push(list.value.length + 1);
+    let params = {
+      page: pagination.value.page,
+      limit: pagination.value.limit,
+    };
+    let res = null
+    if (active.value === 1) {
+      params = {
+        ...params,
+      };
+      res = await balanceApi.getRechargeRecords(params);
+    } else if (active.value === 0) {
+      params = {
+        ...params,
+        change_type_arr: [2, 3, 5],
+      };
+      res = await balanceApi.getWithdrawRecords(params);
     }
+
+
+
+    if (res.code !== 1) return;
+    const { list: data = [], total = 0 } = res.data || {};
+    pagination.value.total = total;
+    list.value = [...list.value, ...data];
+    pagination.value.page += 1;
     loading.value = false;
 
-    if (list.value.length >= 30) {
+    if (list.value.length >= total) {
       finished.value = true;
     }
   }, 1000);
