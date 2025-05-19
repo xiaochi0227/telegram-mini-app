@@ -6,14 +6,17 @@
         <span>{{ item.name }}</span>
       </div>
     </div>
-    <div class="text-blue-500 text-4xl font-bold py-[2rem]" v-if='active != 2'>{{ tabs[active].value }} <span
-        class="text-xl">¥</span>
+    <div class="text-blue-500 text-4xl font-bold py-[2rem]" v-if='active != 2&&tabs[active].value'>
+      {{ tabs[active].value }} 
+      <span class="text-xl">¥</span>
     </div>
     <div class="py-[2rem]" v-else>
       <div class='flex justify-between items-center'>
         <div>可用授信</div>
-        <div class="font-bold text-[#004CE0] text-[40px]">{{ tabs[active].value }} <span
-            class="text-[#004CE0] pl-[6px] text-[24px]">¥</span></div>
+        <div class="font-bold text-[#004CE0] text-[40px]" v-if='tabs[active].value'>
+          {{ tabs[active].value }} 
+          <span class="text-[#004CE0] pl-[6px] text-[24px]">¥</span>
+        </div>
       </div>
       <div class='flex justify-between items-center pt-[48px]' v-if="false">
         <div>已用授信</div>

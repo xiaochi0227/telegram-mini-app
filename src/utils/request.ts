@@ -21,7 +21,7 @@ service.interceptors.request.use(
       config.headers['X-Telegram-Init-Data'] = initData;
     }
 
-    config.headers['Ba-User-Token'] = 'd2c51577-4de2-4339-a82d-90e2424aa893'
+    config.headers['Ba-User-Token'] = '2d5c5202-15d9-4a7f-b21c-3884920a0655'
 
     const locale = localStorage.getItem('locale') || 'russian'
 
