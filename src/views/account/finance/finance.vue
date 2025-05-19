@@ -43,7 +43,7 @@ import NavBar from '@/components/nav-bar/index.vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { balanceApi } from '@/api'
-import Financial from './components/Financial.vue';
+import Financial from '../components/Financial.vue';
 
 const router = useRouter();
 const { t } = useI18n()

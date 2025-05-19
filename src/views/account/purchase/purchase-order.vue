@@ -75,10 +75,37 @@
                 <p>{{ t('orderDetail.payType') }}</p>
                 <p class="text-[#212121]">{{ record.pay_type_str }}</p>
               </div>
+            </div>
+            <template v-if="order.consumption_record">
+              <template
+                v-for="(record, index) in order.consumption_record"
+                :key="index"
+              >
+                <div class="flex justify-between">
+                  <p>{{ t('orderDetail.addTime') }}</p>
+                  <p class="text-[#212121]">{{ record.add_time }}</p>
+                </div>
+                <div class="flex justify-between">
+                  <p>交易ID</p>
+                  <p class="text-[#212121]">{{ record.serial_no }}</p>
+                </div>
+                <div class="flex justify-between">
+                  <p>{{ t('orderDetail.changeMoney') }}</p>
+                  <p class="text-[#212121]">
+                    {{ record.currency_type == 1 ? 'USD' : 'CNY' }}
+                    &nbsp;
+                    {{ record.currency_type == 1 ? '$' : '￥' }}
+                    {{ record.change_money }}
+                  </p>
+                </div>
+                <div class="flex justify-between">
+                  <p>{{ t('orderDetail.payType') }}</p>
+                  <p class="text-[#212121]">{{ record.pay_type_str }}</p>
+                </div>
+              </template>
             </template>
-          </template>
+          </div>
         </div>
-      </div>
 
       <!-- 支付信息 -->
       <div class="bg-white rounded-[24px] shadow p-4" v-if="order.order_status != -1">
@@ -97,24 +124,25 @@
             <p class="text-[#212121]">￥{{ order.service_price }}</p>
           </div>
 
-          <div class="flex justify-between">
-            <p>{{ t('cart.inlandShipping') }}</p>
-            <p class="text-[#212121]">￥{{ order.inland_freight }}</p>
-          </div>
-          <div>
-            <div class="h-[2px] bg-[#f4f4f4] my-[32px]"></div>
-          </div>
-          <div class="flex justify-between text-[24px]">
-            <p>{{ t('checkout.rmbToRub') }}</p>
-            <p class="text-[#212121]">{{ order.rmb_to_rub_rate }}</p>
-          </div>
-          <div class="flex justify-between text-[24px]">
-            <p>{{ t('checkout.usdToRub') }}</p>
-            <p class="text-[#212121]">{{ order.rub_to_usd_rate }}</p>
-          </div>
-          <div class="flex justify-between text-[24px]">
-            <p>{{ t('checkout.usdToRmb') }}</p>
-            <p class="text-[#212121]">{{ order.rmb_to_usd_rate }}</p>
+            <div class="flex justify-between">
+              <p>{{ t('cart.inlandShipping') }}</p>
+              <p class="text-[#212121]">￥{{ order.inland_freight }}</p>
+            </div>
+            <div>
+              <div class="h-[2px] bg-[#f4f4f4] my-[32px]"></div>
+            </div>
+            <div class="flex justify-between text-[24px]">
+              <p>{{ t('checkout.rmbToRub') }}</p>
+              <p class="text-[#212121]">{{ order.rmb_to_rub_rate }}</p>
+            </div>
+            <div class="flex justify-between text-[24px]">
+              <p>{{ t('checkout.usdToRub') }}</p>
+              <p class="text-[#212121]">{{ order.rub_to_usd_rate }}</p>
+            </div>
+            <div class="flex justify-between text-[24px]">
+              <p>{{ t('checkout.usdToRmb') }}</p>
+              <p class="text-[#212121]">{{ order.rmb_to_usd_rate }}</p>
+            </div>
           </div>
         </div>
       </div>

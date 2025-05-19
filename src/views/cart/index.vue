@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col px-[32px] min-h-screen">
-    <div class="nav-header px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
+  <div class="flex flex-col h-full">
+    <div class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
       <nav-bar />
     </div>
 
     <van-skeleton title row="6" :loading="loading">
-      <div class="flex-1 overflow-y-auto">
+      <div class="flex-1 px-[32px] overflow-y-auto">
         <div
           class="mb-4 bg-white rounded-[24px] p-[32px]"
           v-if="cartStore.items.length"
@@ -87,7 +87,7 @@
       </div>
 
       <div
-        class="flex flex-col px-[20px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow"
+        class="flex flex-col mx-[32px] px-[20px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow"
       >
         <p class="text-[#515360] text-[28px]">
           已选择, {{ selectedRowKeys.length }} 件商品

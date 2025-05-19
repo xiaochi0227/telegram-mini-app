@@ -1,28 +1,26 @@
 <template>
-  <div class="account mx-[1rem]">
-    <div class="bg-white px-[20px]">
-      <div
-        class="border-b border-[#f4f4f4] flex justify-between items-center h-[100px]"
-      >
-        <nav-bar />
-        <div class="flex items-center space-x-2">
-          <van-badge :content="cartStore.totalItems">
-            <van-icon name="cart-o" size="28" color="#212121" />
-          </van-badge>
-
-          <van-image
-            round
-            width="32px"
-            height="32px"
-            src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
-          />
-          <div>
-            mike
-            <van-icon name="arrow-down" />
+  <div class="account px-[1rem] h-full overflow-y-auto">
+    <van-sticky>
+      <div class="bg-white px-[20px]">
+        <div
+          class="border-b border-[#f4f4f4] flex justify-between items-center h-[100px]"
+        >
+          <nav-bar />
+          <div class="flex items-center space-x-2">
+            <van-image
+              round
+              width="32px"
+              height="32px"
+              src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+            />
+            <div>
+              mike
+              <van-icon name="arrow-down" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </van-sticky>
     <div class="text-center mb-6 bg-white px-[20px] pb-[32px]">
       <div class="text-sm py-3 text-left">资金余额</div>
       <Financial />
@@ -47,7 +45,12 @@
       <h2 class="font-bold mb-2">进行中的采购订单</h2>
       <div class="grid grid-cols-2 gap-4">
         <template v-if="orderStatusCards.length">
-          <div class="order-status" v-for="(item, index) in orderStatusCards" :key="index" @click="goPath(item.path)">
+          <div
+            class="order-status"
+            v-for="(item, index) in orderStatusCards"
+            :key="index"
+            @click="goPath(item.path)"
+          >
             <div class="flex items-center justify-between">
               <i :class="`iconfont ${item.icon}`"></i>
               <div class="num">{{ item.count }}</div>
@@ -61,7 +64,12 @@
     <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
       <h2 class="font-bold mb-2">物流订单</h2>
       <div class="grid grid-cols-3 gap-4" v-if="logisticsStatusCards.length">
-        <div class="text-center logis-status" v-for="(item, index) in logisticsStatusCards" :key="index" @click="goPath(item.path)">
+        <div
+          class="text-center logis-status"
+          v-for="(item, index) in logisticsStatusCards"
+          :key="index"
+          @click="goPath(item.path)"
+        >
           <i :class="`iconfont ${item.icon}`"></i>
           <div class="mt-[28px]">{{ item.title }}</div>
         </div>
@@ -72,7 +80,10 @@
       </div>
     </div>
     <!-- Logistics Status -->
-    <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]" v-if="false">
+    <div
+      class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]"
+      v-if="false"
+    >
       <h2 class="font-bold mb-2">物流动态</h2>
       <div class="space-y-4">
         <div>
@@ -126,108 +137,107 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import NavBar from '@/components/nav-bar/index.vue';
-import Financial from './components/Financial.vue';
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import NavBar from '@/components/nav-bar/index.vue'
+import Financial from './components/Financial.vue'
 import { accountApi } from '@/api'
-import { useI18n } from 'vue-i18n';
-import { useCart } from '@/hooks/cart';
-import { useCartStore } from '@/store/cart';
-const router = useRouter();
+import { useI18n } from 'vue-i18n'
+const router = useRouter()
 const { t } = useI18n()
 
-const { initItems } = useCart()
-const cartStore = useCartStore()
-const allTotalPrice = ref(0);
-const orderStatusCards = ref([]);
-const logisticsStatusCards = ref([]);
+const allTotalPrice = ref(0)
+const orderStatusCards = ref([])
+const logisticsStatusCards = ref([])
 
 const ORDER_STATUS_MAP = [
   {
     key: 'inquiry_sheet_count',
     titleKey: 'accountCenter.inquiry',
     icon: 'icon-Enquiry',
-    path:'/account/inquiries?status=2'
+    path: '/account/inquiry?status=2',
   },
   {
     key: 'confirmation_count',
     titleKey: 'accountCenter.pendingConfirmation',
     icon: 'icon-Confirm',
-    path:'/account/purchase?status=1'
+    path: '/account/purchase?status=1',
   },
   {
     key: 'need_pay_count',
     titleKey: 'accountCenter.pendingPayment',
     icon: 'icon-Payment',
-    path:'/account/purchase?status=2'
+    path: '/account/purchase?status=2',
   },
   {
     key: 'buy_order_count',
     titleKey: 'accountCenter.procurement',
     icon: 'icon-Purchase',
-    path:'/account/purchase?status=4'
-  }
-];
+    path: '/account/purchase?status=4',
+  },
+]
 
 const LOGISTICS_STATUS_MAP = [
   {
     key: 'transit_count',
     titleKey: 'accountCenter.inTransit',
     icon: 'icon-Transport',
-    path:'/account/logistics?status=2'
+    path: '/account/logistics?status=2',
   },
   {
     key: 'allocation_count',
     titleKey: 'accountCenter.pendingAllocation',
     icon: 'icon-Sorting',
-    path:'/account/logistics?status=3'
+    path: '/account/logistics?status=3',
   },
   {
     key: 'signed_for_count',
     titleKey: 'accountCenter.signed',
     icon: 'icon-Time',
-    path:'/account/logistics?status=4'
-  }
-];
+    path: '/account/logistics?status=4',
+  },
+]
 
 const fetchAccountIndex = async () => {
   try {
-    const { data } = await accountApi.getAccountIndex();
+    const { data } = await accountApi.getAccountIndex()
 
     // Update all total price
-    allTotalPrice.value = data.all_total_price;
+    allTotalPrice.value = data.all_total_price
 
     // Update order status cards
-    orderStatusCards.value = ORDER_STATUS_MAP.map(item => ({
+    orderStatusCards.value = ORDER_STATUS_MAP.map((item) => ({
       title: t(item.titleKey),
       count: data[item.key] || 0,
       icon: item.icon,
-      path: item.path
-    }));
+      path: item.path,
+    }))
 
     // Update logistics status cards
-    logisticsStatusCards.value = LOGISTICS_STATUS_MAP.map(item => ({
+    logisticsStatusCards.value = LOGISTICS_STATUS_MAP.map((item) => ({
       title: t(item.titleKey),
       count: data[item.key] || 0,
       icon: item.icon,
-      path: item.path
-    }));
-    console.log('logisticsStatusCards', orderStatusCards.value, logisticsStatusCards.value);
+      path: item.path,
+    }))
+    console.log(
+      'logisticsStatusCards',
+      orderStatusCards.value,
+      logisticsStatusCards.value
+    )
   } catch (error) {
-    console.error('Failed to fetch account index:', error);
+    console.error('Failed to fetch account index:', error)
     // You might want to handle errors here, e.g., show a notification
   }
-};
+}
 
-const goPath = (path: string) =>{
+const goPath = (path: string) => {
   console.log('path', path)
-  router.push(path);
+  router.push(path)
 }
 onMounted(() => {
-  initItems();
-  fetchAccountIndex();
-});
+  fetchAccountIndex()
+})
 </script>
 
 <style scoped lang="scss">
