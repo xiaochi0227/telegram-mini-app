@@ -116,7 +116,7 @@
     </div>
     <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px] text-[#212121]' 
       v-if="order.address_data&&order.address_data.length"
-      @click="() => router.push({ path: '/account/logistics/purchase-ads', query: { id} })"
+      @click="() => router.push({ path: '/account/purchase/purchase-ads', query: { id} })"
     >
       <div>{{ t('orderDetail.adsInfo') }}</div>
       <i class="iconfont icon-Right"></i>
