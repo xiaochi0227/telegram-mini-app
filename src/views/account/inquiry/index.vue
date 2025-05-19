@@ -137,7 +137,7 @@ const onRefresh = async () => {
 }
 
 const handleDetail = (id) => {
-  router.push('/inquiry-detail?id=' + id)
+  router.push('/account/inquiry-detail?id=' + id)
 }
 
 // ... 其他代码

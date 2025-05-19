@@ -127,35 +127,35 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/inquiry',
+    path: '/account/inquiry',
     name: 'Inquiry',
-    component: () => import('../views/inquiry/index.vue'),
+    component: () => import('../views/account/inquiry/index.vue'),
     meta: {
       title: '我的询价'
     },
   },
   {
-    path: '/inquiry-detail',
+    path: '/account/inquiry-detail',
     name: 'InquiryDetail',
-    component: () => import('../views/inquiry/detail.vue'),
+    component: () => import('../views/account/inquiry/detail.vue'),
     meta: {
       title: '询价详情',
       showBack: true,
     },
   },
   {
-    path: '/goods-detail',
+    path: '/account/goods-detail',
     name: 'GoodsDetail',
-    component: () => import('../views/inquiry/goods-detail.vue'),
+    component: () => import('../views/account/inquiry/goods-detail.vue'),
     meta: {
       title: '商品详情',
       showBack: true,
     },
   },
   {
-    path: '/inquiry-info',
+    path: '/account/inquiry-info',
     name: 'InquiryInfo',
-    component: () => import('../views/inquiry/inquiry-info.vue'),
+    component: () => import('../views/account/inquiry/inquiry-info.vue'),
     meta: {
       title: '询价详情',
       showBack: true,
