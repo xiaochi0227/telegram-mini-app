@@ -230,6 +230,16 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/account/purchase/payment',
+    name: 'PurchaseOrderPayment',
+    component: () => import('../views/account/purchase/payment.vue'),
+    meta: {
+      title: '付尾款',
+      requiresAuth: false,
+      showBack:true,
+    },
+  },
+  {
     path: '/account/logistics',
     name: 'Logistics',
     component: () => import('../views/account/logistics/logistics.vue'),
