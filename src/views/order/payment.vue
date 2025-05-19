@@ -30,9 +30,29 @@
           </span>
         </div>
 
+        <div
+          class="flex flex-col my-[20px] px-[28px] py-[24px] rounded-[12px] bg-[#F4F4F4] text-[28px]"
+          v-if="is_insufficient"
+        >
+          <span class="text-[#ED2323]">人民币余额不足</span>
+
+          <span class="mt-1 text-[#FF356D] underline" @click="handleExcharge">
+            使用美元兑换人民币
+          </span>
+        </div>
+
         <!-- 如何充值按钮 -->
-        <div class="flex justify-end">
-          <span class="text-[#0066CC] underline text-[28px]" @click="handleRecharge">如何充值？</span>
+        <div class="flex justify-end items-center">
+          <span class="mr-4 text-[#FF356D] underline text-[28px]" v-if="!hasPayPassword">
+            设置支付密码
+          </span>
+
+          <span
+            class="text-[#0066CC] underline text-[28px]"
+            @click="handleRecharge"
+          >
+            如何充值？
+          </span>
         </div>
       </div>
 
@@ -69,13 +89,11 @@ const router = useRouter()
 const decryptedData = ref({})
 const hasPayPassword = ref(false)
 const balanceInfo = ref({})
-// 欠费
-const is_arrears_of_fees = ref(false)
 // 余额不足
 const is_insufficient = ref(false)
 const btnLoading = ref(false)
 
-const { setProducts, setAddressList } = useOrderStore()
+const { setProducts, setAddressList, setBalance } = useOrderStore()
 
 // 剩余时间
 const calculateRemaining = computed(() => {
@@ -117,9 +135,8 @@ const getPendingPayment = async () => {
   const { total_price, rmb_balance } = balance_info
 
   balanceInfo.value = balance_info
+  setBalance(balance_info)
   if (total_price && rmb_balance) {
-    // 欠费
-    is_arrears_of_fees.value = +rmb_balance < 0
     // 余额不足
     is_insufficient.value = +rmb_balance < +total_price
   }
@@ -142,6 +159,11 @@ const getPurchaseOrderDetail = async () => {
 
   setProducts(item_data)
   setAddressList(address_data)
+}
+
+// 换汇
+const handleExcharge = () => {
+  router.push('/excharge')
 }
 
 // 充值页面

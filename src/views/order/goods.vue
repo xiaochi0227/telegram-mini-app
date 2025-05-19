@@ -20,9 +20,9 @@
         >
           <div class="flex justify-between items-center text-[28px] font-[600]">
             <span>{{ item.product_name }}</span>
-            <span class="text-[#004CE0]"
-              >CNY ¥{{ item.total_product_price }}</span
-            >
+            <span class="text-[#004CE0]">
+              CNY ¥{{ item.total_product_price }}
+            </span>
           </div>
 
           <div
@@ -67,7 +67,6 @@
 
 <script setup lang="ts">
 import NavBar from '@/components/nav-bar/index.vue'
-import { Image as VanImage } from 'vant'
 import { useOrderStore } from '@/store/order'
 import { useI18n } from '../../hooks/useI18n'
 import { useRoute } from 'vue-router'

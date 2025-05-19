@@ -25,7 +25,7 @@
           size="large"
           native-type="submit"
         >
-          {{ t('checkout.submitOrder') }}
+          {{ t('resetPassword.confirm') }}
         </van-button>
       </van-form>
     </div>

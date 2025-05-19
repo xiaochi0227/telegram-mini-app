@@ -38,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/goods',
-    name: 'Goods',
+    name: 'OrderGoods',
     component: () => import('../views/order/goods.vue'),
     meta: {
       title: '商品信息',
@@ -96,6 +96,15 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/order/payment.vue'),
     meta: {
       title: '支付',
+      showBack: true,
+    },
+  },
+  {
+    path: '/excharge',
+    name: 'Excharge',
+    component: () => import('../views/order/excharge.vue'),
+    meta: {
+      title: '换汇',
       showBack: true,
     },
   },
@@ -177,16 +186,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/account/pay-password.vue'),
     meta: {
       title: '设置支付密码',
-      requiresAuth: false,
-      showback:true,
-    },
-  },
-  {
-    path: '/account/finance/recharge',
-    name: 'Recharge',
-    component: () => import('../views/account/recharge.vue'),
-    meta: {
-      title: '充值',
       requiresAuth: false,
       showback:true,
     },

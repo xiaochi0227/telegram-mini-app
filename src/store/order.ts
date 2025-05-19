@@ -14,6 +14,7 @@ export const useOrderStore = defineStore('order', {
   state: () => ({
     addresses: [] as Address[],
     products: [] as Product[],
+    balance: {}
   }),
 
   actions: {
@@ -23,6 +24,10 @@ export const useOrderStore = defineStore('order', {
 		},
 		setProducts(products: Product[]) {
 			this.products = products
-		}
+		},
+    // 资金余额
+    setBalance(balanceInfo: any) {
+      this.balance = balanceInfo
+    }
   },
 }); 
