@@ -22,7 +22,7 @@
         :name="item.name"
         :to="item.path"
       >
-        <template #icon="props">
+        <template #icon>
           <i
             class="iconfont"
             :class="item.icon"
@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { useAppStore } from './store'
 import { useRoute } from 'vue-router'
 

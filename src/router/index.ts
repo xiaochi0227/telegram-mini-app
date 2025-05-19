@@ -12,6 +12,15 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/inquiry',
+    name: 'Inquiry',
+    component: () => import('../views/inquiry/index.vue'),
+    meta: {
+      title: '询价',
+      active: 'inquiry'
+    },
+  },
+  {
     path: '/account/center',
     name: 'Account',
     component: () => import('../views/account/account.vue'),
@@ -130,7 +139,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/account/inquiry',
-    name: 'Inquiry',
+    name: 'AccountInquiry',
     component: () => import('../views/account/inquiry/index.vue'),
     meta: {
       title: '我的询价',

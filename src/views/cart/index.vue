@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-full">
-    <div class="nav-header mx-[32[x]] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
+    <div class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
       <nav-bar />
     </div>
 
