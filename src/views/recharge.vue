@@ -10,7 +10,7 @@
     >
       <p class="text-[24px] text-[#515360]">{{ t('recharge.description') }}</p>
 
-      <p class="text-center text-[#FF356D] text-[28px]">
+      <p class="text-center text-[#FF356D] text-[28px]" @click="makePhoneCall(t('recharge.phoneNumber'))">
         <i class="iconfont icon-Phone text"></i>&nbsp;
         {{ t('recharge.phone') }}：{{ t('recharge.phoneNumber') }}
       </p>
@@ -32,8 +32,14 @@
 <script setup lang="ts">
 import NavBar from '@/components/nav-bar/index.vue'
 import { useI18n } from 'vue-i18n'
-
 const { t } = useI18n()
+interface PhoneCall {
+  phoneNumber: string;
+}
+
+const makePhoneCall = (phoneNumber: PhoneCall['phoneNumber']): void => {
+  window.location.href = `tel:${phoneNumber}`;
+};
 </script>
 <style lang="scss" scoped>
 .iconfont {

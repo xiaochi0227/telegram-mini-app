@@ -314,6 +314,26 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/userAgreement',
+    name: 'UserAgreement',
+    component: () => import('../views/userAgreement.vue'),
+    meta: {
+      title: 'login.agreementLink',
+      requiresAuth: false,
+      showBack: true,
+    },
+  },
+  {
+    path: '/privacyPolicy',
+    name: 'PrivacyPolicy',
+    component: () => import('../views/PrivacyPolicy.vue'),
+    meta: {
+      title: 'login.privacyLink',
+      requiresAuth: false,
+      showBack: true,
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFound.vue'),

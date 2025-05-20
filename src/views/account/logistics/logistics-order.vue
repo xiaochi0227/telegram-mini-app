@@ -67,8 +67,7 @@
       <i class="iconfont icon-Right"></i>
     </div>
 
-    <div
-      @click="getBillImage"
+    <div @click="getBillImage"
       class="fixed flex  bottom-0 inset-x-[32px] justify-between items-center bg-white rounded-t-[24px] mt-[24px]  shadow-[0_-2px_5px_0_#DBDBDB] h-[164px] px-[20px]">
       <div
         class="border border-[#FF356D] flex items-center justify-center text-[#FF356D] w-full h-[80px] rounded-[24px]">
