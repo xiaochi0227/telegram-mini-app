@@ -18,7 +18,7 @@
         />
       </template>
       <span
-        class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px] leading-[32px]"
+        class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px]"
       >
         {{ navTitle }}
       </span>

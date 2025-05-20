@@ -72,6 +72,26 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/account/info',
+    name: 'AccountInfo',
+    component: () => import('../views/account/info/index.vue'),
+    meta: {
+      title: '账户信息',
+      showBack: true,
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/account/change',
+    name: 'AccountChange',
+    component: () => import('../views/account/change/index.vue'),
+    meta: {
+      title: '切换账号',
+      showBack: true,
+      requiresAuth: true
+    },
+  },
+  {
     path: '/cart',
     name: 'Cart',
     component: () => import('../views/cart/index.vue'),

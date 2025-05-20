@@ -6,7 +6,7 @@
           class="border-b border-[#f4f4f4] flex justify-between items-center h-[100px]"
         >
           <nav-bar />
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center space-x-2" @click="goPath('/account/info')">
             <van-image
               round
               width="32px"
@@ -237,6 +237,7 @@ const fetchAccountIndex = async () => {
 const goPath = (path: string) => {
   router.push(path)
 }
+
 onMounted(async () => {
   await fetchAccountIndex()
   isLoading.value = false

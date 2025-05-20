@@ -89,6 +89,8 @@
   --van-tabbar-item-font-size: 40px !important;
 
   --van-field-icon-size: 38px !important;
+
+  --van-tag-line-height: 40px !important;
 }
 
 a {
