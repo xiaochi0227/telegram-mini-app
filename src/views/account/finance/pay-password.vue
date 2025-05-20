@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-[1rem]">
+  <div class="mx-[1rem]" v-loading="isLoading">
     <div class=" bg-white px-[20px] mb-[24px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
@@ -8,8 +8,8 @@
     <PasswordInput v-model="password" @complete="handleComplete" :title="currentTitle"
       :error="error" :errorMessage="errorMessage" ref="pwsInput" v-if="!success" />
     <div class="flex justify-center items-center bg-white rounded-[24px] h-[400px] mt-[24px] flex-col" v-if="success">
-      <div class="w-[100px] h-[100px] rounded-full bg-[#FF356D]"></div>
-      <div class="text-[#212121] text-[40px] font-bold mt-[80px]">{{ successText }}</div>
+      <van-icon name="passed" size="64px"  color="#FF356D"/>
+      <div class="text-[#212121] text-[40px] font-bold mt-[40px]">{{ successText }}</div>
     </div>
   </div>
 </template>
@@ -19,8 +19,11 @@ import NavBar from '@/components/nav-bar/index.vue';
 import PasswordInput from '@/components/PasswordInput/index.vue';
 import { ref, computed } from 'vue';
 import { balanceApi } from '@/api'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const pwsInput = ref<InstanceType<typeof PasswordInput> | null>(null);
+const isLoading = ref(true)
 const hasPayPassword = ref(false);
 const success = ref(false);
 const password = ref('');
@@ -33,13 +36,13 @@ const newPassword = ref('');
 const confirm_password = ref('');
 
 const titles = {
-  setPassword: ['设置支付密码', '确认密码'],
-  changePassword: ['当前密码', '新密码', '确认密码']
+  setPassword: [t('finance.payPassword'), t('profile.confirmPassword')],
+  changePassword:[ t('profile.currentPassword'), t('profile.newPassword'),  t('profile.confirmPassword')]
 };
 
 const successTexts = {
-  setPassword: '设置成功',
-  changePassword: '修改成功'
+  setPassword:t('finance.setSuccess'),
+  changePassword: t('profile.passwordSuccess')
 };
 
 const currentTitle = computed(() => {
@@ -55,6 +58,7 @@ const getHasPayPassword = async () => {
   try {
     const res = await balanceApi.hasPayPassword();
     hasPayPassword.value = res.data || false;
+    isLoading.value = false
   } catch (err) {
     console.error('errorerror', err);
     // Handle error appropriately
@@ -86,7 +90,7 @@ const handlePasswordChangeFlow = async (value: string) => {
     case 3:
       if (value !== newPassword.value) {
         error.value = true;
-        errorMessage.value = '两次输入的密码不一致';
+        errorMessage.value = t('resetPassword.passwordNotMatch');
         pwsInput.value?.clearPassword();
       } else {
         // All steps completed, ready to submit
@@ -117,7 +121,7 @@ const handleNewPasswordFlow = async (value: string) => {
     case 2:
       if (value !== newPassword.value) {
         error.value = true;
-        errorMessage.value = '两次输入的密码不一致';
+        errorMessage.value =  t('resetPassword.passwordNotMatch');
         pwsInput.value?.clearPassword();
       } else {
         // Ready to submit new password

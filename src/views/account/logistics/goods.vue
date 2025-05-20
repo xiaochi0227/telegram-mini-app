@@ -1,11 +1,11 @@
 <template>
-  <div class="mx-[1rem]  text-[28px]">
+  <div class="mx-[1rem] flex flex-col h-full text-[28px]" v-loading="isLoading">
     <div class=" bg-white px-[20px] mb-[24px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
       </div>
     </div>
-    <div class="space-y-4 bg-white shadow-[0_1px_3px_0_rgba(184,184,184,0.25)] rounded-[24px] py-[32px] px-[20px]">
+    <div class="flex-1 overflow-y-auto space-y-4 bg-white shadow-[0_1px_3px_0_rgba(184,184,184,0.25)] rounded-[24px] py-[32px] px-[20px]">
       <!-- 商品卡片 -->
       <div class="rounded-[16px] p-[20px] flex items-center text-[#212121] border border-[#E7E7E9]"
         v-for="(item, index) in order.wh_out_receipt_item" :key="index">
@@ -50,11 +50,24 @@ const route = useRoute();
 const { t } = useI18n()
 
 const id = route.query.id
-const order = ref({});
+const isLoading = ref(true);
+interface Order {
+  wh_out_receipt_item: {
+    images: string[];
+    product_name: string;
+    product_num: number;
+    package_num: number;
+  }[];
+}
+
+const order = ref<Order>({
+  wh_out_receipt_item: [],
+});
 
 const getOrderDetail = async () => {
-  const res = (await logisticsApi.getLogisticsDetail({ id }))
+  const res = (await logisticsApi.getLogisticsDetail({ id })) as { data: Order };
   order.value = res.data || {};
+  isLoading.value = false;
 };
 getOrderDetail()
 

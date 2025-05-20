@@ -7,15 +7,16 @@
       </div>
     </div>
     <div class="text-blue-500 text-4xl font-bold py-[2rem]" v-if='active != 2&&tabs[active].value'>
+      <span class="text-xl" v-if="active==0">$</span>
+      <span class="text-xl" v-else-if="active==1">¥</span>
       {{ tabs[active].value }} 
-      <span class="text-xl">¥</span>
     </div>
     <div class="py-[2rem]" v-else>
       <div class='flex justify-between items-center'>
         <div>{{ t('finance.availableCredit') }}</div>
         <div class="font-bold text-[#004CE0] text-[40px]" v-if='tabs[active].value'>
-          {{ tabs[active].value }} 
           <span class="text-[#004CE0] pl-[6px] text-[24px]">¥</span>
+          {{ tabs[active].value }} 
         </div>
       </div>
       <!-- <div class='flex justify-between items-center pt-[48px]' v-if="false">

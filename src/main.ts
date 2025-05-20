@@ -6,7 +6,7 @@ import App from './App.vue'
 import router from './router'
 import * as Vant from './plugins/vant'
 import i18n from './plugins/i18n'
-
+import loadingDirective, { showGlobalLoading, hideGlobalLoading } from './directives/loading'
 // 动态设置根字体大小
 function setRootFontSize() {
    const baseSize = 32 // 基础值，设计稿宽度为 375px 时的 rootValue
@@ -36,7 +36,9 @@ Object.values(Vant).forEach(component => {
   }
 })
 
-console.log('i18n:', i18n)
+// 注册指令
+app.directive('loading', loadingDirective)
+
 
 // 使用路由、状态管理和国际化
 app.use(router)
