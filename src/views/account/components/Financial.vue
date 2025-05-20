@@ -18,11 +18,11 @@
           <span class="text-[#004CE0] pl-[6px] text-[24px]">¥</span>
         </div>
       </div>
-      <div class='flex justify-between items-center pt-[48px]' v-if="false">
+      <!-- <div class='flex justify-between items-center pt-[48px]' v-if="false">
         <div>已用授信</div>
         <div class="font-bold text-[#004CE0] text-[40px]">456246.00<span
             class="text-[#004CE0] pl-[10px] text-[24px]">¥</span></div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

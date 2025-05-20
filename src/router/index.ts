@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
-
+import i18n from '../plugins/i18n';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Account',
     component: () => import('../views/account/account.vue'),
     meta: {
-      title: '账户中心',
+      title: 'nav.account',
       active: 'user'
     },
   },
@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Cart',
     component: () => import('../views/cart/index.vue'),
     meta: {
-      title: '购物车',
+      title: 'cart.title',
       active: 'cart'
     },
   },
@@ -43,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Shipping',
     component: () => import('../views/order/shipping.vue'),
     meta: {
-      title: '确认运输要求',
+      title: 'cart.confirmShipping',
       showBack: true,
     },
   },
@@ -61,7 +61,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Address',
     component: () => import('../views/order/address.vue'),
     meta: {
-      title: '地址信息',
+      title: 'orderDetail.adsInfo',
       showBack: true,
     },
   },
@@ -79,7 +79,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'EditAddress',
     component: () => import('../views/address/edit-address.vue'),
     meta: {
-      title: '编辑地址',
+      title: 'address.edit',
       showBack: true
     },
   },
@@ -88,7 +88,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Memo',
     component: () => import('../views/address/memo.vue'),
     meta: {
-      title: '包装与配送要求',
+      title: 'checkout.packagingRequirements',
       showBack: true
     },
   },
@@ -97,7 +97,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Confirm',
     component: () => import('../views/order/confirm.vue'),
     meta: {
-      title: '订单确认',
+      title: 'cart.confirmOrder',
       showBack: true,
     },
   },
@@ -106,7 +106,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Payment',
     component: () => import('../views/order/payment.vue'),
     meta: {
-      title: '支付',
+      title: 'cart.payment',
       showBack: true,
     },
   },
@@ -115,7 +115,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Excharge',
     component: () => import('../views/order/excharge.vue'),
     meta: {
-      title: '换汇',
+      title: 'payment.exchange',
       showBack: true,
     },
   },
@@ -124,7 +124,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Complete',
     component: () => import('../views/order/complete.vue'),
     meta: {
-      title: '支付成功',
+      title: 'checkout.paymentSuccess',
       showBack: true,
     },
   },
@@ -133,7 +133,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Recharge',
     component: () => import('../views/recharge.vue'),
     meta: {
-      title: '充值',
+      title: 'accountCenter.recharge',
       showBack: true,
     },
   },
@@ -142,7 +142,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'AccountInquiry',
     component: () => import('../views/account/inquiry/index.vue'),
     meta: {
-      title: '我的询价',
+      title: 'menu.inquiries',
       active: 'user'
     },
   },
@@ -151,7 +151,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'InquiryDetail',
     component: () => import('../views/account/inquiry/detail.vue'),
     meta: {
-      title: '询价详情',
+      title: 'myInquiries.inquiry_details',
       showBack: true,
     },
   },
@@ -169,7 +169,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'InquiryInfo',
     component: () => import('../views/account/inquiry/inquiry-info.vue'),
     meta: {
-      title: '询价详情',
+      title: 'myInquiries.inquiry_details',
       showBack: true,
     },
   },
@@ -178,7 +178,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Finance',
     component: () => import('../views/account/finance/finance.vue'),
     meta: {
-      title: '资金管理',
+      title: 'menu.finance',
       requiresAuth: false,
       active: 'user'
     },
@@ -188,7 +188,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'FinanceList',
     component: () => import('../views/account/finance/finance-list.vue'),
     meta: {
-      title: '资金明细',
+      title: 'accountCenter.fundDetail',
       requiresAuth: false,
       showBack: true
     },
@@ -198,7 +198,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PayPassword',
     component: () => import('../views/account/finance/pay-password.vue'),
     meta: {
-      title: '设置支付密码',
+      title: 'finance.payPassword',
       requiresAuth: false,
       showBack: true
     },
@@ -208,7 +208,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Purchase',
     component: () => import('../views/account/purchase/purchase.vue'),
     meta: {
-      title: '采购订单',
+      title: 'menu.orders',
       requiresAuth: false,
       active: 'user'
     },
@@ -228,7 +228,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseInfo',
     component: () => import('../views/account/purchase/purchase-info.vue'),
     meta: {
-      title: '采购信息',
+      title: 'orderDetail.purchaseInfo',
       requiresAuth: false,
       showBack: true,
     },
@@ -238,7 +238,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseAds',
     component: () => import('../views/account/purchase/purchase-ads.vue'),
     meta: {
-      title: '地址信息',
+      title: 'orderDetail.adsInfo',
       requiresAuth: false,
       showBack: true,
     },
@@ -258,7 +258,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseGoods',
     component: () => import('../views/account/purchase/goods.vue'),
     meta: {
-      title: '采购商品',
+      title: 'cart.procurement',
       requiresAuth: false,
       showBack:true,
     },
@@ -268,7 +268,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseOrderPayment',
     component: () => import('../views/account/purchase/payment.vue'),
     meta: {
-      title: '付尾款',
+      title: 'rder.payEndMoney',
       requiresAuth: false,
       showBack: true,
     },
@@ -278,7 +278,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Logistics',
     component: () => import('../views/account/logistics/logistics.vue'),
     meta: {
-      title: '物流订单',
+      title: 'menu.logistics',
       requiresAuth: false,
       active: 'user'
     },
@@ -298,7 +298,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'LogisticsDetail',
     component: () => import('../views/account/logistics/logistics-detail.vue'),
     meta: {
-      title: '物流详情',
+      title: 'logistics.orderDetail',
       requiresAuth: false,
       showBack: true,
     },
@@ -308,7 +308,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'LogisticsGoods',
     component: () => import('../views/account/logistics/goods.vue'),
     meta: {
-      title: '运输商品',
+      title: 'logistics.orderGoods',
       requiresAuth: false,
       showBack: true,
     },
@@ -331,6 +331,7 @@ const router = createRouter({
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
+  to.meta.title = i18n.global.t(to.meta.title as string) || to.meta.title;
   // 设置页面标题
   document.title = `${to.meta.title} - Telegram Mini App`;
 
