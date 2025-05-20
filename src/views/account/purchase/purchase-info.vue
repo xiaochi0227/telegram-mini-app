@@ -8,8 +8,8 @@
 
     <div class="bg-white rounded-2xl shadow p-4 mt-[24px]" v-for="(item, index) in order.buy_order" :key="index">
       <div class="flex justify-between items-center">
-        <p class="text-lg font-bold">{{ item.product_name }}</p>
-        <p class="text-[#FF356D] text-sm">{{ item.status_str }}</p>
+        <p class="font-bold">{{ item.product_name }}</p>
+        <p :class="`text-[${item.is_exception?'#ED2323':'#FF356D'}] text-[24px]`">{{ item.status_str }}</p>
       </div>
       <p class="text-sm text-gray-500 mt-2">
         {{ t('orderDetail.updateTime') }}:
@@ -29,7 +29,7 @@
           }}
         </template>
       </p>
-      <p class="text-[24px] text-[##ED2323] mt-2" v-if="item.is_exception">
+      <p class="text-[24px] text-[#ED2323] mt-2" v-if="item.is_exception">
         {{ item.exception_str }} {{ item.exception_memo }}
       </p>
       <div class="mt-4 bg-gray-100 rounded-lg px-[24px] flex items-center" v-if="item.is_exception"
@@ -86,7 +86,7 @@ getOrderDetail()
 }
 
 .icon-Right {
-  font-size: 64px;
+  font-size: 54px;
   color: #515360;
 }
 </style>

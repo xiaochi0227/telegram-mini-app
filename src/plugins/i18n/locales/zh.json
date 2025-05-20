@@ -212,6 +212,7 @@
 	"finance.payPassword": "设置支付密码",
 	"finance.modifyPayPassword": "修改支付密码",
 	"finance.availableCredit": "可用授信",
+	"finance.credit": "授信",
 	"finance.consumptionRecord": "消费记录",
 	"finance.all": "全部",
 	"finance.rechargeRecord": "充值记录",

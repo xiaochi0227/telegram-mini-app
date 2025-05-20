@@ -22,27 +22,27 @@
       </div>
     </van-sticky>
     <div class="text-center mb-6 bg-white px-[20px] pb-[32px]">
-      <div class="text-sm py-3 text-left">资金余额</div>
+      <div class="text-sm py-3 text-left">{{ t('accountCenter.balance') }}</div>
       <Financial />
       <div class="flex justify-center space-x-4">
         <button
-          class="bg-[#FF356D] text-white px-6 py-2 rounded-[12px] w-[240px] h-[72px]"
+          class="bg-[#FF356D] text-white px-[6px] py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
           @click="() => router.push('/recharge')"
         >
-          充值
+        {{ t('accountCenter.recharge') }}
         </button>
         <button
-          class="border border-[#E7E7E9] bg-white text-[#212121] px-6 py-2 rounded-[12px] w-[240px] h-[72px]"
+          class="border border-[#E7E7E9] bg-white text-[#212121] px-[6px]py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
           @click="() => router.push('/account/finance/operation-records')"
         >
-          资金明细
+          {{ t('accountCenter.fundDetail') }}
         </button>
       </div>
     </div>
 
     <!-- Orders Section -->
     <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
-      <h2 class="font-bold mb-2">进行中的采购订单</h2>
+      <h2 class="font-bold mb-2">{{ t('accountCenter.purchaseOrder') }}</h2>
       <div class="grid grid-cols-2 gap-4">
         <template v-if="orderStatusCards.length">
           <div
@@ -55,14 +55,14 @@
               <i :class="`iconfont ${item.icon}`"></i>
               <div class="num">{{ item.count }}</div>
             </div>
-            <div class="pt-[16px]">{{ item.title }}</div>
+            <div class="pt-[16px] text-[24px]">{{ item.title }}</div>
           </div>
         </template>
       </div>
     </div>
     <!-- Logistics Section -->
     <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
-      <h2 class="font-bold mb-2">物流订单</h2>
+      <h2 class="font-bold mb-2">{{ t('accountCenter.logistics') }}</h2>
       <div class="grid grid-cols-3 gap-4" v-if="logisticsStatusCards.length">
         <div
           class="text-center logis-status"
@@ -71,16 +71,16 @@
           @click="goPath(item.path)"
         >
           <i :class="`iconfont ${item.icon}`"></i>
-          <div class="mt-[28px]">{{ item.title }}</div>
+          <div class="mt-[28px] text-[24px]">{{ item.title }}</div>
         </div>
       </div>
-      <div class="font-bold mt-[40px]">待支付的物流费</div>
-      <div class="text-center mt-[16px] text-[#004CE0] font-bold">
-        $ 42456.56
+      <div class="font-bold mt-[40px]">{{ t('accountCenter.logisticsPaid') }}</div>
+      <div class="text-center mt-[16px] text-[#004CE0] font-bold text-[32px]">
+        $ {{ allTotalPrice }}
       </div>
     </div>
     <!-- Logistics Status -->
-    <div
+    <!--div
       class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]"
       v-if="false"
     >
@@ -111,13 +111,13 @@
           </div>
         </div>
       </div>
-    </div>
+    </div-->
 
     <!-- Contact Section -->
     <div
       class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px] contact"
     >
-      <h2 class="font-bold mb-2">联系我们</h2>
+      <h2 class="font-bold mb-2">{{ t('nav.contact') }}</h2>
       <div class="flex justify-around items-center">
         <div class="text-center">
           <i class="iconfont icon-telegram text-[#28A7E7]"></i>

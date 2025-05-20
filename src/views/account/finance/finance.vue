@@ -6,31 +6,30 @@
       </div>
     </div>
     <div class="text-center mb-6 bg-white px-[20px] pb-[40px] rounded-b-[24px]">
-      <div class=" font-bold py-3 text-left">资金余额</div>
+      <div class=" font-bold py-3 text-left">{{ t('accountCenter.balance') }}</div>
       <Financial />
       <div class="flex justify-center space-x-4">
-        <button class="bg-[#FF356D] text-white px-6 py-2 rounded-[12px] w-[260px] h-[72px] text-[24px]"
-          @click="() => router.push('/recharge')"
-        >
-          充值
+        <button class="bg-[#FF356D] text-white px-[2px] py-[4px] rounded-[12px] w-[300px] h-[80px] text-[24px]"
+          @click="() => router.push('/recharge')">
+          {{ t('accountCenter.recharge') }}
         </button>
-        <button class="border border-[#E7E7E9] bg-white text-[#212121] px-6 py-2 rounded-[12px] w-[260px] h-[72px] text-[24px]"
-          @click="() => router.push('/account/finance/pay-password')"
-        >
-          修改支付密码
+        <button
+          class="border border-[#E7E7E9] bg-white text-[#212121] px-[2px] py-[4px] rounded-[12px] w-[300px] h-[80px] text-[24px]"
+          @click="() => router.push('/account/finance/pay-password')">
+          {{ t('finance.payPassword') }}
         </button>
       </div>
     </div>
 
     <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]'
       @click="(() => router.push('/account/finance/operation-records?active=0'))">
-      <div>消费记录</div>
+      <div>{{ t('finance.consumptionRecord') }}</div>
       <i class="iconfont icon-Right"></i>
     </div>
 
     <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]'
       @click="(() => router.push('/account/finance/operation-records?active=1'))">
-      <div>充值记录</div>
+      <div>{{ t('finance.rechargeRecord') }}</div>
       <i class="iconfont icon-Right"></i>
     </div>
 

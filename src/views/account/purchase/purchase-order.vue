@@ -8,6 +8,9 @@
     <div class="space-y-4 text-[28px]">
       <!-- 发货单信息 -->
       <div class="bg-white rounded-[24px] shadow p-4">
+        <div class="mb-[20px]">
+          <span class="bg-orange-100 text-orange-500 text-sm px-2 py-1 rounded">{{ order.order_status_str }}</span>
+        </div>
         <div class="flex justify-between items-center">
           <div>
             <p class="text-sm text-gray-500">
@@ -15,9 +18,7 @@
             </p>
             <p class="text-lg font-bold text-[#212121]">{{ order.order_no }}</p>
           </div>
-          <div class="text-right">
-            <span class="bg-orange-100 text-orange-500 text-sm px-2 py-1 rounded">{{ order.order_status_str }}</span>
-          </div>
+
         </div>
         <div class="mt-4 flex justify-between items-center">
           <p>{{ t('order.orderTime') }}:</p>
