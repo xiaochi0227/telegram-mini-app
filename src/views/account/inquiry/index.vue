@@ -25,7 +25,7 @@
       </div>
     </van-sticky>
 
-    <div class="px-[32px] overflow-y-auto">
+    <div class="scroll-container px-[32px] overflow-y-auto">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
@@ -63,11 +63,14 @@
         </van-list>
       </van-pull-refresh>
     </div>
+
+    <back-top />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
+import BackTop from '@/components/back-top/index.vue'
 import NavBar from '@/components/nav-bar/index.vue'
 import { inquiryApi } from '@/api'
 import { useI18n } from 'vue-i18n'
