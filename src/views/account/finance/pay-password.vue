@@ -5,7 +5,7 @@
         <nav-bar />
       </div>
     </div>
-    <PasswordInput v-model="password" @complete="handleComplete" @submit="handleSubmit" :title="currentTitle"
+    <PasswordInput v-model="password" @complete="handleComplete" :title="currentTitle"
       :error="error" :errorMessage="errorMessage" ref="pwsInput" v-if="!success" />
     <div class="flex justify-center items-center bg-white rounded-[24px] h-[400px] mt-[24px] flex-col" v-if="success">
       <div class="w-[100px] h-[100px] rounded-full bg-[#FF356D]"></div>
