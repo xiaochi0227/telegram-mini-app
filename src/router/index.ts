@@ -17,7 +17,28 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/inquiry/index.vue'),
     meta: {
       title: '询价',
-      active: 'inquiry'
+      active: 'inquiry',
+      keepAlive: true
+    },
+  },
+  {
+    path: '/goods-picture',
+    name: 'GoodsPicture',
+    component: () => import('../views/inquiry/goods-picture.vue'),
+    meta: {
+      title: '商品图片',
+      active: 'inquiry',
+      showBack: true,
+    },
+  },
+  {
+    path: '/inquiry-success',
+    name: 'InquirySuccess',
+    component: () => import('../views/inquiry/success.vue'),
+    meta: {
+      title: '询价成功',
+      active: 'inquiry',
+      showBack: true,
     },
   },
   {
