@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-[1rem]  text-[28px]">
+  <div class="mx-[32px]  text-[28px]" v-loading="isLoading">
     <div class=" bg-white px-[20px] mb-[24px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
@@ -50,11 +50,13 @@ const route = useRoute();
 const { t } = useI18n()
 
 const id = route.query.id
+const isLoading = ref(true);
 const order = ref({});
 
 const getOrderDetail = async () => {
   const res = (await orderApi.getPaidOrderDetail(id))
   order.value = res.data || {};
+  isLoading.value = false;
 };
 getOrderDetail()
 

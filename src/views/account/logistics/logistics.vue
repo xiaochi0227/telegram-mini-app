@@ -28,7 +28,7 @@
           <div
             class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]"
             v-for="item in list"
-            :key="item"
+            :key="item.id"
             @click="handleDetail(item.id)"
           >
             <!-- 顶部信息 -->
@@ -112,14 +112,25 @@ const defaultIdx = ref(0)
 const result = ref(t('order.allOrders'))
 const showPicker = ref(false)
 
-const list = ref([])
+interface LogisticsItem {
+  id: number;
+  tracking_no: string;
+  tracking_status_str: string;
+  total_price: number;
+  tracking_status: number;
+  estimated_time?: string;
+  allocation_time?: string;
+  signed_for_time?: string;
+}
+
+const list = ref<LogisticsItem[]>([])
 const loading = ref(false)
 const finished = ref(false)
 const finishedText = ref('没有更多了')
 const refreshing = ref(false)
 const isEmpty = ref(false)
 const status = ref('')
-status.value = route.query.status || ''
+status.value = Array.isArray(route.query.status) ? route.query.status[0] || '' : route.query.status || '' 
 result.value =
   orderStatusOptions.find((item) => item.value == status.value)?.text ||
   t('order.allOrders')
@@ -138,7 +149,7 @@ const onLoad = () => {
     let params = {
       page: pagination.value.page,
       limit: pagination.value.limit,
-      tracking_status_arr: status.value ? [status.value] : [2, 3, 4],
+      tracking_status: status.value || [2, 3, 4].join(','),
     }
     let res = await logisticsApi.getLogisticsList(params)
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-[1rem]">
+  <div class="mx-[32px]" v-loading="isLoading">
     <div class=" bg-white px-[20px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
@@ -31,16 +31,17 @@ import NavBar from '@/components/nav-bar/index.vue';
 import { orderApi } from '@/api';
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router';
-const router = useRouter();
 const route = useRoute();
 const { t } = useI18n()
 
-const id = route.query.id
-const order = ref({});
+const id = Array.isArray(route.query.id) ? route.query.id[0] : route.query.id || '';
+const isLoading = ref(true);
+const order = ref<{ address_data: Array<{ country_name: string; province_name: string; city_name: string; detail_address: string; country_code: string; phone_num: string; landline_num?: string; memo?: string }> }>({ address_data: [] });
 
 const getOrderDetail = async () => {
-  const res = (await orderApi.getPaidOrderDetail(id))
+  const res = (await orderApi.getPaidOrderDetail(id as string))
   order.value = res.data || {};
+  isLoading.value = false;
 };
 getOrderDetail()
 

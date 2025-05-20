@@ -147,8 +147,15 @@ const router = useRouter()
 const { t } = useI18n()
 
 const allTotalPrice = ref(0)
-const orderStatusCards = ref([])
-const logisticsStatusCards = ref([])
+interface StatusCard {
+  title: string
+  count: number
+  icon: string
+  path: string
+}
+
+const orderStatusCards = ref<StatusCard[]>([])
+const logisticsStatusCards = ref<StatusCard[]>([])
 
 const ORDER_STATUS_MAP = [
   {

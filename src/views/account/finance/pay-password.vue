@@ -19,6 +19,8 @@ import NavBar from '@/components/nav-bar/index.vue';
 import PasswordInput from '@/components/PasswordInput/index.vue';
 import { ref, computed } from 'vue';
 import { balanceApi } from '@/api'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const pwsInput = ref<InstanceType<typeof PasswordInput> | null>(null);
 const hasPayPassword = ref(false);
@@ -33,13 +35,13 @@ const newPassword = ref('');
 const confirm_password = ref('');
 
 const titles = {
-  setPassword: ['设置支付密码', '确认密码'],
-  changePassword: ['当前密码', '新密码', '确认密码']
+  setPassword: [t('finance.payPassword'), t('profile.confirmPassword')],
+  changePassword:[ t('profile.currentPassword'), t('profile.newPassword'),  t('profile.confirmPassword')]
 };
 
 const successTexts = {
-  setPassword: '设置成功',
-  changePassword: '修改成功'
+  setPassword:t('finance.setSuccess'),
+  changePassword: t('profile.passwordSuccess')
 };
 
 const currentTitle = computed(() => {
@@ -86,7 +88,7 @@ const handlePasswordChangeFlow = async (value: string) => {
     case 3:
       if (value !== newPassword.value) {
         error.value = true;
-        errorMessage.value = '两次输入的密码不一致';
+        errorMessage.value = t('resetPassword.passwordNotMatch');
         pwsInput.value?.clearPassword();
       } else {
         // All steps completed, ready to submit
@@ -117,7 +119,7 @@ const handleNewPasswordFlow = async (value: string) => {
     case 2:
       if (value !== newPassword.value) {
         error.value = true;
-        errorMessage.value = '两次输入的密码不一致';
+        errorMessage.value =  t('resetPassword.passwordNotMatch');
         pwsInput.value?.clearPassword();
       } else {
         // Ready to submit new password

@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-[1rem] text-[28px] text-[#515360] h-full overflow-y-auto">
+  <div class="mx-[1rem] text-[28px] text-[#515360] h-full overflow-y-auto" v-loading="isLoading">
     <div class="bg-white px-[20px] mb-[24px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
@@ -181,9 +181,12 @@
     </div>
 
     <!-- 重新下单 -->
-    <div v-if="order.order_status == -1"
+    <div 
+      v-if="order.order_status == -1"
       class="fixed flex  bottom-0 inset-x-[32px] justify-between items-center bg-white rounded-t-[24px] mt-[24px]  shadow-[0_-2px_5px_0_#DBDBDB] h-[164px] px-[20px]">
-      <div class="bg-[#FF356D] flex items-center justify-center text-[#fff] w-full h-[80px] rounded-[24px]">
+      <div 
+        class="bg-[#FF356D] flex items-center justify-center text-[#fff] w-full h-[80px] rounded-[24px]"
+        @click="handleReorder">
         <span>{{ t('orderDetail.reorderAgain') }}</span>
       </div>
     </div>
@@ -191,25 +194,90 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect,nextTick } from 'vue'
 import NavBar from '@/components/nav-bar/index.vue'
 import { orderApi } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
+import { encryptParams } from '@/utils/encryption'
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
 
-const id = route.params.id
-const order = ref({})
+const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
+const isLoading = ref(true)
+interface Order {
+  order_status_str: string;
+  order_no: string;
+  add_time: string;
+  already_pay_rmb_price: number;
+  need_pay_rmb_price: number;
+  order_status: number;
+  pay_status: number;
+  consumption_record?: Array<{
+    add_time: string;
+    serial_no: string;
+    change_money: number;
+    currency_type: number;
+    pay_type_str: string;
+  }>;
+  total_price: number;
+  total_product_price: number;
+  service_price: number;
+  inland_freight: number;
+  rmb_to_rub_rate: number;
+  rub_to_usd_rate: number;
+  rmb_to_usd_rate: number;
+  buy_order?: Array<{ status: number }>;
+  address_data?: Array<any>;
+  item_data?: Array<{
+    images: string[];
+    product_name: string;
+    price: number;
+    product_num: number;
+    package_num: number;
+  }>;
+  memo?: string;
+}
+
+const order = ref<Order>({
+  order_status_str: '',
+  order_no: '',
+  add_time: '',
+  already_pay_rmb_price: 0,
+  need_pay_rmb_price: 0,
+  order_status: 0,
+  pay_status: 0,
+  consumption_record: [],
+  total_price: 0,
+  total_product_price: 0,
+  service_price: 0,
+  inland_freight: 0,
+  rmb_to_rub_rate: 0,
+  rub_to_usd_rate: 0,
+  rmb_to_usd_rate: 0,
+  buy_order: [],
+  address_data: [],
+  item_data: [],
+  memo: '',
+});
 const completedOrdersCount = ref(0)
 const handlePayment = () => {
   router.push('/account/purchase/payment?id=' + id)
 }
 
+const handleReorder = () => {
+    const encrypted = encryptParams({
+      purchase_order_id: id,
+      entry: 5,
+    });
+    router.push(`/shipping?query=${encodeURIComponent(encrypted)}`);
+  };
+
 const getOrderDetail = async () => {
   const res = await orderApi.getPaidOrderDetail(id)
   order.value = res.data || {}
+  isLoading.value = false
 }
 getOrderDetail()
 

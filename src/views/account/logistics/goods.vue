@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-[1rem]  text-[28px]">
+  <div class="mx-[1rem]  text-[28px]" v-loading="isLoading">
     <div class=" bg-white px-[20px] mb-[24px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
@@ -50,11 +50,24 @@ const route = useRoute();
 const { t } = useI18n()
 
 const id = route.query.id
-const order = ref({});
+const isLoading = ref(true);
+interface Order {
+  wh_out_receipt_item: {
+    images: string[];
+    product_name: string;
+    product_num: number;
+    package_num: number;
+  }[];
+}
+
+const order = ref<Order>({
+  wh_out_receipt_item: [],
+});
 
 const getOrderDetail = async () => {
-  const res = (await logisticsApi.getLogisticsDetail({ id }))
+  const res = (await logisticsApi.getLogisticsDetail({ id })) as { data: Order };
   order.value = res.data || {};
+  isLoading.value = false;
 };
 getOrderDetail()
 

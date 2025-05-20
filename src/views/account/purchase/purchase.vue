@@ -84,14 +84,22 @@ const defaultIdx = ref(0)
 const result = ref(t('order.allOrders'))
 const showPicker = ref(false)
 
-const list = ref([])
+interface OrderItem {
+  id: number;
+  order_no: string;
+  order_status_str: string;
+  add_time: string;
+  total_price: number;
+}
+
+const list = ref<OrderItem[]>([])
 const loading = ref(false)
 const finished = ref(false)
 const finishedText = ref('没有更多了')
 const refreshing = ref(false)
 const isEmpty = ref(false)
 const status = ref('')
-status.value = route.query.status || ''
+status.value = (Array.isArray(route.query.status) ? route.query.status[0] : route.query.status) || ''
 result.value =
   orderStatusOptions.find((item) => item.value == status.value)?.text ||
   t('order.allOrders')
@@ -110,7 +118,7 @@ const onLoad = () => {
     let params = {
       page: pagination.value.page,
       limit: pagination.value.limit,
-      order_status: status.value,
+      order_status: Number(status.value),
     }
     let res = await orderApi.getMyOrderList(params)
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-[1rem]  text-[28px] text-[#515360]">
+  <div class="mx-[1rem]  text-[28px] text-[#515360]" v-loading="isLoading">
     <div class=" bg-white px-[20px] mb-[24px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
@@ -90,11 +90,33 @@ const route = useRoute();
 const { t } = useI18n()
 
 const id = route.params.id
-const order = ref({});
+const isLoading = ref(true);
+interface Order {
+  tracking_no: string;
+  tracking_status_str: string;
+  add_time: string;
+  shipment_place: string;
+  destination: string;
+  total_price: number;
+  pay_type_str: string;
+  pay_time: string;
+}
+
+const order = ref<Order>({
+  tracking_no: '',
+  tracking_status_str: '',
+  add_time: '',
+  shipment_place: '',
+  destination: '',
+  total_price: 0,
+  pay_type_str: '',
+  pay_time: '',
+});
 const bill_image = ref('');
 const getOrderDetail = async () => {
-  const res = (await logisticsApi.getLogisticsDetail({ id }))
+  const res = (await logisticsApi.getLogisticsDetail({ id })) as { data: Order };
   order.value = res.data || {};
+  isLoading.value = false;
 };
 
 const getBillImage = async () => {
