@@ -1,9 +1,9 @@
 <template>
   <div
-    class="flex flex-col items-center justify-center gap-[40px] p-4 pb-[100px] bg-white rounded-lg shadow-md"
+    class="flex flex-col items-center justify-center gap-[40px] p-4 pb-[100px] bg-white rounded-lg"
   >
     <h2 class="text-[28px] font-bold w-full">{{ title }}</h2>
-    <div class="flex space-x-4">
+    <div class="flex space-x-2">
       <input
         v-for="(_, index) in Array(length).fill(0)"
         :key="index"
