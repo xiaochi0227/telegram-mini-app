@@ -6,8 +6,10 @@
           <nav-bar />
         </div>
       </div>
-      <div class="flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]"
-        @click="showPicker = true">
+      <div
+        class="flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]"
+        @click="showPicker = true"
+      >
         <div>{{ result }}</div>
         <i class="iconfont icon-Right"></i>
       </div>
@@ -17,9 +19,18 @@
 
     <div class="flex-1 px-[32px] overflow-y-auto" v-else>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list v-model:loading="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
-          <div class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]" v-for="item in list" :key="item"
-            @click="handleDetail(item.id)">
+        <van-list
+          v-model:loading="loading"
+          :finished="finished"
+          :finished-text="finishedText"
+          @load="onLoad"
+        >
+          <div
+            class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]"
+            v-for="item in list"
+            :key="item"
+            @click="handleDetail(item)"
+          >
             <!-- 顶部信息 -->
             <p class="text-[32px] text-[#212121] font-bold">
               {{ item.order_no }}
@@ -48,8 +59,12 @@
     </div>
   </div>
   <van-popup v-model:show="showPicker" round position="bottom">
-    <van-picker :columns="orderStatusOptions" @cancel="showPicker = false" :default-index="defaultIdx"
-      @confirm="onConfirm" />
+    <van-picker
+      :columns="orderStatusOptions"
+      @cancel="showPicker = false"
+      :default-index="defaultIdx"
+      @confirm="onConfirm"
+    />
   </van-popup>
 </template>
 
@@ -58,6 +73,7 @@ import { ref } from 'vue'
 import NavBar from '@/components/nav-bar/index.vue'
 import { orderApi } from '@/api'
 import { useI18n } from 'vue-i18n'
+import { encryptParams } from '@/utils/encryption'
 import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -85,11 +101,11 @@ const result = ref(t('order.allOrders'))
 const showPicker = ref(false)
 
 interface OrderItem {
-  id: number;
-  order_no: string;
-  order_status_str: string;
-  add_time: string;
-  total_price: number;
+  id: number
+  order_no: string
+  order_status_str: string
+  add_time: string
+  total_price: number
 }
 
 const list = ref<OrderItem[]>([])
@@ -99,7 +115,10 @@ const finishedText = ref('没有更多了')
 const refreshing = ref(false)
 const isEmpty = ref(false)
 const status = ref('')
-status.value = (Array.isArray(route.query.status) ? route.query.status[0] : route.query.status) || ''
+status.value =
+  (Array.isArray(route.query.status)
+    ? route.query.status[0]
+    : route.query.status) || ''
 result.value =
   orderStatusOptions.find((item) => item.value == status.value)?.text ||
   t('order.allOrders')
@@ -141,8 +160,8 @@ const onLoad = () => {
     if (list.value.length >= total) {
       finished.value = true
     }
-  }, 200);
-};
+  }, 200)
+}
 
 const onRefresh = () => {
   // 清空列表数据
@@ -166,8 +185,23 @@ const onConfirm = (value: any) => {
   loading.value = true
   onLoad()
 }
-const handleDetail = (id: number) => {
-  router.push({ path: '/account/purchase/' + id })
+const handleDetail = (record) => {
+  const { order_status, id, order_no } = record
+  // 添加多个参数
+  const encrypted = encryptParams({
+    purchase_order_id: id,
+    order_no,
+    entry: 4,
+  })
+
+  // 直接读取order_status就可以
+  if (order_status == 1) {
+    router.push(`/confirm?query=${encodeURIComponent(encrypted)}`)
+  } else if (order_status == 2) {
+    router.push(`/payment?query=${encodeURIComponent(encrypted)}`)
+  } else {
+    router.push(`/account/purchase/${id}`)
+  }
 }
 </script>
 

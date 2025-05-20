@@ -52,7 +52,7 @@ decryptedData.value = encryptedData
 
 function goOrderDetail() {
 	const { purchase_order_id } = decryptedData.value 
-  router.push('/order/detail/id' + purchase_order_id) // 根据实际路由调整
+  router.push('/account/purchase/' + purchase_order_id) // 根据实际路由调整
 }
 
 function goHome() {

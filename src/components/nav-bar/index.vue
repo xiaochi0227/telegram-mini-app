@@ -1,22 +1,24 @@
 <template>
   <div>
     <div class="flex items-center py-[32px]">
-      <van-icon
-        v-if="route.meta.showBack"
-        name="arrow-left"
-        size="24"
-        color="#FF356D"
-        @click="router.back()"
-      />
-      <van-icon
-       v-else
-        name="bars"
-        size="24"
-        color="#212121"
-        @click="showPopup = true"
-      />
+      <template v-if="!hideIcon">
+        <van-icon
+          v-if="route.meta.showBack"
+          name="arrow-left"
+          size="24"
+          color="#FF356D"
+          @click="router.back()"
+        />
+        <van-icon
+          v-else
+          name="bars"
+          size="24"
+          color="#212121"
+          @click="showPopup = true"
+        />
+      </template>
       <span
-        class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px] leading-[32px]"
+        class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px]"
       >
         {{ navTitle }}
       </span>
@@ -62,9 +64,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, withDefaults, defineProps } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n';
+
+const props = withDefaults(
+  defineProps<{
+    hideIcon?: boolean // loading
+  }>(),
+  {
+    hideIcon: false,
+  }
+)
 
 const { t } = useI18n()
 const route = useRoute()

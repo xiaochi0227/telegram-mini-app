@@ -11,9 +11,14 @@ export interface GoodsItem {
   is_quotation: boolean
 }
 
+interface GoodsPicture {
+  url: string
+}
+
 export const useInquiryStore = defineStore('inquiry', () => {
   const good = ref<GoodsItem>({})
 	const inquiry = ref<InquiryItem>({})
+  const goodsPicture = ref<GoodsPicture>([])
 
   const setGood = (newGood: GoodsItem) => {
     good.value = newGood
@@ -23,10 +28,21 @@ export const useInquiryStore = defineStore('inquiry', () => {
     inquiry.value = newGood
   }
 
+  const setGoodsPicture = (picture: GoodsPicture) => {
+    goodsPicture.value = picture
+  }
+
+  const removeGoodsPicture = (index) => {
+    goodsPicture.value.splice(index, 1)
+  }
+
   return {
     good,
     setGood,
     inquiry,
-		setInquiry
+		setInquiry,
+    goodsPicture,
+    setGoodsPicture,
+    removeGoodsPicture
   }
 }) 

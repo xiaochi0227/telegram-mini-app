@@ -4,9 +4,10 @@
     placeholder="请输入手机号码"
     maxlength="13"
     class="phone-input"
+    :class="{ 'no-required': !required }"
     :formatter="formatterNumber"
     :rules="[
-      { required: true, message: '请输入手机号' },
+      { required: required, message: '请输入手机号' },
       { validator: validatePhone, message: '请输入正确的手机号' }
     ]"
   >
@@ -21,12 +22,14 @@ import { computed, withDefaults, defineProps, defineEmits } from 'vue'
 interface Props {
   countryCode?: string
   modelValue: string
+  required: boolean
   onChange?: (value: string) => void
 }
 
 const props = withDefaults(defineProps<Props>(), {
   countryCode: '7',
   modelValue: '',
+  required: true
 })
 
 const emit = defineEmits<{
@@ -67,6 +70,8 @@ const parserNumber = (value: string) => {
 }
 
 const validatePhone = (value: string) => {
+  if (!props.required && !value) return true
+
   const unformattedValue = parserNumber(value)
   return /^\d{10}$/.test(unformattedValue)
 }

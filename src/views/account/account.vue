@@ -245,6 +245,7 @@ const fetchAccountIndex = async () => {
 const goPath = (path: string) => {
   router.push(path)
 }
+
 onMounted(async () => {
   await fetchAccountIndex()
   isLoading.value = false

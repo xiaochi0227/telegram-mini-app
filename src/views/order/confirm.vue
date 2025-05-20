@@ -26,6 +26,7 @@
 
         <div
           class="py-[10px] mb-3 text-center text-[28px] border border-[#E7E7E9] rounded-[12px]"
+          @click="handleContact('https://t.me/@pakupay')"
         >
           <i class="iconfont icon-telegram text-[#28A7E7] mr-1"></i>
           <span>PAKUPAY</span>
@@ -33,6 +34,7 @@
 
         <div
           class="py-[10px] text-center text-[28px] border border-[#E7E7E9] rounded-[12px]"
+          @click="handleContact('tel:+17774072288')"
         >
           <i class="iconfont icon-Phone text-[#FF356D] mr-1"></i>
           <span>+86 17774072288</span>
@@ -75,6 +77,13 @@ const order_no = computed(() => {
 })
 
 const { setProducts, setAddressList } = useOrderStore()
+
+interface Contact {
+  contact: string;
+}
+const handleContact = (contact: Contact['contact']): void => {
+  window.location.href = `${contact}`;
+};
 
 // 下单页有5个入口
 // 1.购物车下单购买(传购物车选中数据ids)
