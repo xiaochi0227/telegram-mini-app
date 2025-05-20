@@ -1,5 +1,5 @@
 <template>
-  <div class="fund-manage mx-[1rem]">
+  <div class="fund-manage mx-[1rem]" v-loading="isLoading">
     <div class=" bg-white px-[20px]">
       <div class=" border-b border-[#f4f4f4] flex justify-between items-center h-[100px]">
         <nav-bar />
@@ -45,9 +45,11 @@ import Financial from '../components/Financial.vue';
 
 const router = useRouter();
 const { t } = useI18n()
-
+const isLoading = ref(true)
 onMounted(() => {
-
+  setTimeout(() => {
+    isLoading.value = false
+  }, 300)
 })
 </script>
 

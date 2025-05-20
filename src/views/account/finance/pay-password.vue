@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-[1rem]">
+  <div class="mx-[1rem]" v-loading="isLoading">
     <div class=" bg-white px-[20px] mb-[24px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
@@ -8,8 +8,8 @@
     <PasswordInput v-model="password" @complete="handleComplete" :title="currentTitle"
       :error="error" :errorMessage="errorMessage" ref="pwsInput" v-if="!success" />
     <div class="flex justify-center items-center bg-white rounded-[24px] h-[400px] mt-[24px] flex-col" v-if="success">
-      <div class="w-[100px] h-[100px] rounded-full bg-[#FF356D]"></div>
-      <div class="text-[#212121] text-[40px] font-bold mt-[80px]">{{ successText }}</div>
+      <van-icon name="passed" size="64px"  color="#FF356D"/>
+      <div class="text-[#212121] text-[40px] font-bold mt-[40px]">{{ successText }}</div>
     </div>
   </div>
 </template>
@@ -23,6 +23,7 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 const pwsInput = ref<InstanceType<typeof PasswordInput> | null>(null);
+const isLoading = ref(true)
 const hasPayPassword = ref(false);
 const success = ref(false);
 const password = ref('');
@@ -57,6 +58,7 @@ const getHasPayPassword = async () => {
   try {
     const res = await balanceApi.hasPayPassword();
     hasPayPassword.value = res.data || false;
+    isLoading.value = false
   } catch (err) {
     console.error('errorerror', err);
     // Handle error appropriately

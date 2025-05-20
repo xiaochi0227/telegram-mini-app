@@ -1,11 +1,11 @@
 <template>
-  <div class="mx-[32px]  text-[28px]" v-loading="isLoading">
+  <div class="mx-[32px] flex flex-col h-full text-[28px]" v-loading="isLoading">
     <div class=" bg-white px-[20px] mb-[24px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
       </div>
     </div>
-    <div class="space-y-4 bg-white shadow-[0_1px_3px_0_rgba(184,184,184,0.25)] rounded-[24px] py-[32px] px-[20px]">
+    <div class="flex-1 overflow-y-auto space-y-4 bg-white shadow-[0_1px_3px_0_rgba(184,184,184,0.25)] rounded-[24px] py-[32px] px-[20px]">
       <!-- 商品卡片 -->
       <div class="rounded-[16px] p-[20px] flex items-center text-[#212121] border border-[#E7E7E9]"
         v-for="(item, index) in order.item_data" :key="index">

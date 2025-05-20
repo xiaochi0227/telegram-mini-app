@@ -1,5 +1,5 @@
 <template>
-  <div class="account px-[1rem] h-full overflow-y-auto">
+  <div class="account px-[1rem] h-full overflow-y-auto" v-loading="isLoading">
     <van-sticky>
       <div class="bg-white px-[20px]">
         <div
@@ -13,10 +13,10 @@
               height="32px"
               src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
             />
-            <div>
+            <!-- <div>
               mike
               <van-icon name="arrow-down" />
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -146,6 +146,7 @@ import { useI18n } from 'vue-i18n'
 const router = useRouter()
 const { t } = useI18n()
 
+const isLoading = ref(true)
 const allTotalPrice = ref(0)
 interface StatusCard {
   title: string
@@ -227,11 +228,6 @@ const fetchAccountIndex = async () => {
       icon: item.icon,
       path: item.path,
     }))
-    console.log(
-      'logisticsStatusCards',
-      orderStatusCards.value,
-      logisticsStatusCards.value
-    )
   } catch (error) {
     console.error('Failed to fetch account index:', error)
     // You might want to handle errors here, e.g., show a notification
@@ -239,11 +235,11 @@ const fetchAccountIndex = async () => {
 }
 
 const goPath = (path: string) => {
-  console.log('path', path)
   router.push(path)
 }
-onMounted(() => {
-  fetchAccountIndex()
+onMounted(async () => {
+  await fetchAccountIndex()
+  isLoading.value = false
 })
 </script>
 

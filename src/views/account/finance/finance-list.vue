@@ -37,16 +37,12 @@
                   <span>{{ t('finace.costAmount') }}</span>
                   <template v-if="item.change_type === 5">
                     <section v-if="item.entity_type === 6">
-
-                      <div class="text-blue-500 font-bold">-¥{{ item.rmb_money }}</div>
-                      <div class="text-blue-500 font-bold">+${{ item.usd_money }}</div>
-
-                    </section>
-                    <section v-else>
-
                       <div class="text-blue-500 font-bold">-${{ item.usd_money }}</div>
                       <div class="text-blue-500 font-bold">+¥{{ item.rmb_money }}</div>
-
+                    </section>
+                    <section v-else>
+                      <div class="text-blue-500 font-bold">-¥{{ item.rmb_money }}</div>
+                      <div class="text-blue-500 font-bold">+${{ item.usd_money }}</div>
                     </section>
                   </template>
                   <template v-else>
@@ -188,6 +184,7 @@ const onRefresh = () => {
     left: 32px;
     right: 32px;
     z-index: 9;
+
     .van-tab {
       font-size: 28px;
 
