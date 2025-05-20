@@ -54,20 +54,21 @@
         </div>
         <div class="h-[2px] bg-[#f4f4f4] my-[32px]"></div>
         <!-- 开始运输 -->
-        <div class="bg-[#f4f4f4] rounded-[20px] h-[88px] p-4 flex justify-between items-center" 
-        @click="() => router.push({ path: '/account/logistics/detail', query: { id } })">
+        <div class="bg-[#f4f4f4] rounded-[20px] h-[88px] p-4 flex justify-between items-center"
+          @click="() => router.push({ path: '/account/logistics/detail', query: { id } })">
           <p class="text-sm text-gray-500">{{ t('logistics.startTransportation') }}</p>
           <p class="text-[#212121]">{{ order.add_time }}</p>
         </div>
       </div>
     </div>
     <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]'
-      @click="() => router.push({ path: '/account/logistics/goods', query: { id, type: 1 } })">
+      @click="() => router.push({ path: '/account/logistics/goods', query: { id } })">
       <div>{{ t('logistics.orderGoods') }}</div>
       <i class="iconfont icon-Right"></i>
     </div>
 
     <div
+      @click="getBillImage"
       class="fixed flex  bottom-0 inset-x-[32px] justify-between items-center bg-white rounded-t-[24px] mt-[24px]  shadow-[0_-2px_5px_0_#DBDBDB] h-[164px] px-[20px]">
       <div
         class="border border-[#FF356D] flex items-center justify-center text-[#FF356D] w-full h-[80px] rounded-[24px]">
@@ -83,17 +84,33 @@ import NavBar from '@/components/nav-bar/index.vue';
 import { logisticsApi } from '@/api';
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router';
-
+import { ImagePreview } from 'vant';
 const router = useRouter();
 const route = useRoute();
 const { t } = useI18n()
 
 const id = route.params.id
 const order = ref({});
-
+const bill_image = ref('');
 const getOrderDetail = async () => {
   const res = (await logisticsApi.getLogisticsDetail({ id }))
   order.value = res.data || {};
+};
+
+const getBillImage = async () => {
+  if (bill_image.value) {
+    ImagePreview({
+      images: [bill_image.value], // 图片数组，支持多张
+      startPosition: 0,   // 初始位置（第几张）
+    });
+    return
+  }
+  const res = await logisticsApi.getBillImage({ id })
+  bill_image.value = res.data || {};
+  ImagePreview({
+    images: [bill_image.value], // 图片数组，支持多张
+    startPosition: 0,   // 初始位置（第几张）
+  });
 };
 getOrderDetail()
 

@@ -12,7 +12,7 @@
         <div
           class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[32px] contact"
         >
-          <h2 class="font-bold mb-2">在线咨询</h2>
+          <h2 class="font-bold mb-2">{{ t('footer.online') }}</h2>
           <div class="flex justify-center items-center gap-14">
             <div class="text-center">
               <i class="iconfont icon-telegram text-[#28A7E7]"></i>
@@ -31,7 +31,7 @@
             @click="toggleAll"
             class="mb-[36px]"
           >
-            全选
+            {{ t('cart.selectAll') }}
           </van-checkbox>
 
           <!-- 商品列表 -->
@@ -54,7 +54,7 @@
                   </div>
                 </div>
                 <div class="flex justify-between items-center mt-2">
-                  <span class="text-[#515360] text-[28px]">购买数量</span>
+                  <span class="text-[#515360] text-[28px]">{{ t('inquiriesDetails.quantity') }}</span>
                   <span class="text-[#212121] text-[32px] font-bold">
                     {{ item.product_num }}
                   </span>

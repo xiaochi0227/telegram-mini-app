@@ -25,10 +25,10 @@
       </div>
       <div class="text-[#212121] text-[28px] mt-[16px]">
         <span class="font-bold">{{ t('inquiriesDetails.quantity') }}：</span>
-        <span> {{ good.product_num }}（个） </span>
+        <span> {{ good.product_num }} </span>
       </div>
       <div class="text-[#212121] text-[28px] mt-[16px]">
-        <span class="font-bold">参考链接：</span>
+        <span class="font-bold">{{t('reference.link')}}：</span>
         <a :href="link" class="text-blue-500 underline" target="_blank">
           {{ good.reference_url }}
         </a>

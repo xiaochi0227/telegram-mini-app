@@ -5,9 +5,9 @@
     <div class="mt-[-80px] mb-4">
       <van-icon name="passed" size="64" color="#F73C6B" />
     </div>
-    <div class="font-bold mb-2 text-center text-[44px]">提交成功</div>
-    <div class="font-bold text-center text-[32px]">业务员会在两个工作日内与您联系功</div>
-    <div class="font-bold mb-3 text-center text-[32px]">并将报价发送至您的邮箱</div>
+    <div class="font-bold mb-2 text-center text-[44px]">{{ t('inquiry.submitSuccess') }}</div>
+    <div class="font-bold text-center text-[32px]">{{ t('inquiry.contactWithinDays') }}</div>
+    <div class="font-bold mb-3 text-center text-[32px]">{{ t('inquiry.quoteToEmail') }}</div>
     <div class="text-[#515360] text-[28px] text-center mb-10 mx-10">
       您也可以登录至 账户中心 - <span class="text-[#0066CC] cursor-pointer underline" @click="goToInquiry">询价单</span> 中查看最新的报价信息
     </div>

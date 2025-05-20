@@ -3,7 +3,7 @@
     <div class="flex justify-center items-center bg-[#F4F4F4] rounded-full  h-[64px]">
       <div class="px-4 flex-1 text-[#515360]  account-tab" v-for="(item, index) in tabs" :key="index"
         :class="{ active: active === index }" @click="activeTab(index)">
-        <span>{{ item.name }}</span>
+        <span class="whitespace-nowrap">{{ item.name }}</span>
       </div>
     </div>
     <div class="text-blue-500 text-4xl font-bold py-[2rem]" v-if='active != 2&&tabs[active].value'>
@@ -12,17 +12,17 @@
     </div>
     <div class="py-[2rem]" v-else>
       <div class='flex justify-between items-center'>
-        <div>可用授信</div>
+        <div>{{ t('finance.availableCredit') }}</div>
         <div class="font-bold text-[#004CE0] text-[40px]" v-if='tabs[active].value'>
           {{ tabs[active].value }} 
           <span class="text-[#004CE0] pl-[6px] text-[24px]">¥</span>
         </div>
       </div>
-      <div class='flex justify-between items-center pt-[48px]' v-if="false">
+      <!-- <div class='flex justify-between items-center pt-[48px]' v-if="false">
         <div>已用授信</div>
         <div class="font-bold text-[#004CE0] text-[40px]">456246.00<span
             class="text-[#004CE0] pl-[10px] text-[24px]">¥</span></div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -31,6 +31,8 @@ import { onMounted, ref } from 'vue'
 import { balanceApi } from '@/api'
 import { useI18n } from 'vue-i18n'    
 
+const { t } = useI18n()
+
 const active = ref(0)
 const activeTab = (index: number) => {
   active.value = index
@@ -38,7 +40,7 @@ const activeTab = (index: number) => {
 const tabs = ref([
   { name: 'USD', value: '', key: 'usd_balance' },
   { name: 'CNY', value: '', key: 'rmb_balance' },
-  { name: '授信', value: '', key: 'credit_line' }
+  { name: t('finance.credit'), value: '', key: 'credit_line' }
 ])
 const fetchBalanceIndex = async () => {
 

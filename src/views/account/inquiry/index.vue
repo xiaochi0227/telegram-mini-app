@@ -19,7 +19,7 @@
             v-model:show="showActionSheet"
             :actions="actions"
             @select="onSelect"
-            cancel-text="取消"
+            :cancel-text="t('address.cancel')"
           />
         </div>
       </div>
@@ -92,7 +92,7 @@ const refreshing = ref(false)
 
 // ActionSheet state
 const showActionSheet = ref(false)
-const selectedLabel = ref('全部')
+const selectedLabel = ref(t('finance.all'))
 const orderStatus = ref('')
 const actions = [
   { name: t('common.all'), value: '' },

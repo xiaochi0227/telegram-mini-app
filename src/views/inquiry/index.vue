@@ -65,9 +65,14 @@
           <van-field
             v-model="product.reference_url"
             :name="`products[${index}].reference_url`"
-            label="商品参考链接"
-            placeholder="请输入商品参考链接"
-            :rules="[{ validator: validateUrl, message: '请输入有效的URL' }]"
+            :label="t('inquiry.productLink')"
+            :placeholder="t('inquiry.productLinkPlaceholder')"
+            :rules="[
+              {
+                validator: validateUrl,
+                message: t('inquiry.productLinkInvalid'),
+              },
+            ]"
             class="mb-4 no-required"
           />
 
@@ -75,11 +80,11 @@
           <van-field
             v-model="product.product_name"
             :name="`products[${index}].product_name`"
-            label="商品名称"
-            placeholder="请输入商品名称"
+            :label="t('inquiry.productName')"
+            :placeholder="t('inquiry.productNamePlaceholder')"
             :rules="[
-              { required: true, message: '请输入商品名称' },
-              { min: 2, max: 50, message: '长度在2到50个字符之间' },
+              { required: true, message: t('inquiry.productNamePlaceholder') },
+              { min: 2, max: 100, message: '商品名称在2到100个字符之间' },
             ]"
             class="mb-4"
           />
@@ -89,11 +94,14 @@
             v-model="product.product_num"
             :name="`products[${index}].product_num`"
             type="digit"
-            label="商品数量"
-            placeholder="请输入商品数量"
+            :label="t('inquiry.quantity')"
+            :placeholder="t('inquiry.quantityPlaceholder')"
             :rules="[
-              { required: true, message: '请输入商品数量' },
-              { validator: validateQuantity, message: '数量必须大于0' },
+              { required: true, message: t('inquiry.quantityPlaceholder') },
+              {
+                validator: validateQuantity,
+                message: t('inquiry.quantityInvalid'),
+              },
             ]"
             class="mb-4"
           />
@@ -102,9 +110,9 @@
           <van-field
             v-model="product.desc"
             :name="`products[${index}].desc`"
-            label="商品说明"
+            :label="t('inquiriesDetails.goodsDesc')"
             type="textarea"
-            placeholder="请输入商品说明"
+            :placeholder="t('inquiry.descPlaceholder')"
             rows="7"
             autosize
             class="mb-4 no-required"
@@ -124,7 +132,7 @@
         @click="addProduct"
         class="!border-dashed"
       >
-        添加商品
+        {{ t('inquiry.addProduct') }}
       </van-button>
 
       <!-- 联系信息 -->
@@ -136,11 +144,14 @@
           <van-field
             v-model="form.contact.email"
             name="contact.email"
-            label="电子邮箱"
-            placeholder="请输入电子邮箱"
+            :label="t('inquiry.email')"
+            :placeholder="t('inquiry.emailPlaceholder')"
             :rules="[
-              { required: true, message: '请输入电子邮箱' },
-              { validator: validateEmail, message: '请输入有效的邮箱地址' },
+              { required: true, message: t('inquiry.emailPlaceholder') },
+              {
+                pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                message: t('login.registerEmailInvalid'),
+              },
             ]"
             class="mb-4"
           />
@@ -155,10 +166,10 @@
           <van-field
             v-model="form.contact.memo"
             name="memo"
-            label="备注"
+            :label="t('inquiry.remarks')"
             type="textarea"
-            placeholder="请输入备注"
-            maxlength="2000"
+            :placeholder="t('inquiry.remarksMaxlength')"
+            maxlength="1000"
             rows="7"
             autosize
             class="mb-4 no-required"
@@ -177,9 +188,8 @@
         type="primary"
         @click="handleSubmit"
         :loading="submitting"
-        loading-text="提交中..."
       >
-        提交
+        {{ t('inquiry.submit') }}
       </van-button>
     </div>
   </div>
@@ -280,10 +290,6 @@ const validateUrl = (val: string) => {
 
 const validateQuantity = (val: string) => {
   return Number(val) > 0
-}
-
-const validateEmail = (val: string) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)
 }
 
 const maxCount = ref(5)

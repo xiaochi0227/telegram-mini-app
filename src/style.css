@@ -52,6 +52,7 @@
   /* checkbox */
   --van-checkbox-size: 36px !important;
   --van-checkbox-label-margin: 32px !important;
+  --van-checkbox-label-margin: 10px !important;
 
   /* cell  */
   --van-cell-icon-size: 24px !important;
@@ -86,6 +87,8 @@
   --van-tabbar-height: 120px !important;
   --van-tabbar-item-line-height: 60px !important;
   --van-tabbar-item-font-size: 40px !important;
+
+  --van-field-icon-size: 38px !important;
 }
 
 a {

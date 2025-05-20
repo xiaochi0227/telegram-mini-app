@@ -161,8 +161,8 @@ const onLoad = () => {
     if (list.value.length >= total) {
       finished.value = true
     }
-  }, 500)
-}
+  }, 200);
+};
 
 const onRefresh = () => {
   // 清空列表数据

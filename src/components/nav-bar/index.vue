@@ -66,6 +66,7 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, defineProps } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n';
 
 const props = withDefaults(
   defineProps<{
@@ -76,6 +77,7 @@ const props = withDefaults(
   }
 )
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const navTitle = computed(() => route.meta.title || '标题')
@@ -83,11 +85,11 @@ const showPopup = ref(false)
 
 // 菜单项数组
 const menuItems = [
-  { title: '账户中心', icon: 'user-o', path: '/account' },
-  { title: '我的询价', icon: 'comment-o', path: '/account/inquiry' },
-  { title: '采购订单', icon: 'icon-caigou', path: '/account/purchase' },
-  { title: '物流订单', icon: 'logistics', path: '/account/logistics' },
-  { title: '资金管理', icon: 'balance-o', path: '/account/finance' },
+  { title: t('nav.account'), icon: 'user-o', path: '/account/center' },
+  { title: t('menu.inquiries'), icon: 'comment-o', path: '/account/inquiry' },
+  { title: t('menu.orders'), icon: 'icon-caigou', path: '/account/purchase' },
+  { title: t('menu.logistics'), icon: 'logistics', path: '/account/logistics' },
+  { title: t('menu.finance'), icon: 'balance-o', path: '/account/finance' },
 ]
 
 function onMenuClick(item: any) {

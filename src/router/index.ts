@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
+import i18n from '../plugins/i18n';
+import { useUser } from '@/hooks/user';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,11 +14,29 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/login/index.vue'),
+    meta: {
+      title: '返回',
+      showBack: true
+    },
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/register/index.vue'),
+    meta: {
+      title: '返回',
+      showBack: true
+    },
+  },
+  {
     path: '/inquiry',
     name: 'Inquiry',
     component: () => import('../views/inquiry/index.vue'),
     meta: {
-      title: '询价',
+      title: 'header.purchaseOrder',
       active: 'inquiry',
       keepAlive: true
     },
@@ -46,8 +66,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Account',
     component: () => import('../views/account/account.vue'),
     meta: {
-      title: '账户中心',
-      active: 'user'
+      title: 'nav.account',
+      active: 'user',
+      requiresAuth: true
     },
   },
   {
@@ -55,8 +76,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Cart',
     component: () => import('../views/cart/index.vue'),
     meta: {
-      title: '购物车',
-      active: 'cart'
+      title: 'cart.title',
+      active: 'cart',
+      requiresAuth: true
     },
   },
   {
@@ -64,8 +86,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Shipping',
     component: () => import('../views/order/shipping.vue'),
     meta: {
-      title: '确认运输要求',
+      title: 'cart.confirmShipping',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -75,6 +98,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '商品信息',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -82,8 +106,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Address',
     component: () => import('../views/order/address.vue'),
     meta: {
-      title: '地址信息',
+      title: 'orderDetail.adsInfo',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -92,7 +117,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/address/address-list.vue'),
     meta: {
       title: '选择地址',
-      showBack: true
+      showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -100,8 +126,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'EditAddress',
     component: () => import('../views/address/edit-address.vue'),
     meta: {
-      title: '编辑地址',
-      showBack: true
+      title: 'address.edit',
+      showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -109,8 +136,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Memo',
     component: () => import('../views/address/memo.vue'),
     meta: {
-      title: '包装与配送要求',
-      showBack: true
+      title: 'checkout.packagingRequirements',
+      showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -118,8 +146,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Confirm',
     component: () => import('../views/order/confirm.vue'),
     meta: {
-      title: '订单确认',
+      title: 'cart.confirmOrder',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -127,8 +156,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Payment',
     component: () => import('../views/order/payment.vue'),
     meta: {
-      title: '支付',
+      title: 'cart.payment',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -136,8 +166,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Excharge',
     component: () => import('../views/order/excharge.vue'),
     meta: {
-      title: '换汇',
+      title: 'payment.exchange',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -145,8 +176,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Complete',
     component: () => import('../views/order/complete.vue'),
     meta: {
-      title: '支付成功',
+      title: 'checkout.paymentSuccess',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -154,8 +186,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Recharge',
     component: () => import('../views/recharge.vue'),
     meta: {
-      title: '充值',
-      showBack: true,
+      title: 'accountCenter.recharge',
+      showBack: true
     },
   },
   {
@@ -163,8 +195,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'AccountInquiry',
     component: () => import('../views/account/inquiry/index.vue'),
     meta: {
-      title: '我的询价',
-      active: 'user'
+      title: 'menu.inquiries',
+      active: 'user',
+      requiresAuth: true
     },
   },
   {
@@ -172,8 +205,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'InquiryDetail',
     component: () => import('../views/account/inquiry/detail.vue'),
     meta: {
-      title: '询价详情',
+      title: 'myInquiries.inquiry_details',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -183,6 +217,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '商品详情',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -190,38 +225,39 @@ const routes: Array<RouteRecordRaw> = [
     name: 'InquiryInfo',
     component: () => import('../views/account/inquiry/inquiry-info.vue'),
     meta: {
-      title: '询价详情',
+      title: 'myInquiries.inquiry_details',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
     path: '/account/finance',
     name: 'Finance',
-    component: () => import('../views/account/finance.vue'),
+    component: () => import('../views/account/finance/finance.vue'),
     meta: {
-      title: '资金管理',
-      requiresAuth: false,
-      active: 'user'
+      title: 'menu.finance',
+      active: 'user',
+      requiresAuth: true
     },
   },
   {
     path: '/account/finance/operation-records',
     name: 'FinanceList',
-    component: () => import('../views/account/finance-list.vue'),
+    component: () => import('../views/account/finance/finance-list.vue'),
     meta: {
-      title: '资金明细',
-      requiresAuth: false,
-      showBack: true
+      title: 'accountCenter.fundDetail',
+      showBack: true,
+      requiresAuth: true
     },
   },
   {
     path: '/account/finance/pay-password',
     name: 'PayPassword',
-    component: () => import('../views/account/pay-password.vue'),
+    component: () => import('../views/account/finance/pay-password.vue'),
     meta: {
-      title: '设置支付密码',
-      requiresAuth: false,
-      showBack: true
+      title: 'finance.payPassword',
+      showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -229,9 +265,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Purchase',
     component: () => import('../views/account/purchase/purchase.vue'),
     meta: {
-      title: '采购订单',
-      requiresAuth: false,
-      active: 'user'
+      title: 'menu.orders',
+      active: 'user',
+      requiresAuth: true
     },
   },
   {
@@ -240,8 +276,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/account/purchase/purchase-order.vue'),
     meta: {
       title: '采购订单详情',
-      requiresAuth: false,
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -249,9 +285,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseInfo',
     component: () => import('../views/account/purchase/purchase-info.vue'),
     meta: {
-      title: '采购信息',
-      requiresAuth: false,
+      title: 'orderDetail.purchaseInfo',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -259,9 +295,29 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseAds',
     component: () => import('../views/account/purchase/purchase-ads.vue'),
     meta: {
-      title: '地址信息',
-      requiresAuth: false,
+      title: 'orderDetail.adsInfo',
       showBack: true,
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/account/purchase/purchase-voucher',
+    name: 'PurchaseVoucher',
+    component: () => import('../views/account/purchase/purchase-voucher.vue'),
+    meta: {
+      title: '入库凭证',
+      showBack: true,
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/account/purchase/goods',
+    name: 'PurchaseGoods',
+    component: () => import('../views/account/purchase/goods.vue'),
+    meta: {
+      title: 'cart.procurement',
+      showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -269,9 +325,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseOrderPayment',
     component: () => import('../views/account/purchase/payment.vue'),
     meta: {
-      title: '付尾款',
-      requiresAuth: false,
+      title: 'rder.payEndMoney',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -279,9 +335,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Logistics',
     component: () => import('../views/account/logistics/logistics.vue'),
     meta: {
-      title: '物流订单',
-      requiresAuth: false,
-      active: 'user'
+      title: 'menu.logistics',
+      active: 'user',
+      requiresAuth: true
     },
   },
   {
@@ -290,8 +346,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/account/logistics/logistics-order.vue'),
     meta: {
       title: '物流订单详情',
-      requiresAuth: false,
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -299,19 +355,19 @@ const routes: Array<RouteRecordRaw> = [
     name: 'LogisticsDetail',
     component: () => import('../views/account/logistics/logistics-detail.vue'),
     meta: {
-      title: '物流详情',
-      requiresAuth: false,
+      title: 'logistics.orderDetail',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
     path: '/account/logistics/goods',
-    name: 'Goods',
-    component: () => import('../views/goods.vue'),
+    name: 'LogisticsGoods',
+    component: () => import('../views/account/logistics/goods.vue'),
     meta: {
-      title: '运输商品',
-      requiresAuth: false,
+      title: 'logistics.orderGoods',
       showBack: true,
+      requiresAuth: true
     },
   },
   {
@@ -320,7 +376,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/NotFound.vue'),
     meta: {
       title: '404 Not Found',
-      requiresAuth: false,
     },
   },
 ];
@@ -332,16 +387,17 @@ const router = createRouter({
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
+  to.meta.title = i18n.global.t(to.meta.title as string) || to.meta.title;
   // 设置页面标题
   document.title = `${to.meta.title} - Telegram Mini App`;
 
   // 检查是否需要认证
   if (to.meta.requiresAuth) {
-    const webApp = window.Telegram?.WebApp;
-    if (!webApp?.initDataUnsafe?.user) {
-      next({ name: 'Home' });
-      return;
-    }
+    // const { user, loading } = useUser()
+    // if (!user.value || !loading.value) {
+    //   next({ name: 'Login' });
+    //   return;
+    // }
   }
   next();
 });

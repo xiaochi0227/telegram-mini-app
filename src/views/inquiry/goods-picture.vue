@@ -31,14 +31,12 @@
 <script setup>
 import NavBar from '@/components/nav-bar/index.vue'
 import { computed, ref } from 'vue'
-import { Toast } from 'vant'
 import { useInquiryStore } from '@/store/inquiry'
 
 const { goodsPicture, removeGoodsPicture } = useInquiryStore()
 
 function remove(idx) {
   removeGoodsPicture(idx)
-  Toast('已删除')
 }
 </script>
 
