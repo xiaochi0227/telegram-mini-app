@@ -33,7 +33,7 @@
       >
         <!-- 顶部用户信息 -->
         <div class="bg-[#FFFFFF] rounded-[24px] px-[32px] py-[48px]">
-          <div class="flex items-center">
+          <div class="flex items-center" @click="goAccountInfo">
             <div class="w-10 h-10 rounded-full bg-[#D9D9D9]"></div>
             <span class="ml-3 text-lg font-bold text-[#515360]">mike</span>
             <van-icon name="arrow" class="ml-2" color="#515360" />
@@ -97,6 +97,10 @@ function onMenuClick(item: any) {
     router.push(item.path)
     showPopup.value = false
   }
+}
+
+const goAccountInfo = () => {
+  router.push('/account/info')
 }
 </script>
 

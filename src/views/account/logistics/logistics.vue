@@ -45,9 +45,10 @@
               <p>USD ${{ item.total_price }}</p>
             </div>
             <!-- 分隔线 -->
-            <div class="border-t border-[#F4F4F4] my-[24px]"></div>
+            <div class="border-t border-[#F4F4F4] my-[24px]" v-if="item.tracking_status"></div>
             <div
               class="flex justify-between items-center h-[88px] bg-[#f4f4f4] rounded-[20px] px-[20px]"
+              v-if="item.tracking_status"
             >
               <template v-if="item.tracking_status == 2">
                 <p>{{ t('accountCenter.estimatedTime') }}</p>
