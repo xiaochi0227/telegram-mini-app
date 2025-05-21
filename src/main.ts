@@ -9,22 +9,22 @@ import i18n from './plugins/i18n'
 import loadingDirective, { showGlobalLoading, hideGlobalLoading } from './directives/loading'
 // 动态设置根字体大小
 function setRootFontSize() {
-   const baseSize = 32 // 基础值，设计稿宽度为 375px 时的 rootValue
-   const designWidth = 750 // 设计稿宽度
-   const screenWidth = document.documentElement.clientWidth || window.innerWidth
- 
-   // 根据屏幕宽度动态计算 font-size
-   const fontSize = (screenWidth / designWidth) * baseSize
- 
-   // 设置到 html 的根元素
-   document.documentElement.style.fontSize = `${fontSize}px`
- }
- 
- // 初始化根字体大小
- setRootFontSize()
- 
- // 监听窗口大小变化，实时调整
- window.addEventListener('resize', setRootFontSize)
+  const baseSize = 32 // 基础值，设计稿宽度为 375px 时的 rootValue
+  const designWidth = 750 // 设计稿宽度
+  const screenWidth = document.documentElement.clientWidth || window.innerWidth
+
+  // 根据屏幕宽度动态计算 font-size
+  const fontSize = (screenWidth / designWidth) * baseSize
+
+  // 设置到 html 的根元素
+  document.documentElement.style.fontSize = `${fontSize}px`
+}
+
+// 初始化根字体大小
+setRootFontSize()
+
+// 监听窗口大小变化，实时调整
+window.addEventListener('resize', setRootFontSize)
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -40,9 +40,15 @@ Object.values(Vant).forEach(component => {
 app.directive('loading', loadingDirective)
 
 
+// 添加全局方法
+app.config.globalProperties.$loading = {
+  show: showGlobalLoading,
+  hide: hideGlobalLoading
+}
+
 // 使用路由、状态管理和国际化
 app.use(router)
-   .use(pinia)
-   .use(i18n)
+  .use(pinia)
+  .use(i18n)
 
 app.mount('#app')

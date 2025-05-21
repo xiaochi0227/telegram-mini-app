@@ -1,11 +1,13 @@
 <template>
-  <div class="mx-[1rem]  text-[28px] text-[#515360]" v-loading="isLoading">
-    <div class=" bg-white px-[20px] mb-[24px]">
-      <div class="flex justify-between items-center h-[100px]">
-        <nav-bar />
+  <div class="flex flex-col text-[28px] text-[#515360] h-full" v-loading="isLoading">
+    <van-sticky>
+      <div class="mx-[1rem] bg-white px-[20px] mb-[24px]">
+        <div class="flex justify-between items-center h-[100px]">
+          <nav-bar />
+        </div>
       </div>
-    </div>
-    <div class="space-y-4 text-[28px]">
+    </van-sticky>
+    <div class="flex-1 overflow-y-auto px-[1rem] space-y-4 text-[28px]">
       <!-- 发货单信息 -->
       <div class="bg-white rounded-[24px] shadow p-4">
         <div class="flex justify-between items-center">
@@ -14,7 +16,8 @@
             <p class="text-lg font-bold text-[#212121]">{{ order.tracking_no }}</p>
           </div>
           <div class="text-right">
-            <span class="bg-orange-100 text-orange-500 text-sm px-2 py-1 rounded">{{ order.tracking_status_str }}</span>
+            <span class="bg-orange-100 text-orange-500 text-sm px-2 py-1 rounded">{{ order.tracking_status_str
+            }}</span>
           </div>
         </div>
         <div class="mt-4 flex justify-between items-center">
@@ -60,15 +63,15 @@
           <p class="text-[#212121]">{{ order.add_time }}</p>
         </div>
       </div>
-    </div>
-    <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]'
-      @click="() => router.push({ path: '/account/logistics/goods', query: { id } })">
-      <div>{{ t('logistics.orderGoods') }}</div>
-      <i class="iconfont icon-Right"></i>
-    </div>
 
+      <div class='flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]'
+        @click="() => router.push({ path: '/account/logistics/goods', query: { id } })">
+        <div>{{ t('logistics.orderGoods') }}</div>
+        <i class="iconfont icon-Right"></i>
+      </div>
+    </div>
     <div @click="getBillImage"
-      class="fixed flex  bottom-0 inset-x-[32px] justify-between items-center bg-white rounded-t-[24px] mt-[24px]  shadow-[0_-2px_5px_0_#DBDBDB] h-[164px] px-[20px]">
+      class="flex mx-[32px] justify-between items-center bg-white rounded-t-[24px] mt-[24px]  shadow-[0_-2px_5px_0_#DBDBDB] h-[164px] px-[20px]">
       <div
         class="border border-[#FF356D] flex items-center justify-center text-[#FF356D] w-full h-[80px] rounded-[24px]">
         <span>{{ t('logistics.viewInvoice') }}</span>
