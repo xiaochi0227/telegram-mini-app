@@ -100,21 +100,23 @@
 import NavBar from '@/components/nav-bar/index.vue'
 import PhoneInput from '@/components/phone-input/index.vue'
 import { ref } from 'vue'
-import { Toast } from 'vant'
+import { Notify } from 'vant'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUser } from '@/hooks/user'
+import { useAppStore } from '../../store/index';
 
 const router = useRouter()
 const { t } = useI18n()
-const { register } = useUser()
+const { register, getVerificationCode } = useUser()
+const { tg_user_id } = useAppStore()
 
 const showPassword = ref(false)
 const loading = ref(false)
 
 const form = ref({
   account_type: 2,
-  country_code: 7,
+  country_code: '7',
   username: '',
   password: '',
   ver_code: '', // 新增
@@ -125,13 +127,17 @@ let timer: any = null
 const agree = ref(false)
 
 const sendCode = async () => {
+  const { username } = form.value
   if (!form.value.username) {
-    Toast(t('reg.phoneRequired'))
+    Notify({ type: 'danger', message: t('reg.phoneRequired') })
     return
   }
   // 这里调用发送验证码的接口
-  // await apiSendCode(form.value.username)
-  Toast(t('login.codeSent'))
+  const res = await getVerificationCode({username, tg_user_id, country_code: '7'})
+
+  if (!res) return 
+
+  Notify({ type: 'success', message: t('login.codeSent') })
   countdown.value = 60
   timer = setInterval(() => {
     countdown.value--
@@ -151,20 +157,19 @@ function openPrivacyPolicy() {
 
 const onRegister = async () => {
   if (!agree.value) {
-    Toast(t('login.agreementRequired'))
+    Notify({ type: 'danger', message: t('login.agreementRequired') })
     return
   }
 
   loading.value = true
 
-  const res = await register({ ...form.value })
+  const res = await register({ ...form.value, tg_user_id })
 
   loading.value = false
 
   if (res.code != 1) return
 
-  // 登录逻辑
-  Toast(t('login.registerSuc'))
+  Notify({ type: 'success', message: t('login.registerSuc') })
   router.back()
 }
 

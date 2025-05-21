@@ -2,10 +2,21 @@
   <div class="account px-[1rem] h-full overflow-y-auto" v-loading="isLoading">
     <van-sticky>
       <div class="bg-white px-[20px]">
-        <div class="border-b border-[#f4f4f4] flex justify-between items-center h-[100px]">
+        <div
+          class="border-b border-[#f4f4f4] flex justify-between items-center h-[100px]"
+        >
           <nav-bar />
           <div class="flex items-center space-x-2">
-            <van-image round width="32px" height="32px" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+            <van-image
+              round
+              width="32px"
+              height="32px"
+              :src="
+                user
+                  ? user.photo_url
+                  : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
+              "
+            />
             <!-- <div>
               mike
               <van-icon name="arrow-down" />
@@ -18,13 +29,16 @@
       <div class="text-sm py-3 text-left">{{ t('accountCenter.balance') }}</div>
       <Financial />
       <div class="flex justify-center space-x-4">
-        <button class="bg-[#FF356D] text-white px-[6px] py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
-          @click="() => router.push('/recharge')">
+        <button
+          class="bg-[#FF356D] text-white px-[6px] py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
+          @click="() => router.push('/recharge')"
+        >
           {{ t('accountCenter.recharge') }}
         </button>
         <button
           class="border border-[#E7E7E9] bg-white text-[#212121] px-[6px]py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
-          @click="() => router.push('/account/finance/operation-records')">
+          @click="() => router.push('/account/finance/operation-records')"
+        >
           {{ t('accountCenter.fundDetail') }}
         </button>
       </div>
@@ -35,7 +49,12 @@
       <h2 class="font-bold mb-2">{{ t('accountCenter.purchaseOrder') }}</h2>
       <div class="grid grid-cols-2 gap-4">
         <template v-if="orderStatusCards.length">
-          <div class="order-status" v-for="(item, index) in orderStatusCards" :key="index" @click="goPath(item.path)">
+          <div
+            class="order-status"
+            v-for="(item, index) in orderStatusCards"
+            :key="index"
+            @click="goPath(item.path)"
+          >
             <div class="flex items-center justify-between">
               <i :class="`iconfont ${item.icon}`"></i>
               <div class="num">{{ item.count }}</div>
@@ -49,13 +68,19 @@
     <div class="mt-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
       <h2 class="font-bold mb-2">{{ t('accountCenter.logistics') }}</h2>
       <div class="grid grid-cols-3 gap-4" v-if="logisticsStatusCards.length">
-        <div class="text-center logis-status" v-for="(item, index) in logisticsStatusCards" :key="index"
-          @click="goPath(item.path)">
+        <div
+          class="text-center logis-status"
+          v-for="(item, index) in logisticsStatusCards"
+          :key="index"
+          @click="goPath(item.path)"
+        >
           <i :class="`iconfont ${item.icon}`"></i>
           <div class="mt-[28px] text-[24px]">{{ item.title }}</div>
         </div>
       </div>
-      <div class="font-bold mt-[40px]">{{ t('accountCenter.logisticsPaid') }}</div>
+      <div class="font-bold mt-[40px]">
+        {{ t('accountCenter.logisticsPaid') }}
+      </div>
       <div class="text-center mt-[16px] text-[#004CE0] font-bold text-[32px]">
         $ {{ allTotalPrice }}
       </div>
@@ -98,8 +123,15 @@
     <div class="my-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px] contact">
       <h2 class="font-bold mb-2">{{ t('nav.contact') }}</h2>
       <div class="flex justify-around items-center">
-        <div class="text-center" v-for="method in contactMethods" :key="method.id">
-          <i :class="['iconfont', method.icon, method.colorClass]"  @click="handleContact(method.link)"></i>
+        <div
+          class="text-center"
+          v-for="method in contactMethods"
+          :key="method.id"
+        >
+          <i
+            :class="['iconfont', method.icon, method.colorClass]"
+            @click="handleContact(method.link)"
+          ></i>
         </div>
       </div>
     </div>
@@ -113,8 +145,11 @@ import NavBar from '@/components/nav-bar/index.vue'
 import Financial from './components/Financial.vue'
 import { accountApi } from '@/api'
 import { useI18n } from 'vue-i18n'
+import { useAppStore } from '../../store/index'
 const router = useRouter()
 const { t } = useI18n()
+
+const { user } = useAppStore()
 
 const contactMethods = [
   {
@@ -122,37 +157,37 @@ const contactMethods = [
     icon: 'icon-telegram',
     colorClass: 'text-[#28A7E7]',
     link: 'https://t.me/@pakupay',
-    tooltip: '通过Telegram联系我们'
+    tooltip: '通过Telegram联系我们',
   },
   {
     id: 'whatsapp',
     icon: 'icon-whatsup',
     colorClass: 'text-[#33CC33]',
     link: 'https://wa.me/+79153050184',
-    tooltip: '通过WhatsApp联系我们'
+    tooltip: '通过WhatsApp联系我们',
   },
   {
     id: 'phone',
     icon: 'icon-Phone',
     colorClass: 'text-[#FF356D]',
     link: 'tel:+79959922888',
-    tooltip: '拨打客服电话'
+    tooltip: '拨打客服电话',
   },
   {
     id: 'email',
     icon: 'icon-Email',
     colorClass: 'text-[#FF356D]',
     link: 'mailto:support@pakupay.com',
-    tooltip: '发送电子邮件'
-  }
-];
+    tooltip: '发送电子邮件',
+  },
+]
 
 interface Contact {
-  contact: string;
+  contact: string
 }
 const handleContact = (contact: Contact['contact']): void => {
-  window.location.href = `${contact}`;
-};
+  window.location.href = `${contact}`
+}
 
 const isLoading = ref(true)
 const allTotalPrice = ref(0)
@@ -293,8 +328,7 @@ onMounted(async () => {
   }
 }
 
-.contact>div>div {
-
+.contact > div > div {
   &:nth-child(1),
   &:nth-child(2) {
     .iconfont {

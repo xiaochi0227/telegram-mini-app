@@ -40,6 +40,22 @@
           ]"
           class="mb-4"
         />
+
+        <van-field
+          v-model="form.ver_code"
+          name="ver_code"
+          :placeholder="t('login.captchaPlaceholder')"
+          :rules="[{ required: true, message: t('login.captchaPlaceholder') }]"
+          class="mb-4 send-btn"
+        >
+          <template #button>
+            <captcha
+              :callInterface="true"
+              @code-change="(val) => (captchaCode = val)"
+            />
+          </template>
+        </van-field>
+
         <van-field
           v-model="form.password"
           name="password"
@@ -57,6 +73,7 @@
           size="large"
           type="primary"
           native-type="submit"
+          :loading="loading"
         >
           {{ t('login.title') }}
         </van-button>
@@ -74,33 +91,52 @@
 <script setup lang="ts">
 import NavBar from '@/components/nav-bar/index.vue'
 import PhoneInput from '@/components/phone-input/index.vue'
-import { ref, reactive } from 'vue'
-import { Toast } from 'vant'
+import Captcha from '@/components/captcha/index.vue'
+import { ref } from 'vue'
+import { Notify } from 'vant'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUser } from '@/hooks/user'
+import { useAppStore } from '../../store/index'
 
 const router = useRouter()
 const { t } = useI18n()
 const { login } = useUser()
+const { tg_user_id } = useAppStore()
 
-const showPassword = ref(false)
 const active = ref('2')
 const tabs = ref([
   { name: t('login.registerPhone'), value: '2' },
   { name: t('login.registerEmail'), value: '1' },
 ])
+const showPassword = ref(false)
 const loading = ref(false)
 
 const form = ref({
+  account_type: 2,
+  country_code: 7,
   phone: '',
   email: '',
   password: '',
+  ver_code: '', // 新增
 })
+const captchaCode = ref('')
 
 const onLogin = async () => {
-  const { phone, email, password } = form.value
+  const { phone, email, password, ver_code } = form.value
+  if (!captchaCode.value) {
+    Notify({ type: 'danger', message: t('login.captchaRequired') })
+    return
+  }
+
+  if (ver_code.toLowerCase() !== captchaCode.value.toLowerCase()) {
+    Notify({ type: 'danger', message: t('login.captchaError') })
+    return
+  }
+
   const params = {
+    tg_user_id,
+    ver_code: ver_code.toLowerCase(),
     account_type: active.value,
     password,
     country_code: active.value == 2 ? '7' : '',
@@ -113,10 +149,10 @@ const onLogin = async () => {
 
   loading.value = false
 
-  if (res.code != 1) return 
+  if (!res) return
 
   // 登录逻辑
-  Toast(t('login.loginSuccess'))
+  Notify({ type: 'success', message: t('login.loginSuccess') })
   router.back()
 }
 
@@ -148,6 +184,13 @@ function onRegister() {
 
     &:after {
       display: none;
+    }
+
+    &.send-btn {
+      .van-field__button {
+        margin-right: -30px;
+        height: 100%;
+      }
     }
 
     .van-field__body {

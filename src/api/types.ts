@@ -8,7 +8,13 @@ export interface ApiResponse<T = any> {
 
 export interface TgLoginParams {
   tg_user_id: string,
-  user_id: string;
+  user_id?: string;
+}
+
+export interface TgCodeParams {
+  tg_user_id: string,
+  username?: string;
+  country_code: string,
 }
 
 // User related types

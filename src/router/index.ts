@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Login',
     component: () => import('../views/login/index.vue'),
     meta: {
-      title: '返回',
+      title: 'header.back',
       showBack: true
     },
   },
@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Register',
     component: () => import('../views/register/index.vue'),
     meta: {
-      title: '返回',
+      title: 'header.back',
       showBack: true
     },
   },
@@ -86,7 +86,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'AccountChange',
     component: () => import('../views/account/change/index.vue'),
     meta: {
-      title: '切换账号',
+      title: 'account.changeAccount',
       showBack: true,
       requiresAuth: true
     },
@@ -413,7 +413,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/privacyPolicy',
     name: 'PrivacyPolicy',
-    component: () => import('../views/PrivacyPolicy.vue'),
+    component: () => import('../views/privacyPolicy.vue'),
     meta: {
       title: 'login.privacyLink',
       requiresAuth: false,
@@ -443,11 +443,11 @@ router.beforeEach((to, from, next) => {
 
   // 检查是否需要认证
   if (to.meta.requiresAuth) {
-    // const { user, loading } = useUser()
-    // if (!user.value || !loading.value) {
-    //   next({ name: 'Login' });
-    //   return;
-    // }
+    const { user } = useUser()
+    if (!user.value) {
+      next({ name: 'Login' });
+      return;
+    }
   }
   next();
 });
