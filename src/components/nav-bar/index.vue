@@ -29,7 +29,7 @@
       >
         <!-- 顶部用户信息 -->
         <div class="bg-[#FFFFFF] rounded-[24px] px-[32px] py-[48px]">
-          <div class="flex items-center" @click="goAccountInfo">
+          <div class="flex items-center cursor-pointer" @click="goAccountInfo">
             <van-image
               round
               width="32px"
@@ -51,7 +51,7 @@
               v-for="item in menuItems"
               :key="item.title"
               :title="item.title"
-              class="text-[24px]"
+              class="text-[24px] cursor-pointer"
               :class="{ active: item.path === route.path }"
               @click="onMenuClick(item)"
             >
