@@ -58,7 +58,7 @@ function showLoading(target: ShowLoadingOptions['target'], text: ShowLoadingOpti
       },
       render() {
         return h(Loading, {
-          text: text || '加载中...',
+          text: text,
           showClose: false,
           modelValue: this.isVisible,
           'onUpdate:modelValue': (val: boolean) => {

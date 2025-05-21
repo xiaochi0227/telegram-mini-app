@@ -13,11 +13,11 @@
       </div>
     </div>
 
-    <van-empty image-size="160" description="暂无数据" v-if="isEmpty" />
+    <van-empty image-size="160":description="t('noData')" v-if="isEmpty" />
 
     <div class="flex-1 px-[32px] overflow-y-auto scroll-container" v-else>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list v-model:loading="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
+        <van-list v-model:loading="loading" :loading-text="`${t('loading')}...`" :finished="finished" :finished-text="finishedText" @load="onLoad">
           <div class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]" v-for="item in list" :key="item"
             @click="handleDetail(item)">
             <!-- 顶部信息 -->
@@ -44,8 +44,8 @@
           </div> -->
             <div v-if="
               (item.order_status == 3 ||
-              item.order_status == 4 ||
-              item.order_status == 5) &&
+                item.order_status == 4 ||
+                item.order_status == 5) &&
               item.pay_status == 3
             ">
               <div class="w-full text-center bg-[#FF356D] h-[90px] leading-[90px] rounded-[24px] text-[#fff] my-[36px]"
@@ -104,12 +104,12 @@ interface OrderItem {
   order_no: string
   order_status: number
   order_status_str: string
-  pay_status:number
+  pay_status: number
   add_time: string
   total_price: number,
 }
 
-const handlePayment = (id:number) => {
+const handlePayment = (id: number) => {
   router.push('/account/purchase/payment?id=' + id)
 }
 

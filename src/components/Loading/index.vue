@@ -9,10 +9,11 @@
 </template>
 
 <script setup>
+import i18n from '../../plugins/i18n';
 defineProps({
   text: {
     type: String,
-    default: '加载中...'
+    default: `${i18n.global.t('loading')}...`
   },
   showClose: {
     type: Boolean,

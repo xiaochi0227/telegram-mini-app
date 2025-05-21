@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col text-[28px] text-[#515360] h-full" v-loading="isLoading">
+  <div class="flex flex-col h-full text-[28px] text-[#515360]" v-loading="isLoading">
     <van-sticky>
       <div class="mx-[1rem] bg-white px-[20px] mb-[24px]">
         <div class="flex justify-between items-center h-[100px]">
@@ -57,32 +57,34 @@
           </div>
           <template v-if="order.consumption_record">
             <template v-for="(record, index) in order.consumption_record" :key="index">
-              <div class="flex justify-between">
-                <p>{{ t('orderDetail.addTime') }}</p>
-                <p class="text-[#212121]">{{ record.add_time }}</p>
-              </div>
-              <div class="flex justify-between">
-                <p>交易ID</p>
-                <p class="text-[#212121]">{{ record.serial_no }}</p>
-              </div>
-              <div class="flex justify-between">
-                <p>{{ t('orderDetail.changeMoney') }}</p>
-                <p class="text-[#212121]">
-                  {{ record.currency_type == 1 ? 'USD' : 'CNY' }}
-                  &nbsp;
-                  {{ record.currency_type == 1 ? '$' : '￥' }}
-                  {{ record.change_money }}
-                </p>
-              </div>
-              <div class="flex justify-between">
-                <p>{{ t('orderDetail.payType') }}</p>
-                <p class="text-[#212121]">{{ record.pay_type_str }}</p>
-              </div>
+              <template v-if="index==0">
+                <div class="flex justify-between">
+                  <p>{{ t('orderDetail.addTime') }}</p>
+                  <p class="text-[#212121]">{{ record.add_time }}</p>
+                </div>
+                <div class="flex justify-between">
+                  <p>{{ t('orderDetail.transaction') }}</p>
+                  <p class="text-[#212121]">{{ record.serial_no }}</p>
+                </div>
+                <div class="flex justify-between">
+                  <p>{{ t('orderDetail.changeMoney') }}</p>
+                  <p class="text-[#212121]">
+                    {{ record.currency_type == 1 ? 'USD' : 'CNY' }}
+                    &nbsp;
+                    {{ record.currency_type == 1 ? '$' : '￥' }}
+                    {{ record.change_money }}
+                  </p>
+                </div>
+                <div class="flex justify-between">
+                  <p>{{ t('orderDetail.payType') }}</p>
+                  <p class="text-[#212121]">{{ record.pay_type_str }}</p>
+                </div>
+              </template>
             </template>
           </template>
 
-          <div v-if="order.consumption_record &&order.consumption_record.length>1">
-            <div class="dashed"></div>
+          <div v-if="order.consumption_record && order.consumption_record.length > 1">
+            <div class="dashed w-full h-[4px]"></div>
             <div class="pt-[24px] text-center text-[#FF356D] underline" @click="() =>
               router.push({
                 path: '/account/purchase/payInfo',
@@ -323,9 +325,7 @@ watchEffect(() => {
 }
 
 .dashed {
-  background: linear-gradient(90deg, #F9FAFC 50%, transparent 50%) 0 100% repeat-x;
+  background: linear-gradient(90deg, #f4f4f4 50%, transparent 50%) 0 100% repeat-x;
   background-size: 10px 2px;
-  /* 控制虚线长度和宽度 */
-  padding: 10px 0;
 }
 </style>

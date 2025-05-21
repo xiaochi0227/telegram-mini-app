@@ -585,5 +585,11 @@
 	"login.currentAccount": "当前",
 	"order.timer": "请在倒计时结束前完成支付",
 	"order.toPayment": "如何充值",
-	"account.changeAccount": "切换账号"
+	"account.changeAccount": "切换账号",
+	"purchase.detail":"采购订单详情",
+	"logistics.detail":"物流订单详情",
+	"receiptVoucher":"入库凭证",
+	"loading":"加载中",
+	"noData":"暂无数据",
+	"transaction":"交易ID"
 }

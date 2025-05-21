@@ -295,7 +295,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseOrder',
     component: () => import('../views/account/purchase/purchase-order.vue'),
     meta: {
-      title: '采购订单详情',
+      title: 'purchase.detail',
       showBack: true,
       requiresAuth: true
     },
@@ -325,7 +325,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseVoucher',
     component: () => import('../views/account/purchase/purchase-voucher.vue'),
     meta: {
-      title: '入库凭证',
+      title: 'receiptVoucher',
       showBack: true,
       requiresAuth: true
     },
@@ -375,7 +375,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'LogisticsOrder',
     component: () => import('../views/account/logistics/logistics-order.vue'),
     meta: {
-      title: '物流订单详情',
+      title: 'logistics.detail',
       showBack: true,
       requiresAuth: true
     },

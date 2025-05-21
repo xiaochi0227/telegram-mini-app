@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col text-[28px] text-[#515360] h-full" v-loading="isLoading">
+  <div class="flex flex-col h-full text-[28px] text-[#515360]" v-loading="isLoading">
     <van-sticky>
       <div class="mx-[1rem] bg-white px-[20px] mb-[24px]">
         <div class="flex justify-between items-center h-[100px]">
@@ -7,7 +7,7 @@
         </div>
       </div>
     </van-sticky>
-    <div class="flex-1 overflow-y-auto px-[1rem] space-y-4 text-[28px]">
+    <div class="flex-1 overflow-y-auto px-[1rem] space-y-4">
       <!-- 发货单信息 -->
       <div class="bg-white rounded-[24px] shadow p-4">
         <div class="flex justify-between items-center">
@@ -59,8 +59,18 @@
         <!-- 开始运输 -->
         <div class="bg-[#f4f4f4] rounded-[20px] h-[88px] p-4 flex justify-between items-center"
           @click="() => router.push({ path: '/account/logistics/detail', query: { id } })">
-          <p class="text-sm text-gray-500">{{ t('logistics.startTransportation') }}</p>
-          <p class="text-[#212121]">{{ order.add_time }}</p>
+          <template v-if="order.tracking_status == 2">
+            <p class="text-sm text-gray-500">{{ t('accountCenter.estimatedTime') }}</p>
+            <p class="text-[#212121]">{{ order.estimated_time }}</p>
+          </template>
+          <template v-else-if="order.tracking_status == 3">
+            <p class="text-sm text-gray-500">{{ t('logistics.allocationTime') }}</p>
+            <p class="text-[#212121]">{{ order.allocation_time }}</p>
+          </template>
+          <template v-else-if="order.tracking_status == 4">
+            <p class="text-sm text-gray-500">{{ t('logistics.endTime') }}</p>
+            <p class="text-[#212121">{{ order.signed_for_time }}</p>
+          </template>
         </div>
       </div>
 
@@ -95,6 +105,7 @@ const id = route.params.id
 const isLoading = ref(true);
 interface Order {
   tracking_no: string;
+  tracking_status: number;
   tracking_status_str: string;
   add_time: string;
   shipment_place: string;
@@ -102,10 +113,14 @@ interface Order {
   total_price: number;
   pay_type_str: string;
   pay_time: string;
+  estimated_time?: string;
+  allocation_time?: string;
+  signed_for_time?: string;
 }
 
 const order = ref<Order>({
   tracking_no: '',
+  tracking_status:0,
   tracking_status_str: '',
   add_time: '',
   shipment_place: '',
@@ -113,6 +128,9 @@ const order = ref<Order>({
   total_price: 0,
   pay_type_str: '',
   pay_time: '',
+  estimated_time:'',
+  allocation_time:'',
+  signed_for_time:'',
 });
 const bill_image = ref('');
 const getOrderDetail = async () => {
