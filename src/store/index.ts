@@ -71,13 +71,13 @@ export const useAppStore = defineStore('app', {
       } else {
         Notify({ type: 'danger', message: '用户未授权，请通过 Telegram 客户端重新打开 WebApp。'})
       }
-      // const initData = webApp.initData
-      // const res = await authApi.tgUserCheck(initData)
+      const initData = webApp.initData
+      const res = await authApi.tgUserCheck(initData)
 
-      // if (res.code != 1 && !res.data) {
-      //   Notify({ type: 'danger', message: '用户校验未通过'})
-      //   return
-      // }
+      if (res.code != 1 && !res.data) {
+        Notify({ type: 'danger', message: '用户校验未通过'})
+        return
+      }
 
       // 默认登录 如果登录过就会返回用户信息，没有就不放入缓存
       const { user, tgLogin } = useUser()
