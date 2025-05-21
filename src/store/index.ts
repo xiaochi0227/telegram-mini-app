@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { initTelegramWebApp } from '../utils/telegram';
 import { authApi } from '@/api/auth';
+import { useUser } from '@/hooks/user';
 
 export interface User {
   id?: string;
@@ -31,6 +32,10 @@ export const useAppStore = defineStore('app', {
   actions: {
     setUser(user: User | null) {
       this.user = user;
+
+      if (!user) return 
+
+      localStorage.setItem('tg_user', JSON.stringify(user));
       this.setTgUserId(user)
     },
     
@@ -45,6 +50,8 @@ export const useAppStore = defineStore('app', {
     // 设置tg_user_id
     setTgUserId(user: User | null) {
       this.tg_user_id = user?.id || ''
+
+      localStorage.setItem('tg_user_id', this.tg_user_id);
     },
 
     async initTelegramApp() {
@@ -70,6 +77,9 @@ export const useAppStore = defineStore('app', {
         console.warn('用户校验未通过');
         return
       }
+
+      // 默认登录 如果登录过就会返回用户信息，没有就不放入缓存
+      useUser().tgLogin({ tg_user_id: this.tg_user_id, user_id: '' })
 
       // // 设置主题
       // if (webApp.themeParams) {

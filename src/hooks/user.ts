@@ -1,6 +1,6 @@
 import { ref, computed, readonly } from 'vue';
 import { useRouter } from 'vue-router';
-import type { LoginParams, RegisterParams } from '@/api/types';
+import type { TgLoginParams, LoginParams, RegisterParams, TgCodeParams } from '@/api/types';
 import { authApi } from '@/api/auth';
 
 export interface User {
@@ -38,6 +38,28 @@ export function useUser() {
 
   // 立即执行检查
   checkAuth();
+
+  //选择登录对应的pakupay账号
+  // 进入后先调用该接口判断是否之前登陆过，登陆过就默认登录并放入登录信息
+  const tgLogin = async (params: TgLoginParams): Promise<boolean> => {
+    try {
+      const res = await authApi.tgLogin(params);
+
+      if (res.code !== 1 || !res.data || !res.data.length) return false;
+
+      const { userInfo } = res.data;
+
+      // 存储认证数据到 localStorage
+      localStorage.setItem('token', userInfo.token);
+      localStorage.setItem('user', JSON.stringify(userInfo));
+
+      user.value = userInfo;
+      return true;
+    } catch (error) {
+      console.error('Login failed:', error);
+      return false;
+    }
+  };
 
   // 登录
   const login = async (params: LoginParams): Promise<boolean> => {
@@ -79,6 +101,20 @@ export function useUser() {
     }
   };
 
+  // 获取验证码
+  const getVerificationCode = async (params: TgCodeParams): Promise<boolean> => {
+    try {
+      const res = await authApi.getTgChatCode(params);
+
+      if (res.code !== 1) return false;
+      
+      return true;
+    } catch (error) {
+      console.error('get verify code:', error);
+      return false;
+    }
+  };
+
   // 登出
   const logout = (): boolean => {
     try {
@@ -104,7 +140,7 @@ export function useUser() {
   // 设置用户名
   const setUserName = (username: string): void => {
     if (!user.value) return;
-    
+
     const updatedUser = { ...user.value, nickname: username };
     localStorage.setItem('user', JSON.stringify(updatedUser));
     user.value = updatedUser;
@@ -139,5 +175,7 @@ export function useUser() {
     setUserName,
     setUser,
     checkAuth,
+    tgLogin,
+    getVerificationCode
   };
 }
