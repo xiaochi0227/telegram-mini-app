@@ -573,5 +573,6 @@
 	"logistics.detail":"Детали логистического заказа",
 	"receiptVoucher":"Складская накладная",
 	"loading":"Загрузка",
-	"noData":"Данных нет"
+	"noData":"Данных нет",
+	"transaction":"交易ID"
 }

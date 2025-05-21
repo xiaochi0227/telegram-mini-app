@@ -63,7 +63,7 @@
                   <p class="text-[#212121]">{{ record.add_time }}</p>
                 </div>
                 <div class="flex justify-between">
-                  <p>交易ID</p>
+                  <p>{{ t('orderDetail.transaction') }}</p>
                   <p class="text-[#212121]">{{ record.serial_no }}</p>
                 </div>
                 <div class="flex justify-between">

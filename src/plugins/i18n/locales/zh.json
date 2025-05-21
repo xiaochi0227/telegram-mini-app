@@ -590,5 +590,6 @@
 	"logistics.detail":"物流订单详情",
 	"receiptVoucher":"入库凭证",
 	"loading":"加载中",
-	"noData":"暂无数据"
+	"noData":"暂无数据",
+	"transaction":"交易ID"
 }
