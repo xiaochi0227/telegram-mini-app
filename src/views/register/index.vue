@@ -28,7 +28,7 @@
               <van-button
                 size="small"
                 type="primary"
-                :disabled="countdown > 0"
+                :disabled="sending || countdown > 0"
                 @click="sendCode"
               >
                 {{
@@ -81,6 +81,7 @@
           size="large"
           type="primary"
           native-type="submit"
+          :loading="loading"
         >
           {{ t('login.registerButton') }}
         </van-button>
@@ -125,6 +126,7 @@ const form = ref({
 const countdown = ref(0)
 let timer: any = null
 const agree = ref(false)
+const sending  = ref(false)
 
 const sendCode = async () => {
   const { username } = form.value
@@ -132,8 +134,12 @@ const sendCode = async () => {
     Notify({ type: 'danger', message: t('reg.phoneRequired') })
     return
   }
+
+  sending.value = true
   // 这里调用发送验证码的接口
   const res = await getVerificationCode({username, tg_user_id, country_code: '7'})
+
+  sending.value = false
 
   if (!res) return 
 
@@ -163,14 +169,14 @@ const onRegister = async () => {
 
   loading.value = true
 
-  const res = await register({ ...form.value, tg_user_id })
+  const res = await register({ ...form.value, tg_user_id  })
 
   loading.value = false
 
-  if (res.code != 1) return
+  if (!res) return
 
   Notify({ type: 'success', message: t('login.registerSuc') })
-  router.back()
+  router.replace('/')
 }
 
 function onLogin() {

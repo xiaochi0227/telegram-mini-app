@@ -22,7 +22,7 @@
               : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
           "
         />
-        <span class="text-[28px] font-[500]">{{ pakupayUser.username }}</span>
+        <span class="text-[28px] font-[500]">{{ getName() }}</span>
       </div>
     </div>
 
@@ -59,11 +59,20 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUser } from '@/hooks/user'
 import { useAppStore } from '@/store/index'
+import { formattedPhone } from '@/utils/format'
 
 const router = useRouter()
 const { t } = useI18n()
 const { user: pakupayUser, logout } = useUser()
 const { user } = useAppStore()
+
+const getName = () => {
+  const username = pakupayUser.value.username
+  if (username.includes('@')) {
+    return username
+  }
+  return '+7 ' + formattedPhone(username)
+}
 
 const goChangeAccount = () => {
   router.push('/account/change')

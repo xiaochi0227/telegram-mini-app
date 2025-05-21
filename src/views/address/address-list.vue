@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col px-[32px] min-h-screen">
-    <div class="nav-header px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
+  <div class="flex flex-col h-full">
+    <div class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
       <nav-bar />
 
       <div class="py-[24px] border-t border-[#F4F4F4]">
@@ -18,7 +18,7 @@
     </div>
 
     <van-skeleton clas="flex-1" title row="6" :loading="loading">
-      <div class="flex-1 overflow-y-auto">
+      <div class="flex-1 px-[32px] pb-[32px] overflow-y-auto">
         <!-- 地址列表 -->
         <div v-if="addressStore.addressList.length" class="space-y-4">
           <div
@@ -70,7 +70,7 @@
       </div>
 
       <!-- 添加地址按钮 -->
-      <div class="px-[20px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow">
+      <div class="px-[20px] mx-[32px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow">
         <van-button
           class="font-bold"
           color="#FF356D"

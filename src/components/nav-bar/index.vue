@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex items-center py-[32px]">
+    <div class="flex items-center py-[32px] cursor-pointer" @click="handleOpeator">
       <template v-if="!hideIcon">
         <i class="iconfont icon-Back" v-if="route.meta.showBack" @click="router.back()"></i>
         <i class="iconfont icon-Menu" v-else @click="showPopup = true"></i>
@@ -19,7 +19,7 @@
       >
         <!-- 顶部用户信息 -->
         <div class="bg-[#FFFFFF] rounded-[24px] px-[32px] py-[48px]">
-          <div class="flex items-center" @click="goAccountInfo">
+          <div class="flex items-center cursor-pointer" @click="goAccountInfo">
             <van-image
               round
               width="32px"
@@ -31,7 +31,7 @@
               "
             />
             <span class="ml-3 text-[28px] font-bold text-[#515360]">
-              {{ pakupayUser.username }}
+              {{ getName() }}
             </span>
             <van-icon name="arrow" class="ml-2" color="#515360" />
           </div>
@@ -41,7 +41,7 @@
               v-for="item in menuItems"
               :key="item.title"
               :title="item.title"
-              class="text-[24px]"
+              class="text-[24px] cursor-pointer"
               :class="{ active: item.path === route.path }"
               @click="onMenuClick(item)"
             >
@@ -66,6 +66,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '../../store/index'
 import { useUser } from '@/hooks/user'
+import { formattedPhone } from '@/utils/format'
 
 const props = withDefaults(
   defineProps<{
@@ -84,6 +85,15 @@ const { user: pakupayUser } = useUser()
 const navTitle = computed(() => route.meta.title || '标题')
 const showPopup = ref(false)
 
+const getName = () => {
+  const username = pakupayUser.value.username
+  if (username.includes('@')) {
+    return username
+  }
+  return '+7 ' + formattedPhone(username)
+}
+
+
 // 菜单项数组
 const menuItems = [
   { title: t('nav.account'), icon: 'user-o', path: '/account/center' },
@@ -98,6 +108,19 @@ function onMenuClick(item: any) {
     router.push(item.path)
     showPopup.value = false
   }
+}
+
+// 头部点击
+const handleOpeator = () => {
+  if (props.hideIcon) return 
+
+  if (route.meta.showBack) {
+    const { user } = useUser()
+
+    if (user.value) router.back()
+    else router.replace('/')
+  }
+  else showPopup.value = true
 }
 
 const goAccountInfo = () => {

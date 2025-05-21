@@ -4,6 +4,7 @@ import { authApi } from '@/api/auth';
 import { useUser } from '@/hooks/user';
 import { Notify } from 'vant';
 
+
 export interface User {
   id?: string;
   firstName?: string;
@@ -79,7 +80,9 @@ export const useAppStore = defineStore('app', {
       }
 
       // 默认登录 如果登录过就会返回用户信息，没有就不放入缓存
-      useUser().tgLogin({ tg_user_id: this.tg_user_id, user_id: '' })
+      const { user, tgLogin } = useUser()
+
+      if (!user.value) tgLogin({ tg_user_id: this.tg_user_id, user_id: '' })
 
       // // 设置主题
       // if (webApp.themeParams) {
