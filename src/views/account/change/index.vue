@@ -20,7 +20,7 @@
             round
             width="45px"
             height="45px"
-            src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+            :src="item.avatar"
           />
           <span class="text-[28px] font-[500]">{{ getName(item.username) }}</span>
         </div>
