@@ -17,7 +17,7 @@
 
     <van-empty image-size="160" description="暂无数据" v-if="isEmpty" />
     
-    <div class="flex-1 px-[32px] overflow-y-auto" v-else>
+    <div class="flex-1 px-[32px] overflow-y-auto scroll-container" v-else>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
@@ -73,6 +73,7 @@
           </div>
         </van-list>
       </van-pull-refresh>
+      <back-top />
     </div>
   </div>
   <van-popup v-model:show="showPicker" round position="bottom">
@@ -88,6 +89,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import NavBar from '@/components/nav-bar/index.vue'
+import BackTop from '@/components/back-top/index.vue'
 import { logisticsApi } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'

@@ -5,73 +5,77 @@
         <nav-bar />
       </div>
     </div>
-    <div class="flex-1 overflow-y-auto mx-[32px]">
-      <van-tabs v-model:active="active" swipeable @change="onChange">
-        <van-tab v-for="item in tabs" :title="item.title" :key="item.id">
-          <van-empty image-size="160" description="暂无数据" v-if="isEmpty" />
-          <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-else class="pt-[80px]">
-            <van-list v-model:loading="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
-              <div v-for="item in list" :key="item" class="bg-white rounded-lg shadow p-4 mt-4  text-[#515360]">
-                <!-- 时间 -->
-                <div class="flex items-center  text-sm mb-4">
-                  <i class="iconfont icon-Time mr-2"></i>
-                  <span class="text-[#212121]">{{ item.add_time }}</span>
-                </div>
-                <!-- 资金单号 -->
-                <div class="flex justify-between  text-base mb-2">
-                  <span>{{ t('finace.fundNo') }}</span>
-                  <span>{{ item.serial_no }}</span>
-                </div>
-                <!-- 消费类型 -->
-                <div class="flex justify-between  text-base mb-2" v-if="active === 0">
-                  <span>{{ t('finace.costType') }}</span>
-                  <span>{{ item.pay_type_str }}</span>
-                </div>
-                <!-- 关联订单号 -->
-                <div class="flex justify-between  text-base mb-2" v-if="active === 0">
-                  <span>{{ t('finace.orderNo') }}</span>
-                  <span>{{ item.entity_no }}</span>
-                </div>
-                <!-- 消费记录 -->
-                <div class="flex justify-between  text-base" v-if="active === 0">
-                  <span>{{ t('finace.costAmount') }}</span>
-                  <template v-if="item.change_type === 5">
-                    <section v-if="item.entity_type === 6">
-                      <div class="text-blue-500 font-bold">-${{ item.usd_money }}</div>
-                      <div class="text-blue-500 font-bold">+¥{{ item.rmb_money }}</div>
-                    </section>
-                    <section v-else>
-                      <div class="text-blue-500 font-bold">-¥{{ item.rmb_money }}</div>
-                      <div class="text-blue-500 font-bold">+${{ item.usd_money }}</div>
-                    </section>
-                  </template>
-                  <template v-else>
+    <div class="flex-1 overflow-y-auto scroll-container">
+      <div class="mx-[32px]">
+        <van-tabs v-model:active="active" swipeable @change="onChange">
+          <van-tab v-for="item in tabs" :title="item.title" :key="item.id">
+            <van-empty image-size="160" description="暂无数据" v-if="isEmpty" />
+            <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-else class="pt-[80px]">
+              <van-list v-model:loading="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
+                <div v-for="item in list" :key="item.add_time" class="bg-white rounded-lg shadow p-4 mt-4  text-[#515360]">
+                  <!-- 时间 -->
+                  <div class="flex items-center  text-sm mb-4">
+                    <i class="iconfont icon-Time mr-2"></i>
+                    <span class="text-[#212121]">{{ item.add_time }}</span>
+                  </div>
+                  <!-- 资金单号 -->
+                  <div class="flex justify-between  text-base mb-2">
+                    <span>{{ t('finace.fundNo') }}</span>
+                    <span>{{ item.serial_no }}</span>
+                  </div>
+                  <!-- 消费类型 -->
+                  <div class="flex justify-between  text-base mb-2" v-if="active === 0">
+                    <span>{{ t('finace.costType') }}</span>
+                    <span>{{ item.pay_type_str }}</span>
+                  </div>
+                  <!-- 关联订单号 -->
+                  <div class="flex justify-between  text-base mb-2" v-if="active === 0">
+                    <span>{{ t('finace.orderNo') }}</span>
+                    <span>{{ item.entity_no }}</span>
+                  </div>
+                  <!-- 消费记录 -->
+                  <div class="flex justify-between  text-base" v-if="active === 0">
+                    <span>{{ t('finace.costAmount') }}</span>
+                    <template v-if="item.change_type === 5">
+                      <section v-if="item.entity_type === 6">
+                        <div class="text-blue-500 font-bold">-${{ item.usd_money }}</div>
+                        <div class="text-blue-500 font-bold">+¥{{ item.rmb_money }}</div>
+                      </section>
+                      <section v-else>
+                        <div class="text-blue-500 font-bold">-¥{{ item.rmb_money }}</div>
+                        <div class="text-blue-500 font-bold">+${{ item.usd_money }}</div>
+                      </section>
+                    </template>
+                    <template v-else>
+                      <div class="text-blue-500 font-bold">
+                        {{ item.change_type === 3 ? '+' : '-' }}
+                        {{ item.change_money ? `¥${item.change_money}` : '' }}
+                      </div>
+                    </template>
+                  </div>
+                  <!-- 充值记录 -->
+                  <div class="flex justify-between  text-base" v-else>
+                    <span>金额</span>
                     <div class="text-blue-500 font-bold">
-                      {{ item.change_type === 3 ? '+' : '-' }}
-                      {{ item.change_money ? `¥${item.change_money}` : '' }}
+                      {{ item.currency_type == 1 ? 'USD $' : 'CNY ￥' }}
+                      {{ item.change_money }}
                     </div>
-                  </template>
-                </div>
-                <!-- 充值记录 -->
-                <div class="flex justify-between  text-base" v-else>
-                  <span>金额</span>
-                  <div class="text-blue-500 font-bold">
-                    {{ item.currency_type == 1 ? 'USD $' : 'CNY ￥' }}
-                    {{ item.change_money }}
                   </div>
                 </div>
-              </div>
-            </van-list>
-          </van-pull-refresh>
+              </van-list>
+            </van-pull-refresh>
 
-        </van-tab>
-      </van-tabs>
+          </van-tab>
+        </van-tabs>
+      </div>
+      <back-top />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import NavBar from '@/components/nav-bar/index.vue';
+import BackTop from '@/components/back-top/index.vue'
 import { useRoute } from 'vue-router';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -91,7 +95,20 @@ const active = ref(0);
 const isEmpty = ref(false);
 const finishedText = ref('没有更多了');
 active.value = Number(route.query.active) || 0;
-const list = ref([]);
+interface ListItem {
+  add_time: string;
+  serial_no: string;
+  pay_type_str?: string;
+  entity_no?: string;
+  change_type?: number;
+  entity_type?: number;
+  usd_money?: number;
+  rmb_money?: number;
+  change_money?: number;
+  currency_type?: number;
+}
+
+const list = ref<ListItem[]>([]);
 const loading = ref(false);
 const finished = ref(false);
 const refreshing = ref(false);

@@ -91,6 +91,7 @@
   --van-field-icon-size: 38px !important;
 
   --van-tag-line-height: 40px !important;
+  --van-list-text-line-height:64px !important;
 }
 
 a {
