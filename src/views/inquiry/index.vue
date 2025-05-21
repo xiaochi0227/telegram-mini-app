@@ -22,7 +22,7 @@
         />
 
         <div class="px-[20px] mb-[40px]">
-          <p class="text-[28px] font-[600] mb-1">商品图片</p>
+          <p class="text-[28px] font-[600] mb-1">{{ t('inquiry.picture') }}</p>
           <!-- 商品图片上传 -->
           <!-- 上传按钮 -->
           <van-uploader
@@ -43,7 +43,7 @@
               <template v-else>
                 <i class="iconfont icon-Picture"></i>
                 <p class="text-[28px] text-[#C7C7C7] font-[500]">
-                  点击上传图片
+                  {{ t('inquiry.uploadPicture') }}
                 </p>
               </template>
             </div>
@@ -51,7 +51,7 @@
 
           <!-- 上传信息 -->
           <van-cell
-            :title="`已上传${product.fileList.length}/${maxCount}`"
+            :title="`${t('inquiry.alreadyUpload')}${product.fileList.length}/${maxCount}`"
             is-link
             class="view-file"
             @click="handleGoodsPicture(product.fileList, index)"
@@ -79,12 +79,16 @@
           <!-- 商品名称 -->
           <van-field
             v-model="product.product_name"
+            maxlength="100"
             :name="`products[${index}].product_name`"
             :label="t('inquiry.productName')"
             :placeholder="t('inquiry.productNamePlaceholder')"
             :rules="[
               { required: true, message: t('inquiry.productNamePlaceholder') },
-              { min: 2, max: 100, message: '商品名称在2到100个字符之间' },
+              { 
+                validator: (val) => val.length >= 2 && val.length <= 100,
+                message: t('inquiry.nameLimit')
+              },
             ]"
             class="mb-4"
           />
@@ -495,6 +499,7 @@ onActivated(() => {
   }
 
   :deep(.van-cell__title) {
+    width: 100%;
     font-size: 28px;
     color: #212121;
     font-weight: 500;

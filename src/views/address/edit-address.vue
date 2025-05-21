@@ -16,7 +16,7 @@
           :model-value="form.country_name"
           is-link
           readonly
-          label="国家"
+          :label="t('address.country')"
           :placeholder="t('address.select') + t('address.country')"
           @click="showCountry = true"
           :rules="rules.country_id"
@@ -139,7 +139,7 @@
           size="large"
           :disabled="btnLoading"
         >
-          确认
+          {{ t('resetPassword.confirm') }}
         </van-button>
       </div>
     </van-form>
@@ -314,6 +314,7 @@ onMounted(() => {
   }
 
   :deep(.van-cell__title) {
+    width: 100%;
     font-size: 28px;
     color: #212121;
     font-weight: 500;

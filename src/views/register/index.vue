@@ -21,14 +21,21 @@
         >
           <template #button>
             <div class="flex justify-center items-center h-full px-[30px]">
-              <i class="iconfont icon-telegram text-[#28A7E7]" v-if="countdown == 0"></i>
+              <i
+                class="iconfont icon-telegram text-[#28A7E7]"
+                v-if="countdown == 0"
+              ></i>
               <van-button
                 size="small"
                 type="primary"
                 :disabled="countdown > 0"
                 @click="sendCode"
               >
-                {{ countdown > 0 ? `${countdown}s后重试` : t('login.getVerificationCode') }}
+                {{
+                  countdown > 0
+                    ? t('login.tryAgin', { time: countdown })
+                    : t('login.getVerificationCode')
+                }}
               </van-button>
             </div>
           </template>

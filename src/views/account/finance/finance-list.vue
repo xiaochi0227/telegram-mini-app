@@ -93,7 +93,7 @@ const pagination = ref({
 });
 const active = ref(0);
 const isEmpty = ref(false);
-const finishedText = ref('没有更多了');
+const finishedText = ref(t('no more'));
 active.value = Number(route.query.active) || 0;
 interface ListItem {
   add_time: string;
@@ -158,7 +158,7 @@ const onLoad = () => {
       return;
     } else {
       isEmpty.value = false;
-      finishedText.value = '没有更多了';
+      finishedText.value = t('no more');
     }
     const { list: data = [], total = 0 } = res.data || {};
     pagination.value.total = total;

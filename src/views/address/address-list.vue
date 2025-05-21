@@ -12,7 +12,7 @@
           size="small"
           @click="handleAddAddress"
         >
-          <van-icon name="plus" />&nbsp;添加新地址
+          <van-icon name="plus" />&nbsp;{{ t('address.add') }}
         </van-button>
       </div>
     </div>
@@ -36,7 +36,7 @@
               class="absolute left-0 top-0 bg-[#FFF1E5] text-[#FF8A21] text-[24px] px-[18px] py-[18px] rounded-br-[14px] leading-[1]"
               style="z-index: 2"
             >
-              默认地址
+              {{ t('address.default') }}
             </div>
             <p
               class="text-[#212121] text-[28px]"
@@ -66,7 +66,7 @@
         </div>
 
         <!-- 空状态 -->
-        <van-empty v-else description="暂无地址" />
+        <van-empty v-else :description="t('no data')" />
       </div>
 
       <!-- 添加地址按钮 -->
@@ -79,7 +79,7 @@
           size="large"
           @click="handleSelectAddress"
         >
-          确认
+          {{ t('resetPassword.confirm') }}
         </van-button>
       </div>
     </van-skeleton>
@@ -127,14 +127,11 @@ const handleSelectAddress = () => {
   const selected_list = addressStore.addressList.filter(
     (address) => address.active
   )
-  if (!selected_list.length) {
-    Notify({ type: 'warning', message: '请选择地址' })
+  if (!selected_list.length || selected_list.length > 1) {
+    Notify({ type: 'warning', message: t('checkout.onlyOneAddress') })
     return
   }
-  if (selected_list.length > 1) {
-    Notify({ type: 'warning', message: '请选择一个地址' })
-    return
-  }
+  
   const selected_address = selected_list[0]
   addressStore.setAddress(selected_address)
   router.back()

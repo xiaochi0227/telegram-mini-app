@@ -53,7 +53,7 @@
             </div>
             <div class="flex justify-between items-center">
               <span class="text-[#212121] text-[28px]">
-                {{ t('myInquiries.product_count') }}/已报价
+                {{ t('myInquiries.product_count') }}/{{ t('order.aleadyQuota') }}
               </span>
               <span class="text-[#515360] text-[24px]">
                 {{ item.product_count }}/{{ item.quotation_num }}

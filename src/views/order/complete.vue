@@ -5,9 +5,16 @@
     <div class="mt-[-80px] mb-4">
       <van-icon name="passed" size="64" color="#F73C6B" />
     </div>
-    <div class="font-bold mb-2 text-center text-[44px]">支付成功</div>
+    <div class="font-bold mb-2 text-center text-[44px]">
+      {{ t('checkout.paymentSuccess') }}
+    </div>
     <div class="text-[#515360] text-[28px] text-center mb-10">
-      您可以到 账户中心 - 订单管理 中查看订单详情
+      {{
+        t('checkout.orderDetailsHint', {
+          account: t('nav.account'),
+          orders: t('menu.orders'),
+        })
+      }}
     </div>
     <div class="flex flex-col gap-2 w-full">
       <van-button
@@ -18,7 +25,7 @@
         round
         @click="goOrderDetail"
       >
-        查看订单详情
+        {{ t('checkout.viewOrderDetails') }}
       </van-button>
       <van-button
         block
@@ -28,7 +35,7 @@
         round
         @click="goHome"
       >
-        返回首页
+        {{ t('checkout.backToHome') }}
       </van-button>
     </div>
   </div>
@@ -39,7 +46,9 @@ import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Icon as VanIcon, Button as VanButton } from 'vant'
 import { decryptParams } from '@/utils/encryption'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const decryptedData = ref({})
@@ -51,7 +60,7 @@ decryptedData.value = encryptedData
   : {}
 
 function goOrderDetail() {
-	const { purchase_order_id } = decryptedData.value 
+  const { purchase_order_id } = decryptedData.value
   router.push('/account/purchase/' + purchase_order_id) // 根据实际路由调整
 }
 

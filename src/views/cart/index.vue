@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col h-full">
-    <div class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
+    <div
+      class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]"
+    >
       <nav-bar />
     </div>
 
@@ -17,7 +19,7 @@
             @click="toggleAll"
             class="mb-[36px]"
           >
-            全选
+            {{ t('cart.selectAll') }}
           </van-checkbox>
 
           <!-- 商品列表 -->
@@ -47,11 +49,15 @@
                     <p class="text-[26px] text-[#212121] pt-[10px]">
                       {{ item.product_name }}
                     </p>
-                    <p class="text-[20px] text-[#515360] mt-[14px]">单价</p>
+                    <p class="text-[20px] text-[#515360] mt-[14px]">
+                      {{ t('inquiriesDetails.unitPprice') }}
+                    </p>
                     <p class="text-[28px] text-[#004CE0] font-bold">
                       {{ t('cart.price') }}{{ item.unit_price }}
                     </p>
-                    <p class="text-[20px] text-[#515360] mt-[14px]">服务费</p>
+                    <p class="text-[20px] text-[#515360] mt-[14px]">
+                      {{ t('cart.serviceFee') }}
+                    </p>
                     <p class="text-[28px] text-[#A5A8B9] font-[500]">
                       {{ t('cart.price') }} &nbsp;￥{{
                         (
@@ -83,14 +89,18 @@
         </div>
 
         <!-- 空状态 -->
-        <van-empty v-else description="购物车没有商品啦，快去添加吧~" />
+        <van-empty v-else :description="t('cart.nodata')" />
       </div>
 
       <div
         class="flex flex-col mx-[32px] px-[20px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow"
       >
         <p class="text-[#515360] text-[28px]">
-          已选择, {{ selectedRowKeys.length }} 件商品
+          {{
+            t('cart.selectedCount', {
+              count: selectedRowKeys.length,
+            })
+          }}
         </p>
 
         <div class="flex justify-between items-center my-[24px]">
@@ -175,10 +185,10 @@ const onSelectItem = (id) => {
 // 删除
 const handleRemove = (id) => {
   Dialog.confirm({
-    title: '提示',
-    message: '确认移除该商品吗',
-    confirmButtonText: '确认',
-    cancelButtonText: '取消',
+    title: t('checkout.tips'),
+    message: t('cart.confirmRemove'),
+    confirmButtonText: t('resetPassword.confirm'),
+    cancelButtonText: t('address.cancel'),
     confirmButtonColor: '#FF356D',
   })
     .then(() => {

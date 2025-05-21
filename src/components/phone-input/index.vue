@@ -1,14 +1,14 @@
 <template>
   <van-field
     v-model="phone"
-    placeholder="请输入手机号码"
+    :placeholder="t('login.registerPhonePlaceholder')"
     maxlength="13"
     class="phone-input"
     :class="{ 'no-required': !required }"
     :formatter="formatterNumber"
     :rules="[
-      { required: required, message: '请输入手机号' },
-      { validator: validatePhone, message: '请输入正确的手机号' }
+      { required: required, message: t('login.registerPhonePlaceholder') },
+      { validator: validatePhone, message: t('login.registerPhoneInvalid') }
     ]"
   >
     <template #button>
@@ -18,6 +18,9 @@
 </template>
 <script setup lang="ts">
 import { computed, withDefaults, defineProps, defineEmits } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 interface Props {
   countryCode?: string

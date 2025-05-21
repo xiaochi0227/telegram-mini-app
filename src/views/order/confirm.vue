@@ -10,18 +10,18 @@
         <div
           class="flex justify-between items-center py-[20px] text-[28px] font-[600] border-b border-[#F4F4F4]"
         >
-          <span>采购订单号：</span>
+          <span>{{ t('orderConfirm.orderNo') }}：</span>
           <span>{{ order_no }}</span>
         </div>
 
         <p class="mx-8 pb-10 pt-4 text-[28px] text-[#515360] text-center">
-          为避免价格波动引起后续补款或退款，请等待业务员确认价格，确认后我们将与您联系，请耐心等待。
+          {{ t('orderConfirm.waitForPrice') }}
         </p>
       </div>
 
       <div class="px-[24px] mb-[28px] py-4 bg-white rounded-[12px] shadow-sm">
         <p class="mx-8 pb-6 text-[28px] text-[#515360] text-center">
-          您可以通过以下方式主动联系业务员。
+          {{ t('orderConfirm.contactSales') }}
         </p>
 
         <div
@@ -34,16 +34,16 @@
 
         <div
           class="py-[10px] text-center text-[28px] border border-[#E7E7E9] rounded-[12px]"
-          @click="handleContact('tel:+17774072288')"
+          @click="handleContact('tel:+7995992-28-88')"
         >
           <i class="iconfont icon-Phone text-[#FF356D] mr-1"></i>
-          <span>+86 17774072288</span>
+          <span>+7 995 992-28-88</span>
         </div>
       </div>
 
       <!-- 商品信息 -->
       <van-cell
-        title="商品信息"
+        :title="t('order.goodsInfo')"
         is-link
         class="view-detail mb-[28px]"
         :to="`/goods?entry=${decryptedData.entry}`"
@@ -51,7 +51,7 @@
 
       <!-- 地址信息 -->
       <van-cell
-        title="地址信息"
+        :title="t('orderDetail.adsInfo')"
         is-link
         class="view-detail mb-[28px]"
         to="/address"
@@ -68,7 +68,9 @@ import { decryptParams } from '@/utils/encryption'
 import { inquiryApi } from '@/api'
 import { Notify } from 'vant'
 import { useOrderStore } from '@/store/order'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const decryptedData = ref({})
 

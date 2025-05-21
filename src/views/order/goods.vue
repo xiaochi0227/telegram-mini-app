@@ -28,14 +28,14 @@
           <div
             class="flex justify-between items-center mt-1 text-[24px] text-[#515360]"
           >
-            <span>单价</span>
+            <span>{{ t('inquiriesDetails.unitPprice') }}</span>
             <span>¥{{ item.price }}</span>
           </div>
 
           <div
             class="flex justify-between items-center mt-1 text-[24px] text-[#515360]"
           >
-            <span>商品数量</span>
+            <span>{{ t('order.productNum') }}</span>
             <span>{{ item.product_num }}</span>
           </div>
 
@@ -50,14 +50,14 @@
             class="flex flex-col bg-[#F4F4F4] mt-2 rounded-[10px] px-[20px] py-[12px] text-[#515360] text-[24px]"
             v-if="entry == 4"
           >
-            <span
-              >{{ t('checkout.packingQuantity') }}&nbsp;{{
+            <span>
+              {{ t('checkout.packingQuantity') }}&nbsp;{{
                 item.packing_quantity
-              }}</span
-            >
-            <span class="mt-1"
-              >{{ t('checkout.totalBoxes') }}&nbsp;{{ item.package_num }}</span
-            >
+              }}
+            </span>
+            <span class="mt-1">
+              {{ t('checkout.totalBoxes') }}&nbsp;{{ item.package_num }}
+            </span>
           </div>
         </div>
       </div>

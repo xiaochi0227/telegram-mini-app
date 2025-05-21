@@ -30,7 +30,7 @@
           text-color="#FF8A21"
           class="!rounded-[12px] !px-[16px] !text-[26px]"
         >
-          当前
+          {{ t('login.currentAccount') }}
         </van-tag>
       </div>
 
@@ -56,7 +56,7 @@
           <div class="flex justify-center items-center w-[90px] h-[90px] rounded-full bg-[#D9D9D9]">
             <van-icon name="plus" color="#fff" size="22" />
           </div>
-          <span class="text-[28px] font-[500]" @click="goLogin">登录其他账号</span>
+          <span class="text-[28px] font-[500]" @click="goLogin">{{ t('login.loginOther') }}</span>
       </div>
     </div>
 

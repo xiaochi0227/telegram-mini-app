@@ -9,7 +9,7 @@
       <div class="px-[32px] flex-1 overflow-y-auto">
         <div class="px-[24px] mb-[28px] bg-white rounded-[12px] shadow-sm">
           <p class="py-[20px] text-[28px] font-[600] border-b border-[#F4F4F4]">
-            采购订单号：{{ balanceInfo.order_no }}
+            {{ t('orderConfirm.orderNo') }}：{{ balanceInfo.order_no }}
           </p>
 
           <div class="py-[40px]">
@@ -18,14 +18,14 @@
               class="mt-2 mb-[40px] text-center !text-[#FF356D] !text-[48px] font-[500]"
             />
             <p class="mb-4 text-[28px] text-[#515360] text-center">
-              请在倒计时结束前完成支付
+              {{ t('order.timer') }}
             </p>
           </div>
         </div>
 
         <div class="px-[24px] mb-[28px] py-4 bg-white rounded-[12px] shadow-sm">
           <div class="flex justify-between items-center font-[600]">
-            <span class="text-[28px]">资金余额：</span>
+            <span class="text-[28px]">{{ t('accountCenter.balance') }}：</span>
             <span class="text-[32px] text-[#004CE0]">
               ￥{{ balanceInfo?.rmb_balance }}
             </span>
@@ -35,10 +35,10 @@
             class="flex flex-col my-[20px] px-[28px] py-[24px] rounded-[12px] bg-[#F4F4F4] text-[28px]"
             v-if="is_insufficient"
           >
-            <span class="text-[#ED2323]">人民币余额不足</span>
+            <span class="text-[#ED2323]">{{ t('payment.insufficientBalance') }}</span>
 
             <span class="mt-1 text-[#FF356D] underline" @click="handleExcharge">
-              使用美元兑换人民币
+              {{ t('payment.exchangeToRmb') }}
             </span>
           </div>
 
@@ -53,27 +53,26 @@
             v-else
           />
 
-          <!-- 如何充值按钮 -->
           <div class="flex justify-end items-center">
             <span
               class="mr-4 text-[#FF356D] underline text-[28px]"
               v-if="!hasPayPassword"
             >
-              设置支付密码
+              {{ t('finance.payPassword') }}
             </span>
 
             <span
               class="text-[#0066CC] underline text-[28px]"
               @click="handleRecharge"
             >
-              如何充值？
+              {{ t('order.toPayment') }}？
             </span>
           </div>
         </div>
 
         <!-- 商品信息 -->
         <van-cell
-          title="商品信息"
+          :title="t('order.goodsInfo')"
           is-link
           class="view-detail mb-[28px]"
           :to="`/goods?entry=${decryptedData.entry}`"
@@ -81,7 +80,7 @@
 
         <!-- 地址信息 -->
         <van-cell
-          title="地址信息"
+          :title="t('orderDetail.adsInfo')"
           is-link
           class="view-detail mb-[28px]"
           to="/address"
@@ -100,7 +99,9 @@ import { decryptParams, encryptParams } from '@/utils/encryption'
 import { balanceApi, inquiryApi, orderApi } from '@/api'
 import { Notify } from 'vant'
 import { useOrderStore } from '@/store/order'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const decryptedData = ref({})

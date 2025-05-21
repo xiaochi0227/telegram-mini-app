@@ -12,7 +12,7 @@
         class="bg-[#FFFFFF] text-[#9FA2AB] text-[24px] rounded-[12px] shadow px-[20px] py-[24px] flex items-center"
       >
         <van-icon name="info-o" class="mr-2" size="15" color="#FF8A21" />
-        <span>请填写您在俄罗斯的收货地址，以便我们将货发到最近的分货点。</span>
+        <span>{{ t('checkout.shippingTips') }}</span>
       </div>
 
       <!-- 显示已选地址 -->
@@ -44,7 +44,7 @@
 
         <van-cell
           class="view-cell"
-          title="包装与配送要求"
+          :title="t('checkout.packagingRequirements')"
           is-link
           @click="handleMemo(address)"
         />
@@ -60,13 +60,13 @@
           style="font-weight: 500"
           @click="handleSelectAddress"
         >
-          选择地址
+          {{ t('order.selectAddress') }}
         </van-button>
       </div>
 
       <!-- 订单信息卡片 -->
       <div class="bg-white rounded-[12px] p-4 mb-4 shadow-sm">
-        <div class="font-[600] text-[28px] mb-2">
+        <div class="font-[600] text-[28px] mb-3">
           {{ t('checkout.orderInfo') }}
         </div>
         <div
@@ -75,7 +75,7 @@
           <span class="text-[28px] text-[#333333] font-[600]">{{
             t('cart.estimatedTotal')
           }}</span>
-          <span class="text-[#004CE0] text-[36px] font-[600]">
+          <span class="text-[#004CE0] text-[36px] font-[600] min-w-[60%] text-right">
             CNY ￥{{ orderInfo.total_price }}
           </span>
         </div>
@@ -142,7 +142,7 @@
       </div>
 
       <!-- 商品信息 -->
-      <van-cell title="商品信息" is-link class="view-detail mb-[28px]" :to="`/goods?entry=${decryptedData.entry}`" />
+      <van-cell :title="t('order.goodsInfo')" is-link class="view-detail mb-[28px]" :to="`/goods?entry=${decryptedData.entry}`" />
     </div>
 
     <div
@@ -315,7 +315,7 @@ const handleMemo = (item) => {
 // 提交订单
 const handleConfirm = async () => {
   if (!addressStore.shippingAddress.length) {
-    Notify({ type: 'warning', message: '请至少选择一个地址' })
+    Notify({ type: 'warning', message: t('checkout.onlyOneAddress') })
     return
   }
 

@@ -116,7 +116,7 @@ const handlePayment = (id:number) => {
 const list = ref<OrderItem[]>([])
 const loading = ref(false)
 const finished = ref(false)
-const finishedText = ref('没有更多了')
+const finishedText = ref(t('no more'))
 const refreshing = ref(false)
 const isEmpty = ref(false)
 const status = ref('')
@@ -154,7 +154,7 @@ const onLoad = () => {
       return
     } else {
       isEmpty.value = false
-      finishedText.value = '没有更多了'
+      finishedText.value = t('no more')
     }
     const { list: data = [], total = 0 } = res.data || {}
     pagination.value.total = total
