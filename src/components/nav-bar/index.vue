@@ -41,7 +41,7 @@
               "
             />
             <span class="ml-3 text-[28px] font-bold text-[#515360]">
-              {{ pakupayUser.username }}
+              {{ getName() }}
             </span>
             <van-icon name="arrow" class="ml-2" color="#515360" />
           </div>
@@ -76,6 +76,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '../../store/index'
 import { useUser } from '@/hooks/user'
+import { formattedPhone } from '@/utils/format'
 
 const props = withDefaults(
   defineProps<{
@@ -93,6 +94,15 @@ const { user } = useAppStore()
 const { user: pakupayUser } = useUser()
 const navTitle = computed(() => route.meta.title || '标题')
 const showPopup = ref(false)
+
+const getName = () => {
+  const username = pakupayUser.value.username
+  if (username.includes('@')) {
+    return username
+  }
+  return '+7 ' + formattedPhone(username)
+}
+
 
 // 菜单项数组
 const menuItems = [
@@ -116,7 +126,7 @@ const handleOpeator = () => {
 
   if (route.meta.showBack) {
     const { user } = useUser()
-    
+
     if (user.value) router.back()
     else router.replace('/')
   }

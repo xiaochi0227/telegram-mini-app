@@ -24,7 +24,7 @@ service.interceptors.request.use(
 
     config.headers['Ba-User-Token'] = localStorage.getItem('token')
 
-    const locale = localStorage.getItem('locale') || 'russian'
+    const locale = localStorage.getItem('locale') || 'zh'
 
     // Add language to headers
     config.headers['Think-Lang'] = locale == 'zh' ? 'zh-cn' : 'ru'

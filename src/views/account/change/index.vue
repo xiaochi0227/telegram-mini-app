@@ -22,7 +22,7 @@
             height="45px"
             src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
           />
-          <span class="text-[28px] font-[500]">+7 7894561265</span>
+          <span class="text-[28px] font-[500]">{{ getName(item.username) }}</span>
         </div>
 
         <van-tag
@@ -77,6 +77,7 @@ import { useI18n } from 'vue-i18n'
 import { useUser } from '@/hooks/user'
 import { useAppStore } from '@/store'
 import { authApi } from '@/api/auth'
+import { formattedPhone } from '@/utils/format'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -91,6 +92,13 @@ const getAccountList = async () => {
   if (res.code != 1) return
 
   list.value = res.data.data || []
+}
+
+const getName = (username: string) => {
+  if (username.includes('@')) {
+    return username
+  }
+  return '+7 ' + formattedPhone(username)
 }
 
 const goLogin = () => {
