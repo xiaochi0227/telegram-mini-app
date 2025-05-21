@@ -15,12 +15,13 @@
       </div>
     </div>
 
-    <van-empty image-size="160" description="暂无数据" v-if="isEmpty" />
+    <van-empty image-size="160" :description="t('noData')" v-if="isEmpty" />
     
     <div class="flex-1 px-[32px] overflow-y-auto scroll-container" v-else>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
+          :loading-text="`${t('loading')}...`"
           :finished="finished"
           :finished-text="finishedText"
           @load="onLoad"

@@ -9,9 +9,9 @@
       <div class="mx-[32px]">
         <van-tabs v-model:active="active" swipeable @change="onChange">
           <van-tab v-for="item in tabs" :title="item.title" :key="item.id">
-            <van-empty image-size="160" description="暂无数据" v-if="isEmpty" />
+            <van-empty image-size="160" :description="t('noData')" v-if="isEmpty" />
             <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-else class="pt-[80px]">
-              <van-list v-model:loading="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
+              <van-list v-model:loading="loading" :loading-text="`${t('loading')}...`" :finished="finished" :finished-text="finishedText" @load="onLoad">
                 <div v-for="item in list" :key="item.add_time" class="bg-white rounded-lg shadow px-[20px] pt-[24px] pb-[40px] mt-[24px]  text-[#515360] space-y-2">
                   <!-- 时间 -->
                   <div class="flex items-center">

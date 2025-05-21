@@ -30,7 +30,8 @@
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          finished-text="没有更多了"
+          :loading-text="`${t('loading')}...`"
+          :finished-text="t('no more')"
           @load="onLoad"
         >
           <div
