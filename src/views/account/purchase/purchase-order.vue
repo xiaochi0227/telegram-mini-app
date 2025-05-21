@@ -8,7 +8,7 @@
       </div>
     </van-sticky>
 
-    <div class="flex-1 overflow-y-auto px-[1rem] space-y-4 text-[28px]">
+    <div class="flex-1 overflow-y-auto px-[1rem] space-y-4">
       <!-- 发货单信息 -->
       <div class="bg-white rounded-[24px] shadow p-4">
         <div class="mb-[20px]">
