@@ -4,6 +4,7 @@ import { authApi } from '@/api/auth';
 import { useUser } from '@/hooks/user';
 import { Notify } from 'vant';
 
+
 export interface User {
   id?: string;
   firstName?: string;
@@ -70,16 +71,18 @@ export const useAppStore = defineStore('app', {
       } else {
         Notify({ type: 'danger', message: '用户未授权，请通过 Telegram 客户端重新打开 WebApp。'})
       }
-      const initData = webApp.initData
-      const res = await authApi.tgUserCheck(initData)
+      // const initData = webApp.initData
+      // const res = await authApi.tgUserCheck(initData)
 
-      if (res.code != 1 && !res.data) {
-        Notify({ type: 'danger', message: '用户校验未通过'})
-        return
-      }
+      // if (res.code != 1 && !res.data) {
+      //   Notify({ type: 'danger', message: '用户校验未通过'})
+      //   return
+      // }
 
       // 默认登录 如果登录过就会返回用户信息，没有就不放入缓存
-      useUser().tgLogin({ tg_user_id: this.tg_user_id, user_id: '' })
+      const { user, tgLogin } = useUser()
+
+      if (!user.value) tgLogin({ tg_user_id: this.tg_user_id, user_id: '' })
 
       // // 设置主题
       // if (webApp.themeParams) {

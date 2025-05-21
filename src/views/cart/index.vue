@@ -162,13 +162,15 @@ const price = computed(() => {
     selectedRowKeys.value.includes(item.id)
   )
 
-  return selectedItems.reduce((acc, item) => {
+  const price =  selectedItems.reduce((acc, item) => {
     return (
       acc +
       item.unit_price * item.product_num +
       (item.unit_price * item.product_num * item.service_ratio || 0)
     )
   }, 0)
+
+  return price.toFixed(2)
 })
 
 // 全选

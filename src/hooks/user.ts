@@ -45,7 +45,7 @@ export function useUser() {
     try {
       const res = await authApi.tgLogin(params);
 
-      if (res.code !== 1 || !res.data || !res.data.length) return false;
+      if (res.code !== 1 || !res.data || !res.data.userInfo) return false;
 
       const { userInfo } = res.data;
 
