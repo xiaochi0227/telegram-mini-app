@@ -7,14 +7,16 @@ console.log(import.meta.env.DEV, import.meta.env.VITE_API_BASE_URL)
 const service = axios.create({
   baseURL: import.meta.env.DEV ? '/api' : import.meta.env.VITE_API_BASE_URL,
   timeout: 60000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 // 请求拦截器
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    // 如果没有设置 Content-Type，则默认设置为 application/json
+    if (!config.headers['Content-Type']) {
+      config.headers['Content-Type'] = 'application/json';
+    }
+
     // 从 Telegram WebApp 获取 initData
     const initData = window.Telegram?.WebApp?.initData;
     

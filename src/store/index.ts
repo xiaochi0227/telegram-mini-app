@@ -71,8 +71,9 @@ export const useAppStore = defineStore('app', {
       } else {
         Notify({ type: 'danger', message: '用户未授权，请通过 Telegram 客户端重新打开 WebApp。'})
       }
-      const initData = webApp.initData
-      const res = await authApi.tgUserCheck(initData)
+
+      // 校验
+      const res = await authApi.tgUserCheck(webApp.initData)
 
       if (res.code != 1 && !res.data) {
         Notify({ type: 'danger', message: '用户校验未通过'})

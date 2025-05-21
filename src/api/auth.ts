@@ -3,7 +3,11 @@ import { http } from '../utils/request';
 
 export const authApi = {
   // 用户信息校验
-  tgUserCheck: (params: LoginParams) => http.post<ApiResponse<LoginResponse>>('/tgUser/tgUserCheck', params),
+  tgUserCheck: (params: any) => http.post<ApiResponse<LoginResponse>>('/tgUser/tgUserCheck', params, {
+    headers: {
+      'Content-Type': 'text/plain' // 明确指定内容类型
+    }
+  }),
 
   // 选择登录对应的pakupay账号 默认登录的时候不传user_id
   tgLogin: (params: TgLoginParams) => http.post<ApiResponse<LoginResponse>>('/tgUser/tgLogin', params),
@@ -16,7 +20,7 @@ export const authApi = {
 
   // 获取图片验证码
   getVerificationCode: () => http.get<ApiResponse<LoginResponse>>('/user/getVerificationCode'),
-  
+
   // 登录
   login: (params: LoginParams) => http.post<ApiResponse<LoginResponse>>('/tgUser/login', params),
 
