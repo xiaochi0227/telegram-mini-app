@@ -34,10 +34,10 @@
 
         <div
           class="py-[10px] text-center text-[28px] border border-[#E7E7E9] rounded-[12px]"
-          @click="handleContact('tel:+17774072288')"
+          @click="handleContact('tel:+7995992-28-88')"
         >
           <i class="iconfont icon-Phone text-[#FF356D] mr-1"></i>
-          <span>+86 17774072288</span>
+          <span>+7 995 992-28-88</span>
         </div>
       </div>
 
@@ -51,7 +51,7 @@
 
       <!-- 地址信息 -->
       <van-cell
-        title="地址信息"
+        :title="t('orderDetail.adsInfo')"
         is-link
         class="view-detail mb-[28px]"
         to="/address"
