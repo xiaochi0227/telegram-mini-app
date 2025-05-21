@@ -9,14 +9,20 @@
     </van-sticky>
 
     <div class="flex-1 px-[32px] overflow-y-auto">
-      <div class="flex gap-[32px] items-center bg-white rounded-[12px] shadow-md px-[40px] py-[30px]">
+      <div
+        class="flex gap-[32px] items-center bg-white rounded-[12px] shadow-md px-[40px] py-[30px]"
+      >
         <van-image
           round
-          width="45px"
-          height="45px"
-          src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+          width="32px"
+          height="32px"
+          :src="
+            user
+              ? user.photo_url
+              : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
+          "
         />
-				<span class="text-[28px] font-[500]">+7 7894561265</span>
+        <span class="text-[28px] font-[500]">{{ pakupayUser.username }}</span>
       </div>
     </div>
 
@@ -28,9 +34,9 @@
         color="#FF356D"
         size="large"
         type="primary"
-				@click="goChangeAccount"
+        @click="goChangeAccount"
       >
-        切换账号
+        {{ t('account.changeAccount') }}
       </van-button>
 
       <van-button
@@ -39,7 +45,7 @@
         color="#FF356D"
         size="large"
         type="primary"
-				@click="handleLogout"
+        @click="handleLogout"
       >
         {{ t('user.logout') }}
       </van-button>
@@ -49,21 +55,22 @@
 
 <script setup lang="ts">
 import NavBar from '@/components/nav-bar/index.vue'
-import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUser } from '@/hooks/user'
+import { useAppStore } from '@/store/index'
 
 const router = useRouter()
 const { t } = useI18n()
-const { logout } = useUser()
+const { user: pakupayUser, logout } = useUser()
+const { user } = useAppStore()
 
 const goChangeAccount = () => {
   router.push('/account/change')
 }
 
 const handleLogout = () => {
-	logout()
+  logout()
 }
 </script>
 

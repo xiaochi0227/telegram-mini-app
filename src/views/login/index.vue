@@ -73,6 +73,7 @@
           size="large"
           type="primary"
           native-type="submit"
+          :loading="loading"
         >
           {{ t('login.title') }}
         </van-button>
@@ -148,7 +149,7 @@ const onLogin = async () => {
 
   loading.value = false
 
-  if (res.code != 1) return
+  if (!res) return
 
   // 登录逻辑
   Notify({ type: 'success', message: t('login.loginSuccess') })

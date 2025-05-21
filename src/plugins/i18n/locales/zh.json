@@ -584,5 +584,6 @@
 	"login.loginOther": "登录其他账号",
 	"login.currentAccount": "当前",
 	"order.timer": "请在倒计时结束前完成支付",
-	"order.toPayment": "如何充值"
+	"order.toPayment": "如何充值",
+	"account.changeAccount": "切换账号"
 }

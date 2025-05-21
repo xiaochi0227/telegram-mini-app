@@ -86,11 +86,11 @@ const { tg_user_id } = useAppStore()
 const list = ref([])
 
 const getAccountList = async () => {
-  const res = await authApi.getTgList({ tg_user_id })
+  const res = await authApi.getUserList({ tg_user_id })
 
   if (res.code != 1) return
 
-  list.value = res.data || []
+  list.value = res.data.data || []
 }
 
 const goLogin = () => {

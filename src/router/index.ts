@@ -86,7 +86,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'AccountChange',
     component: () => import('../views/account/change/index.vue'),
     meta: {
-      title: '切换账号',
+      title: 'account.changeAccount',
       showBack: true,
       requiresAuth: true
     },
@@ -443,8 +443,8 @@ router.beforeEach((to, from, next) => {
 
   // 检查是否需要认证
   if (to.meta.requiresAuth) {
-    const { user, loading } = useUser()
-    if (!user.value || !loading.value) {
+    const { user } = useUser()
+    if (!user.value) {
       next({ name: 'Login' });
       return;
     }

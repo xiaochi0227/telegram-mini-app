@@ -17,9 +17,7 @@
           @click="showPopup = true"
         />
       </template>
-      <span
-        class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px]"
-      >
+      <span class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px]">
         {{ navTitle }}
       </span>
     </div>
@@ -34,8 +32,19 @@
         <!-- 顶部用户信息 -->
         <div class="bg-[#FFFFFF] rounded-[24px] px-[32px] py-[48px]">
           <div class="flex items-center" @click="goAccountInfo">
-            <div class="w-10 h-10 rounded-full bg-[#D9D9D9]"></div>
-            <span class="ml-3 text-lg font-bold text-[#515360]">mike</span>
+            <van-image
+              round
+              width="32px"
+              height="32px"
+              :src="
+                user
+                  ? user.photo_url
+                  : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
+              "
+            />
+            <span class="ml-3 text-[28px] font-bold text-[#515360]">
+              {{ pakupayUser.username }}
+            </span>
             <van-icon name="arrow" class="ml-2" color="#515360" />
           </div>
           <!-- 菜单列表 -->
@@ -66,7 +75,9 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, defineProps } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n';
+import { useI18n } from 'vue-i18n'
+import { useAppStore } from '../../store/index'
+import { useUser } from '@/hooks/user'
 
 const props = withDefaults(
   defineProps<{
@@ -80,6 +91,8 @@ const props = withDefaults(
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
+const { user } = useAppStore()
+const { user: pakupayUser } = useUser()
 const navTitle = computed(() => route.meta.title || '标题')
 const showPopup = ref(false)
 

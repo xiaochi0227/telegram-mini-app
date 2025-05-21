@@ -8,6 +8,9 @@ export const authApi = {
   // 选择登录对应的pakupay账号 默认登录的时候不传user_id
   tgLogin: (params: TgLoginParams) => http.post<ApiResponse<LoginResponse>>('/tgUser/tgLogin', params),
 
+  // 获取TG账号列表
+  getUserList: (params: any) => http.post<ApiResponse<LoginResponse>>('/tgUser/getUserList', params),
+
   // 获取TG验证码
   getTgChatCode: (params: TgCodeParams) => http.post<ApiResponse<LoginResponse>>('/tgUser/getTgChatCode', params),
 
