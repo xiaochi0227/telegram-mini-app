@@ -14,7 +14,7 @@
         </div>
       </div>
     </van-sticky>
-    <div class="text-center mb-6 bg-white px-[20px] pb-[32px]">
+    <div class="text-center bg-white px-[20px] pb-[32px]">
       <div class="text-sm py-3 text-left">{{ t('accountCenter.balance') }}</div>
       <Financial />
       <div class="flex justify-center space-x-4">
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Orders Section -->
-    <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
+    <div class="mt-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
       <h2 class="font-bold mb-2">{{ t('accountCenter.purchaseOrder') }}</h2>
       <div class="grid grid-cols-2 gap-4">
         <template v-if="orderStatusCards.length">
@@ -46,7 +46,7 @@
       </div>
     </div>
     <!-- Logistics Section -->
-    <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
+    <div class="mt-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
       <h2 class="font-bold mb-2">{{ t('accountCenter.logistics') }}</h2>
       <div class="grid grid-cols-3 gap-4" v-if="logisticsStatusCards.length">
         <div class="text-center logis-status" v-for="(item, index) in logisticsStatusCards" :key="index"
@@ -95,7 +95,7 @@
     </div-->
 
     <!-- Contact Section -->
-    <div class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px] contact">
+    <div class="my-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px] contact">
       <h2 class="font-bold mb-2">{{ t('nav.contact') }}</h2>
       <div class="flex justify-around items-center">
         <div class="text-center" v-for="method in contactMethods" :key="method.id">

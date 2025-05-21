@@ -5,7 +5,7 @@
         <nav-bar />
       </div>
     </div>
-    <div class="text-center mb-6 bg-white px-[20px] pb-[40px] rounded-b-[24px]">
+    <div class="text-center bg-white px-[20px] pb-[40px] rounded-b-[24px]">
       <div class=" font-bold py-3 text-left">{{ t('accountCenter.balance') }}</div>
       <Financial />
       <div class="flex justify-center space-x-4">
