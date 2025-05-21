@@ -163,14 +163,14 @@ const onRegister = async () => {
 
   loading.value = true
 
-  const res = await register({ ...form.value, tg_user_id })
+  const res = await register({ ...form.value, tg_user_id  })
 
   loading.value = false
 
-  if (res.code != 1) return
+  if (!res) return
 
   Notify({ type: 'success', message: t('login.registerSuc') })
-  router.back()
+  router.replace('/')
 }
 
 function onLogin() {

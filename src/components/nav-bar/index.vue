@@ -1,20 +1,18 @@
 <template>
   <div>
-    <div class="flex items-center py-[32px]">
+    <div class="flex items-center py-[32px] cursor-pointer" @click="handleOpeator">
       <template v-if="!hideIcon">
         <van-icon
           v-if="route.meta.showBack"
           name="arrow-left"
           size="24"
           color="#FF356D"
-          @click="router.back()"
         />
         <van-icon
           v-else
           name="bars"
           size="24"
           color="#212121"
-          @click="showPopup = true"
         />
       </template>
       <span class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px]">
@@ -110,6 +108,19 @@ function onMenuClick(item: any) {
     router.push(item.path)
     showPopup.value = false
   }
+}
+
+// 头部点击
+const handleOpeator = () => {
+  if (props.hideIcon) return 
+
+  if (route.meta.showBack) {
+    const { user } = useUser()
+    
+    if (user.value) router.back()
+    else router.replace('/')
+  }
+  else showPopup.value = true
 }
 
 const goAccountInfo = () => {
