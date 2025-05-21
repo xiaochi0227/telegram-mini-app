@@ -5,12 +5,19 @@ export interface ApiResponse<T = any> {
   data: T;
 }
 
+
+export interface TgLoginParams {
+  tg_user_id: string,
+  user_id: string;
+}
+
 // User related types
 export interface LoginParams {
+  tg_user_id: string,
+  country_code: string,
+  account_type: number,
   username: string;
   password: string;
-  ver_code: string;
-  // captcha: string;
 }
 
 export interface LoginResponse {
@@ -23,6 +30,9 @@ export interface LoginResponse {
 }
 
 export interface RegisterParams {
+  tg_user_id: string,
+  country_code: string,
+  account_type: number,
   username: string;
   password: string;
   ver_code: string;

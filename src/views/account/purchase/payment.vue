@@ -80,6 +80,7 @@ import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { balanceApi, inquiryApi } from '@/api'
 import { Notify } from 'vant'
+import { useOrderStore } from '@/store/order'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -94,6 +95,8 @@ const passwordInput = ref()
 const is_insufficient = ref(false)
 const btnLoading = ref(false)
 const loading = ref(false)
+
+const { setBalance } = useOrderStore()
 
 const purchase_order_id = computed(() => {
   return route.query.id || ''
@@ -124,6 +127,7 @@ const getPendingPayment = async () => {
   const { need_pay_rmb, rmb_balance } = balance_info
 
   balanceInfo.value = balance_info
+  setBalance(balance_info)
   if (need_pay_rmb && rmb_balance) {
     // 余额不足
     is_insufficient.value = +rmb_balance < +need_pay_rmb
