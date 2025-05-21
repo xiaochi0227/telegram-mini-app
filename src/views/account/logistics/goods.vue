@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-[1rem] flex flex-col h-full text-[28px]" v-loading="isLoading">
+  <div class="mx-[32px] flex flex-col h-full text-[28px]" v-loading="isLoading">
     <div class=" bg-white px-[20px] mb-[24px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />

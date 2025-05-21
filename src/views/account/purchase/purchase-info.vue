@@ -9,42 +9,76 @@
     </van-sticky>
     <div class="flex-1 overflow-y-auto px-[1rem] space-y-4">
       <div class="bg-white rounded-2xl shadow p-4" v-for="(item, index) in order.buy_order" :key="index">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center mb-[10px]">
           <p class="font-bold">{{ item.product_name }}</p>
-          <p :class="`text-[${item.is_exception ? '#ED2323' : '#FF356D'}] text-[24px]`">{{ item.status_str }}</p>
+          <!-- <p :class="`text-[${item.is_exception ? '#ED2323' : '#FF356D'}] text-[24px]`">{{ item.status_str }}</p> -->
         </div>
-        <p class="text-sm text-gray-500 mt-2">
-          {{ t('orderDetail.updateTime') }}:
+        <div class="space-y-[24px]">
           <template v-if="item.is_exception">
-            {{ item.exception_time }}
+            <div class=" text-[24px] space-y-[4px]">
+              <div class="flex items-center justify-between">
+                <p>{{ t('orderDetail.updateTime') }}：{{ item.exception_time }}</p>
+                <p class="text-[#ED2323]">{{ item.is_exception ? t('orderDetail.isException') : '' }}</p>
+              </div>
+              <p class="text-[#ED2323]">
+                <span>
+                  [{{ item.exception_str }}][{{ item.exception_memo }}]
+                </span>
+              </p>
+              <div v-if="item.exception_images && item.exception_images.length">
+                <div class="mt-[20px] bg-gray-100 rounded-lg px-[24px] flex items-center"
+                  @click="handleImagePreview(item.exception_images || [])">
+                  <i class="iconfont icon-Picture text-gray-500 mr-[8px]"></i>
+                  <p class="text-sm text-gray-500 flex-1" v-if="item.is_exception">{{ t('orderDetail.exceptionVoucher')
+                    }}
+                  </p>
+                  <i class="iconfont icon-Right text-gray-500"></i>
+                </div>
+              </div>
+            </div>
           </template>
           <template v-if="item.is_normal">
-            {{ item.normal_time }}
+            <div class=" text-[24px] space-y-[8px]">
+              <div class="flex items-center justify-between">
+                <p>{{ t('orderDetail.updateTime') }}：{{ item.normal_time }}</p>
+                <p class="text-[#FF356D]">{{ item.is_normal ? t('orderDetail.isNormal') : '' }}</p>
+              </div>
+              <p class="text-[#FF356D]">
+                <span>
+                  [{{ item.normal_memo }}]
+                </span>
+              </p>
+            </div>
           </template>
           <template v-if="item.status !== -1">
-            {{
-              item.status === 4
-                ? item.inspection_time
-                : item.status === -2
-                  ? item.cancel_time
-                  : item.last_update_time
-            }}
+            <div class=" text-[24px] space-y-[4px]">
+              <div class="flex items-center justify-between">
+                <p>{{ t('orderDetail.updateTime') }}：{{
+                  item.status === 4
+                    ? item.inspection_time
+                    : item.status === -2
+                      ? item.cancel_time
+                      : item.last_update_time
+                }}</p>
+                <p class="text-[#FF356D]">{{ item.status != -1
+                  ? item.status == -2
+                    ? item.cancel_type == 1
+                      ? '取消采购'
+                      : '重新采购'
+                    : item.status_str
+                  : '' }}</p>
+              </div>
+              <div v-if="item.receipt_images && item.receipt_images.length">
+                <div class="mt-[10px] bg-gray-100 rounded-lg px-[24px] flex items-center" v-if="item.status === 4"
+                  @click="handleImagePreview(item.receipt_images || [])">
+                  <i class="iconfont icon-Voucher text-gray-500 mr-[8px]"></i>
+                  <p class="text-sm text-gray-500 flex-1" v-if="item.status === 4">{{ t('orderDetail.storeVoucher') }}
+                  </p>
+                  <i class="iconfont icon-Right text-gray-500"></i>
+                </div>
+              </div>
+            </div>
           </template>
-        </p>
-        <p class="text-[24px] text-[#ED2323] mt-2" v-if="item.is_exception">
-          {{ item.exception_str }} {{ item.exception_memo }}
-        </p>
-        <div class="mt-4 bg-gray-100 rounded-lg px-[24px] flex items-center" v-if="item.is_exception"
-          @click="handleImagePreview(item.exception_images || [])">
-          <i class="iconfont icon-Picture text-gray-500 mr-[8px]"></i>
-          <p class="text-sm text-gray-500 flex-1" v-if="item.is_exception">{{ t('orderDetail.exceptionVoucher') }}</p>
-          <i class="iconfont icon-Right text-gray-500"></i>
-        </div>
-        <div class="mt-4 bg-gray-100 rounded-lg px-[24px] flex items-center" v-if="item.status === 4"
-          @click="handleImagePreview(item.receipt_images || [])">
-          <i class="iconfont icon-Voucher text-gray-500 mr-[8px]"></i>
-          <p class="text-sm text-gray-500 flex-1" v-if="item.status === 4">{{ t('orderDetail.storeVoucher') }}</p>
-          <i class="iconfont icon-Right text-gray-500"></i>
         </div>
       </div>
     </div>
@@ -75,7 +109,9 @@ interface Order {
     status: number;
     exception_time?: string;
     normal_time?: string;
+    normal_memo?: string;
     last_update_time?: string;
+    cancel_type?: number;
     inspection_time?: string;
     cancel_time?: string;
     exception_str?: string;
