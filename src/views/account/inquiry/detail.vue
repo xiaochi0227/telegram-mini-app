@@ -82,7 +82,7 @@
 
             <van-cell
               class="view-cell"
-              title="查看商品详情"
+              :title="t('order.viewGoodsDetail')"
               is-link
               @click="handleViewGoodsDetail(item)"
             />
@@ -91,7 +91,7 @@
 
         <van-cell
           class="view-detail"
-          title="详情"
+          :title="t('viewDetail')"
           is-link
           to="/account/inquiry-info"
         />

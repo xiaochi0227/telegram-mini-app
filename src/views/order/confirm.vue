@@ -43,7 +43,7 @@
 
       <!-- 商品信息 -->
       <van-cell
-        title="商品信息"
+        :title="t('order.goodsInfo')"
         is-link
         class="view-detail mb-[28px]"
         :to="`/goods?entry=${decryptedData.entry}`"
@@ -68,7 +68,9 @@ import { decryptParams } from '@/utils/encryption'
 import { inquiryApi } from '@/api'
 import { Notify } from 'vant'
 import { useOrderStore } from '@/store/order'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const decryptedData = ref({})
 

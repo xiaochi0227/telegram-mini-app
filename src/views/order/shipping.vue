@@ -60,13 +60,13 @@
           style="font-weight: 500"
           @click="handleSelectAddress"
         >
-          选择地址
+          {{ t('order.selectAddress') }}
         </van-button>
       </div>
 
       <!-- 订单信息卡片 -->
       <div class="bg-white rounded-[12px] p-4 mb-4 shadow-sm">
-        <div class="font-[600] text-[28px] mb-2">
+        <div class="font-[600] text-[28px] mb-3">
           {{ t('checkout.orderInfo') }}
         </div>
         <div
@@ -75,7 +75,7 @@
           <span class="text-[28px] text-[#333333] font-[600]">{{
             t('cart.estimatedTotal')
           }}</span>
-          <span class="text-[#004CE0] text-[36px] font-[600]">
+          <span class="text-[#004CE0] text-[36px] font-[600] min-w-[60%] text-right">
             CNY ￥{{ orderInfo.total_price }}
           </span>
         </div>
@@ -142,7 +142,7 @@
       </div>
 
       <!-- 商品信息 -->
-      <van-cell title="商品信息" is-link class="view-detail mb-[28px]" :to="`/goods?entry=${decryptedData.entry}`" />
+      <van-cell :title="t('order.goodsInfo')" is-link class="view-detail mb-[28px]" :to="`/goods?entry=${decryptedData.entry}`" />
     </div>
 
     <div

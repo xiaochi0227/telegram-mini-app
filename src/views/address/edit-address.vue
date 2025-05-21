@@ -314,6 +314,7 @@ onMounted(() => {
   }
 
   :deep(.van-cell__title) {
+    width: 100%;
     font-size: 28px;
     color: #212121;
     font-weight: 500;

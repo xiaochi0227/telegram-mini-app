@@ -11,7 +11,7 @@
         <span class="text-[#212121]">{{ inquiry.order_no }}</span>
       </div>
       <div class="flex justify-between mb-2 text-[28px] font-[500]">
-        <span class="text-[#515360]">报价状态</span>
+        <span class="text-[#515360]">{{ t('order.quotaStatus') }}</span>
         <span class="font-medium">{{ inquiry.order_status_str }}</span>
       </div>
       <div class="flex justify-between mb-2 text-[28px] font-[500]">

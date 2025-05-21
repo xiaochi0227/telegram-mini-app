@@ -28,13 +28,13 @@
         <span> {{ good.product_num }} </span>
       </div>
       <div class="text-[#212121] text-[28px] mt-[16px]">
-        <span class="font-bold">{{t('reference.link')}}：</span>
+        <span class="font-bold">{{ t('reference.link') }}：</span>
         <a :href="link" class="text-blue-500 underline" target="_blank">
           {{ good.reference_url }}
         </a>
       </div>
       <div class="text-[#212121] text-[28px] font-bold mt-[16px]">
-        商品描述：
+        {{ t('order.goodsDesc') }}：
       </div>
       <div class="text-[#212121] text-[28px] whitespace-pre-line">
         {{ good.desc }}

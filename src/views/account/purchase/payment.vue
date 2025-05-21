@@ -11,19 +11,25 @@
           class="px-[24px] mb-[28px] py-4 bg-white rounded-[12px] shadow-sm text-[28px]"
         >
           <div class="flex justify-between items-center">
-            <span class="text-[#515360]">订单号：</span>
+            <span class="text-[#515360]">
+              {{ t('accountCenter.orderNumber') }}：
+            </span>
             <span class="font-[500]">
-              {{ balanceInfo?.order_no }} 
+              {{ balanceInfo?.order_no }}
             </span>
           </div>
 
           <div class="flex justify-between items-center mt-1">
-            <span class="text-[#515360]">剩余尾款：</span>
+            <span class="text-[#515360]"
+              >{{ t('orderConfirm.needPayMoney') }}：</span
+            >
             <span class="font-[500]"> ￥{{ balanceInfo?.need_pay_rmb }} </span>
           </div>
 
           <div class="flex justify-between items-center mt-1">
-            <span class="text-[#515360]">资金余额：</span>
+            <span class="text-[#515360]"
+              >{{ t('accountCenter.balance') }}：</span
+            >
             <span class="text-[#004CE0] font-[500]">
               ￥{{ balanceInfo?.rmb_balance }}
             </span>
@@ -33,10 +39,12 @@
             class="flex flex-col my-[20px] px-[28px] py-[24px] rounded-[12px] bg-[#F4F4F4] text-[28px]"
             v-if="is_insufficient"
           >
-            <span class="text-[#ED2323]">人民币余额不足</span>
+            <span class="text-[#ED2323]">{{
+              t('payment.insufficientBalance')
+            }}</span>
 
             <span class="mt-1 text-[#FF356D] underline" @click="handleExcharge">
-              使用美元兑换人民币
+              {{ t('payment.exchangeToRmb') }}
             </span>
           </div>
 
@@ -47,17 +55,16 @@
             :loading="btnLoading"
             :auto-submit="false"
             @submit="handlePay"
-            title="支付密码"
+            :title="t('payment.payPassword')"
             v-else
           />
 
-          <!-- 如何充值按钮 -->
           <div class="flex justify-end items-center">
             <span
               class="mr-4 text-[#FF356D] underline text-[28px]"
               v-if="!hasPayPassword"
             >
-              设置支付密码
+              {{ t('finance.payPassword') }}
             </span>
           </div>
         </div>
@@ -73,7 +80,9 @@ import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { balanceApi, inquiryApi } from '@/api'
 import { Notify } from 'vant'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const hasPayPassword = ref(false)
@@ -144,7 +153,7 @@ const handlePay = async (values: any) => {
     return
   }
 
-  Notify({ type: 'success', message: '支付成功' })
+  Notify({ type: 'success', message: t('checkout.paymentSuccess') })
   router.back()
 }
 

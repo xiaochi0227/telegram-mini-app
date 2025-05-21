@@ -18,7 +18,7 @@
               class="mt-2 mb-[40px] text-center !text-[#FF356D] !text-[48px] font-[500]"
             />
             <p class="mb-4 text-[28px] text-[#515360] text-center">
-              请在倒计时结束前完成支付
+              {{ t('order.timer') }}
             </p>
           </div>
         </div>
@@ -53,7 +53,6 @@
             v-else
           />
 
-          <!-- 如何充值按钮 -->
           <div class="flex justify-end items-center">
             <span
               class="mr-4 text-[#FF356D] underline text-[28px]"
@@ -66,14 +65,14 @@
               class="text-[#0066CC] underline text-[28px]"
               @click="handleRecharge"
             >
-              如何充值？
+              {{ t('order.toPayment') }}？
             </span>
           </div>
         </div>
 
         <!-- 商品信息 -->
         <van-cell
-          title="商品信息"
+          :title="t('order.goodsInfo')"
           is-link
           class="view-detail mb-[28px]"
           :to="`/goods?entry=${decryptedData.entry}`"

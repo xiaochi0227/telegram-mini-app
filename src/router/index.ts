@@ -46,7 +46,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'GoodsPicture',
     component: () => import('../views/inquiry/goods-picture.vue'),
     meta: {
-      title: '商品图片',
+      title: 'inquiry.picture',
       active: 'inquiry',
       showBack: true,
     },
@@ -56,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'InquirySuccess',
     component: () => import('../views/inquiry/success.vue'),
     meta: {
-      title: '询价成功',
+      title: 'inquiry.success',
       active: 'inquiry',
       showBack: true,
     },
@@ -76,7 +76,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'AccountInfo',
     component: () => import('../views/account/info/index.vue'),
     meta: {
-      title: '账户信息',
+      title: 'login.accountInfo',
       showBack: true,
       requiresAuth: true
     },
@@ -116,7 +116,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'OrderGoods',
     component: () => import('../views/order/goods.vue'),
     meta: {
-      title: '商品信息',
+      title: 'order.goodsInfo',
       showBack: true,
       requiresAuth: true
     },
@@ -136,7 +136,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'AddressList',
     component: () => import('../views/address/address-list.vue'),
     meta: {
-      title: '选择地址',
+      title: 'order.selectAddress',
       showBack: true,
       requiresAuth: true
     },
@@ -235,7 +235,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'GoodsDetail',
     component: () => import('../views/account/inquiry/goods-detail.vue'),
     meta: {
-      title: '商品详情',
+      title: 'order.goodsDetail',
       showBack: true,
       requiresAuth: true
     },

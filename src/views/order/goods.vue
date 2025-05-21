@@ -35,7 +35,7 @@
           <div
             class="flex justify-between items-center mt-1 text-[24px] text-[#515360]"
           >
-            <span>商品数量</span>
+            <span>{{ t('order.productNum') }}</span>
             <span>{{ item.product_num }}</span>
           </div>
 
