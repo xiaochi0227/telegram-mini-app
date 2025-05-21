@@ -2,15 +2,17 @@
   <div>
     <van-tabs v-model:active="active" swipeable>
       <van-tab v-for="item in tabs" :title="item.name">
-        <div class="text-blue-500 text-4xl font-bold py-[64px]" v-if='active != 2 && tabs[active].value'>
-          <span class="text-xl" v-if="active == 0">$</span>
-          <span class="text-xl" v-else-if="active == 1">¥</span>
-          {{ tabs[active].value }}
+        <div class="text-[#004CE0] text-[72px] font-bold py-[64px]" v-if='active != 2 && tabs[active].value'>
+          <p class="h-[100px]">
+            <span class="text-xl" v-if="active == 0">$</span>
+            <span class="text-xl" v-else-if="active == 1">¥</span>
+            {{ tabs[active].value }}
+          </p>
         </div>
         <div class="py-[64px]" v-else>
-          <div class='flex justify-between items-center'>
+          <div class='flex justify-between items-center h-[100px]'>
             <div>{{ t('finance.availableCredit') }}</div>
-            <div class="font-bold text-[#004CE0] text-[40px]" v-if='tabs[active].value'>
+            <div class="font-bold text-[#004CE0] text-[48px]" v-if='tabs[active].value'>
               <span class="text-[#004CE0] pl-[6px] text-[24px]">¥</span>
               {{ tabs[active].value }}
             </div>
