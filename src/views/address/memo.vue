@@ -9,11 +9,11 @@
         <van-field
           v-model="memo"
           type="textarea"
-          placeholder="您可以在此输入您对包装与配送的需求"
+          :placeholder="t('checkout.packagingPlaceholder')"
           :rows="16"
           :maxlength="2000"
           class="mb-4"
-          :rules="[{ required: true, message: '请输入备注信息' }]"
+          :rules="[{ required: true, message: t('checkout.packagingPlaceholder') }]"
         />
 
         <!-- 下单 -->

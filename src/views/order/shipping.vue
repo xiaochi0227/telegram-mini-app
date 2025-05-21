@@ -12,7 +12,7 @@
         class="bg-[#FFFFFF] text-[#9FA2AB] text-[24px] rounded-[12px] shadow px-[20px] py-[24px] flex items-center"
       >
         <van-icon name="info-o" class="mr-2" size="15" color="#FF8A21" />
-        <span>请填写您在俄罗斯的收货地址，以便我们将货发到最近的分货点。</span>
+        <span>{{ t('checkout.shippingTips') }}</span>
       </div>
 
       <!-- 显示已选地址 -->
@@ -44,7 +44,7 @@
 
         <van-cell
           class="view-cell"
-          title="包装与配送要求"
+          :title="t('checkout.packagingRequirements')"
           is-link
           @click="handleMemo(address)"
         />
@@ -315,7 +315,7 @@ const handleMemo = (item) => {
 // 提交订单
 const handleConfirm = async () => {
   if (!addressStore.shippingAddress.length) {
-    Notify({ type: 'warning', message: '请至少选择一个地址' })
+    Notify({ type: 'warning', message: t('checkout.onlyOneAddress') })
     return
   }
 

@@ -10,18 +10,18 @@
         <div
           class="flex justify-between items-center py-[20px] text-[28px] font-[600] border-b border-[#F4F4F4]"
         >
-          <span>采购订单号：</span>
+          <span>{{ t('orderConfirm.orderNo') }}：</span>
           <span>{{ order_no }}</span>
         </div>
 
         <p class="mx-8 pb-10 pt-4 text-[28px] text-[#515360] text-center">
-          为避免价格波动引起后续补款或退款，请等待业务员确认价格，确认后我们将与您联系，请耐心等待。
+          {{ t('orderConfirm.waitForPrice') }}
         </p>
       </div>
 
       <div class="px-[24px] mb-[28px] py-4 bg-white rounded-[12px] shadow-sm">
         <p class="mx-8 pb-6 text-[28px] text-[#515360] text-center">
-          您可以通过以下方式主动联系业务员。
+          {{ t('orderConfirm.contactSales') }}
         </p>
 
         <div
