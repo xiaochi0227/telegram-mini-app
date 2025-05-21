@@ -413,7 +413,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/privacyPolicy',
     name: 'PrivacyPolicy',
-    component: () => import('../views/PrivacyPolicy.vue'),
+    component: () => import('../views/privacyPolicy.vue'),
     meta: {
       title: 'login.privacyLink',
       requiresAuth: false,
