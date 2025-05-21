@@ -136,12 +136,10 @@ const sendCode = async () => {
 }
 
 function openUserAgreement() {
-  // 跳转或弹窗
-  // router.push('/user-agreement')
+  router.push('/userAgreement')
 }
 function openPrivacyPolicy() {
-  // 跳转或弹窗
-  // router.push('/privacy-policy')
+  router.push('/privacyPolicy')
 }
 
 const onRegister = async () => {
