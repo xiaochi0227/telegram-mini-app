@@ -345,7 +345,17 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PurchaseOrderPayment',
     component: () => import('../views/account/purchase/payment.vue'),
     meta: {
-      title: 'rder.payEndMoney',
+      title: 'order.payEndMoney',
+      showBack: true,
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/account/purchase/payInfo',
+    name: 'PurchasePayInfo',
+    component: () => import('../views/account/purchase/purchase-payInfo.vue'),
+    meta: {
+      title: 'orderDetail.payInfo',
       showBack: true,
       requiresAuth: true
     },

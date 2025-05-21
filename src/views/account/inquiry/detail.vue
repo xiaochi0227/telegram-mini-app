@@ -15,10 +15,10 @@
           <h2 class="font-bold mb-2">{{ t('footer.online') }}</h2>
           <div class="flex justify-center items-center gap-14">
             <div class="text-center">
-              <i class="iconfont icon-telegram text-[#28A7E7]"></i>
+              <i class="iconfont icon-telegram text-[#28A7E7]" @click="handleContact('https://t.me/@pakupay')"></i>
             </div>
             <div class="text-center">
-              <i class="iconfont icon-Phone text-[#FF356D]"></i>
+              <i class="iconfont icon-Phone text-[#FF356D]" @click="handleContact('tel:+79959922888')"></i>
             </div>
           </div>
         </div>
@@ -266,6 +266,13 @@ const handleBuy = () => {
 
   router.push(`/shipping?query=${encodeURIComponent(encrypted)}`)
 }
+
+interface Contact {
+  contact: string;
+}
+const handleContact = (contact: Contact['contact']): void => {
+  window.location.href = `${contact}`;
+};
 
 fetchInquiryDetail()
 </script>
