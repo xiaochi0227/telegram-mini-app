@@ -44,8 +44,8 @@
           </div> -->
             <div v-if="
               (item.order_status == 3 ||
-              item.order_status == 4 ||
-              item.order_status == 5) &&
+                item.order_status == 4 ||
+                item.order_status == 5) &&
               item.pay_status == 3
             ">
               <div class="w-full text-center bg-[#FF356D] h-[90px] leading-[90px] rounded-[24px] text-[#fff] my-[36px]"
@@ -104,12 +104,12 @@ interface OrderItem {
   order_no: string
   order_status: number
   order_status_str: string
-  pay_status:number
+  pay_status: number
   add_time: string
   total_price: number,
 }
 
-const handlePayment = (id:number) => {
+const handlePayment = (id: number) => {
   router.push('/account/purchase/payment?id=' + id)
 }
 

@@ -1,13 +1,12 @@
 <template>
-  <div class="mx-[32px]" v-loading="isLoading">
-    <div class=" bg-white px-[20px]">
+  <div class="flex flex-col h-full" v-loading="isLoading">
+    <div class=" bg-white px-[20px] mx-[32px]">
       <div class="flex justify-between items-center h-[100px]">
         <nav-bar />
       </div>
     </div>
 
-    <div>
-
+    <div class="mx-[32px] flex-1 overflow-y-auto">
       <div class="bg-white rounded-[24px] shadow p-4 mt-[24px]">
         <div class="space-y-2 text-sm">
           <div class="flex justify-between">
@@ -23,34 +22,32 @@
         </div>
       </div>
 
-      <div class="bg-white rounded-[24px] shadow p-4 mt-[24px]">
-       
+      <div class="bg-white rounded-[24px] shadow p-4 mt-[24px]" 
+        v-for="(record, index) in order.consumption_record" :key="index"
+      >
+
         <div class="space-y-2 text-sm">
-          <template v-if="order.consumption_record">
-            <template v-for="(record, index) in order.consumption_record" :key="index">
-              <div class="flex justify-between">
-                <p>{{ t('orderDetail.addTime') }}</p>
-                <p class="text-[#212121]">{{ record.add_time }}</p>
-              </div>
-              <div class="flex justify-between">
-                <p>交易ID</p>
-                <p class="text-[#212121]">{{ record.serial_no }}</p>
-              </div>
-              <div class="flex justify-between">
-                <p>{{ t('orderDetail.changeMoney') }}</p>
-                <p class="text-[#212121]">
-                  {{ record.currency_type == 1 ? 'USD' : 'CNY' }}
-                  &nbsp;
-                  {{ record.currency_type == 1 ? '$' : '￥' }}
-                  {{ record.change_money }}
-                </p>
-              </div>
-              <div class="flex justify-between">
-                <p>{{ t('orderDetail.payType') }}</p>
-                <p class="text-[#212121]">{{ record.pay_type_str }}</p>
-              </div>
-            </template>
-          </template>
+          <div class="flex justify-between">
+            <p>{{ t('orderDetail.addTime') }}</p>
+            <p class="text-[#212121]">{{ record.add_time }}</p>
+          </div>
+          <div class="flex justify-between">
+            <p>交易ID</p>
+            <p class="text-[#212121]">{{ record.serial_no }}</p>
+          </div>
+          <div class="flex justify-between">
+            <p>{{ t('orderDetail.changeMoney') }}</p>
+            <p class="text-[#212121]">
+              {{ record.currency_type == 1 ? 'USD' : 'CNY' }}
+              &nbsp;
+              {{ record.currency_type == 1 ? '$' : '￥' }}
+              {{ record.change_money }}
+            </p>
+          </div>
+          <div class="flex justify-between">
+            <p>{{ t('orderDetail.payType') }}</p>
+            <p class="text-[#212121]">{{ record.pay_type_str }}</p>
+          </div>
         </div>
       </div>
 

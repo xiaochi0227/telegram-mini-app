@@ -1,17 +1,28 @@
 <template>
-  <div class="mx-[1rem]  text-[28px] text-[#515360]" v-loading="isLoading">
-    <div class=" bg-white px-[20px] mb-[24px]">
-      <div class="flex justify-between items-center h-[100px]">
-        <nav-bar />
+  <div class="flex flex-col h-full  text-[28px] text-[#515360]" v-loading="isLoading">
+    <van-sticky>
+      <div class="mx-32px] bg-white px-[20px] mb-[24px]">
+        <div class="flex justify-between items-center h-[100px]">
+          <nav-bar />
+        </div>
       </div>
-    </div>
-    <div class="space-y-4 text-[28px]">
+    </van-sticky>
+    <div class="flex-1 overflow-y-auto px-[32px] space-y-4">
       <!-- 商品信息 -->
       <div class="bg-white rounded-[24px] shadow p-4">
         <div class="space-y-2 text-sm">
           <div class="flex justify-between">
             <p>{{ t('logistics.startTransportation') }}</p>
             <p class="text-[#212121]">{{ order.add_time }}</p>
+          </div>
+          <div v-if="order.transport_log && order.transport_log.length">
+            <van-steps direction="vertical" active="9999" active-color="#FF356D">
+              <van-step v-for="(item, index) in order.transport_log" :key="index">
+                <p class="leading-none text-[rgba(0,0,0,0.45)] text-[24px]">{{ item.node_time }}</p>
+                <h3 class="leading-[48px] text-[#000]">{{ item.desc }}</h3>
+
+              </van-step>
+            </van-steps>
           </div>
           <div class="flex justify-between">
             <p>{{ t('logistics.arriveTime') }}</p>
@@ -50,6 +61,7 @@ interface Order {
   actual_time: string;
   allocation_time: string;
   allocation_address_str: string;
+  transport_log?: Array<{ node_time: string; desc: string }>;
 }
 
 const order = ref<Order>({
@@ -70,4 +82,25 @@ getOrderDetail()
 </script>
 
 <style scoped lang="scss">
+:deep(.van-steps) {
+  padding-left: 48px;
+
+  .van-step--vertical {
+    line-height: 58px;
+  }
+
+  .van-step__circle-container {
+    left: -22px;
+    top: 22px;
+  }
+
+  .van-step__line {
+    left: -22px;
+  }
+
+  .van-step__circle {
+    width: 14px;
+    height: 14px;
+  }
+}
 </style>

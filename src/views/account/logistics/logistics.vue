@@ -49,6 +49,7 @@
             <div
               class="flex justify-between items-center h-[88px] bg-[#f4f4f4] rounded-[20px] px-[20px]"
               v-if="item.tracking_status"
+              @click.stop="() => router.push({ path: '/account/logistics/detail', query: { id:item.id } })"
             >
               <template v-if="item.tracking_status == 2">
                 <p>{{ t('accountCenter.estimatedTime') }}</p>
@@ -152,7 +153,7 @@ const onLoad = () => {
     let params = {
       page: pagination.value.page,
       limit: pagination.value.limit,
-      tracking_status: status.value || [2, 3, 4].join(','),
+      tracking_status_arr: status.value?[status.value]:[2, 3, 4],
     }
     let res = await logisticsApi.getLogisticsList(params)
 
