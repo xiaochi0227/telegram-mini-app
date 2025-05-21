@@ -6,10 +6,8 @@
           <nav-bar />
         </div>
       </div>
-      <div
-        class="flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]"
-        @click="showPicker = true"
-      >
+      <div class="flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]"
+        @click="showPicker = true">
         <div>{{ result }}</div>
         <i class="iconfont icon-Right"></i>
       </div>
@@ -19,18 +17,9 @@
 
     <div class="flex-1 px-[32px] overflow-y-auto scroll-container" v-else>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list
-          v-model:loading="loading"
-          :finished="finished"
-          :finished-text="finishedText"
-          @load="onLoad"
-        >
-          <div
-            class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]"
-            v-for="item in list"
-            :key="item"
-            @click="handleDetail(item)"
-          >
+        <van-list v-model:loading="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
+          <div class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]" v-for="item in list" :key="item"
+            @click="handleDetail(item)">
             <!-- 顶部信息 -->
             <p class="text-[32px] text-[#212121] font-bold">
               {{ item.order_no }}
@@ -53,20 +42,27 @@
             <!-- <div class="text-center underline text-[#FF356D] font-bold">
             发货单
           </div> -->
+            <div v-if="
+              (item.order_status == 3 ||
+              item.order_status == 4 ||
+              item.order_status == 5) &&
+              item.pay_status == 3
+            ">
+              <div class="w-full text-center bg-[#FF356D] h-[90px] leading-[90px] rounded-[24px] text-[#fff] my-[36px]"
+                @click.stop="handlePayment(item.id)">
+                {{ t('order.payEndMoney') }}
+              </div>
+            </div>
           </div>
         </van-list>
       </van-pull-refresh>
       <back-top />
     </div>
-    
+
   </div>
   <van-popup v-model:show="showPicker" round position="bottom">
-    <van-picker
-      :columns="orderStatusOptions"
-      @cancel="showPicker = false"
-      :default-index="defaultIdx"
-      @confirm="onConfirm"
-    />
+    <van-picker :columns="orderStatusOptions" @cancel="showPicker = false" :default-index="defaultIdx"
+      @confirm="onConfirm" />
   </van-popup>
 </template>
 
@@ -82,6 +78,7 @@ const router = useRouter()
 const route = useRoute()
 
 const { t } = useI18n()
+
 
 const pagination = ref({
   page: 1,
@@ -105,9 +102,15 @@ const showPicker = ref(false)
 interface OrderItem {
   id: number
   order_no: string
+  order_status: number
   order_status_str: string
+  pay_status:number
   add_time: string
-  total_price: number
+  total_price: number,
+}
+
+const handlePayment = (id:number) => {
+  router.push('/account/purchase/payment?id=' + id)
 }
 
 const list = ref<OrderItem[]>([])
