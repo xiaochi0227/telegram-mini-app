@@ -2,18 +2,8 @@
   <div>
     <div class="flex items-center py-[32px] cursor-pointer" @click="handleOpeator">
       <template v-if="!hideIcon">
-        <van-icon
-          v-if="route.meta.showBack"
-          name="arrow-left"
-          size="24"
-          color="#FF356D"
-        />
-        <van-icon
-          v-else
-          name="bars"
-          size="24"
-          color="#212121"
-        />
+        <i class="iconfont icon-Back" v-if="route.meta.showBack"></i>
+        <i class="iconfont icon-Menu" v-else @click="showPopup = true"></i>
       </template>
       <span class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px]">
         {{ navTitle }}
@@ -160,5 +150,15 @@ const goAccountInfo = () => {
       }
     }
   }
+}
+.icon-Menu{
+  font-size:36px;
+  color:#212121;
+  font-weight:bold;
+}
+.icon-Back{
+  font-size:42px;
+  color:#FF356D;
+  font-weight:bold;
 }
 </style>
