@@ -81,6 +81,7 @@
           size="large"
           type="primary"
           native-type="submit"
+          :disabled="disabled"
           :loading="loading"
         >
           {{ t('login.registerButton') }}
@@ -105,7 +106,7 @@ import { Notify } from 'vant'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUser } from '@/hooks/user'
-import { useAppStore } from '../../store/index';
+import { useAppStore } from '../../store/index'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -114,6 +115,7 @@ const { tg_user_id } = useAppStore()
 
 const showPassword = ref(false)
 const loading = ref(false)
+const disabled = ref(false)
 
 const form = ref({
   account_type: 2,
@@ -126,7 +128,7 @@ const form = ref({
 const countdown = ref(0)
 let timer: any = null
 const agree = ref(false)
-const sending  = ref(false)
+const sending = ref(false)
 
 const sendCode = async () => {
   const { username } = form.value
@@ -137,11 +139,15 @@ const sendCode = async () => {
 
   sending.value = true
   // 这里调用发送验证码的接口
-  const res = await getVerificationCode({username, tg_user_id, country_code: '7'})
+  const res = await getVerificationCode({
+    username,
+    tg_user_id,
+    country_code: '7',
+  })
 
   sending.value = false
 
-  if (!res) return 
+  if (!res) return
 
   Notify({ type: 'success', message: t('login.codeSent') })
   countdown.value = 60
@@ -169,7 +175,7 @@ const onRegister = async () => {
 
   loading.value = true
 
-  const res = await register({ ...form.value, tg_user_id  })
+  const res = await register({ ...form.value, tg_user_id })
 
   loading.value = false
 
@@ -183,6 +189,22 @@ function onLogin() {
   // 跳转到注册页
   router.replace('/login')
 }
+
+// 是否允许机器人给用户发信息
+const checkAllowWriteToPm = () => {
+  // 从 Telegram WebApp 获取 initData
+  const webApp = window.Telegram?.WebApp
+  // 解析 Telegram 注入的 initData
+  const initData = new URLSearchParams(webApp.initData)
+  const allow_write_to_pm = JSON.parse(initData.get('allow_write_to_pm')) 
+
+  if (!allow_write_to_pm) {
+    disabled.value = true;
+    Notify({type: 'danger', message: t('register.allowSendMsg') })
+  }
+}
+
+checkAllowWriteToPm()
 </script>
 
 <style scoped lang="scss">

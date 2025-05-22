@@ -30,7 +30,7 @@
                   : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
               "
             />
-            <span class="ml-3 text-[28px] font-bold text-[#515360]">
+            <span class="ml-3 text-[28px] font-bold text-[#515360] max-w-[300px] truncate">
               {{ getName() }}
             </span>
             <van-icon name="arrow" class="ml-2" color="#515360" />

@@ -591,5 +591,6 @@
 	"receiptVoucher":"入库凭证",
 	"loading":"加载中",
 	"noData":"暂无数据",
-	"transaction":"交易ID"
+	"transaction":"交易ID",
+	"register.allowSendMsg": "请允许机器人发送消息"
 }

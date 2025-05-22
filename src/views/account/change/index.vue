@@ -16,13 +16,10 @@
         @click="handleChangeAccount(item)"
       >
         <div class="flex gap-[32px] items-center">
-          <van-image
-            round
-            width="45px"
-            height="45px"
-            :src="item.avatar"
-          />
-          <span class="text-[28px] font-[500]">{{ getName(item.username) }}</span>
+          <van-image round width="45px" height="45px" :src="item.avatar" />
+          <span class="text-[28px] font-[500]">{{
+            getName(item.username)
+          }}</span>
         </div>
 
         <van-tag
@@ -42,13 +39,14 @@
 
       <div
         class="flex gap-[32px] items-center mb-4 bg-white rounded-[12px] px-[40px] py-[30px] border-dashed border-[4px]"
+        @click="goLogin"
       >
         <div
           class="flex justify-center items-center w-[90px] h-[90px] rounded-full bg-[#D9D9D9]"
         >
           <van-icon name="plus" color="#fff" size="22" />
         </div>
-        <span class="text-[28px] font-[500]" @click="goLogin">
+        <span class="text-[28px] font-[500]">
           {{ t('login.loginOther') }}
         </span>
       </div>
