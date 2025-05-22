@@ -67,6 +67,8 @@ const { user: pakupayUser, logout } = useUser()
 const { user } = useAppStore()
 
 const getName = () => {
+  if (!pakupayUser.value) return ''
+  
   const username = pakupayUser.value.username
   if (username.includes('@')) {
     return username

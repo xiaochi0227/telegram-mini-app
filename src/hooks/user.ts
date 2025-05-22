@@ -118,9 +118,9 @@ export function useUser() {
   // 登出
   const logout = async (): boolean => {
     try {
-      // const res = await authApi.logout()
+      const res = await authApi.logout()
 
-      // if (res.code !== 1) return false;
+      if (res.code !== 1) return false;
 
       clearUser()
 

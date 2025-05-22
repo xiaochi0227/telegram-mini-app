@@ -86,7 +86,10 @@ const navTitle = computed(() => route.meta.title || '标题')
 const showPopup = ref(false)
 
 const getName = () => {
+  if (!pakupayUser.value) return ''
+
   const username = pakupayUser.value.username
+  
   if (username.includes('@')) {
     return username
   }
