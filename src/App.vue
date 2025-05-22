@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :style="appStyle">
+  <div id="app" :style="appStyle" v-loading="loading">
     <div class="flex-1 overflow-hidden">
       <router-view v-slot="{ Component, route }">
         <keep-alive>
@@ -10,12 +10,7 @@
     </div>
 
     <!-- 底部导航栏 -->
-    <van-tabbar
-      v-model="active"
-      route
-      :fixed="false"
-      v-if="active"
-    >
+    <van-tabbar v-model="active" route :fixed="false" v-if="active">
       <van-tabbar-item
         v-for="(item, index) of tabbar"
         :key="index"
@@ -35,13 +30,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useAppStore } from './store'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const store = useAppStore()
 const theme = computed(() => store.theme)
+const loading = ref(false)
 
 const appStyle = computed(() => ({
   backgroundColor: theme.value?.backgroundColor || '#ffffff',
@@ -75,8 +71,10 @@ const tabbar = reactive([
   },
 ])
 
-onMounted(() => {
-  store.initTelegramApp()
+onMounted(async () => {
+  loading.value = true
+  await store.initTelegramApp()
+  loading.value = false
 })
 </script>
 
