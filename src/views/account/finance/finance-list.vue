@@ -38,18 +38,18 @@
                     <span>{{ t('finace.costAmount') }}</span>
                     <template v-if="item.change_type === 5">
                       <section v-if="item.entity_type === 6">
-                        <div class="text-[#004CE0] font-bold">-${{ item.usd_money }}</div>
-                        <div class="text-[#004CE0] font-bold">+¥{{ item.rmb_money }}</div>
+                        <div class="text-[#004CE0] font-bold">-USD ${{ item.usd_money }}</div>
+                        <div class="text-[#004CE0] font-bold">+CNY ¥{{ item.rmb_money }}</div>
                       </section>
                       <section v-else>
-                        <div class="text-[#004CE0] font-bold">-¥{{ item.rmb_money }}</div>
-                        <div class="text-[#004CE0] font-bold">+${{ item.usd_money }}</div>
+                        <div class="text-[#004CE0] font-bold">-CNY ¥{{ item.rmb_money }}</div>
+                        <div class="text-[#004CE0] font-bold">+USD ${{ item.usd_money }}</div>
                       </section>
                     </template>
                     <template v-else>
                       <div class="text-[#004CE0] font-bold">
                         {{ item.change_type === 3 ? '+' : '-' }}
-                        {{ item.change_money ? `¥${item.change_money}` : '' }}
+                        {{ item.change_money ? `${item.currency_type == 1 ? 'USD $' : 'CNY ￥'}${item.change_money}` : '' }}
                       </div>
                     </template>
                   </div>
