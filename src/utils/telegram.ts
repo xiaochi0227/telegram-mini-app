@@ -14,6 +14,7 @@ declare global {
             language_code?: string;
           };
         };
+        initData: string;
         showPopup: (params: {
           title: string;
           message: string;
@@ -25,6 +26,7 @@ declare global {
           hide: () => void;
           onClick: (callback: () => void) => void;
         };
+        onEvent: (event: string, callback: () => void) => void;
       };
     };
   }
@@ -41,7 +43,18 @@ export async function initTelegramWebApp(): Promise<boolean> {
   webApp.ready();
   webApp.expand();
 
-  return true;
+  return new Promise((resolve) => {
+    // 监听数据变化（适用于动态注入场景）
+    webApp.onEvent('viewportChanged', () => {
+      console.log('initData:', webApp.initData);
+      resolve(true);
+    });
+
+    // 设置超时保护
+    setTimeout(() => {
+      resolve(false);
+    }, 5000);
+  });
 }
 
 // 注意：获取手机号需要通过 Bot API 实现，这里只提供获取用户基本信息的函数 
