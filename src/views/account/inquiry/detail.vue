@@ -271,8 +271,24 @@ interface Contact {
   contact: string;
 }
 const handleContact = (contact: Contact['contact']): void => {
-  window.location.href = `${contact}`;
-};
+  if (window.Telegram && window.Telegram.WebApp) {
+    try {
+      window.Telegram.WebApp.openLink(`${contact}`);
+    } catch (e) {
+      // 回退方案：复制到剪贴板并提示用户
+      let msg =''
+      if(contact.startsWith('tel:')){
+        navigator.clipboard.writeText('+79959922888');
+        msg = `电话号码 ${'+79959922888'} 已复制，请打开拨号界面粘贴拨打`
+      }else{
+        navigator.clipboard.writeText('support@pakupay.com');
+        msg = `邮箱 ${'support@pakupay.com'} 已复制`
+      }
+      window.Telegram.WebApp.showAlert(msg);
+    }
+  }
+  // window.location.href = `${contact}`
+}
 
 fetchInquiryDetail()
 </script>

@@ -2,21 +2,13 @@
   <div class="account px-[1rem] h-full overflow-y-auto" v-loading="isLoading">
     <van-sticky>
       <div class="bg-white px-[20px]">
-        <div
-          class="border-b border-[#f4f4f4] flex justify-between items-center h-[100px]"
-        >
+        <div class="border-b border-[#f4f4f4] flex justify-between items-center h-[100px]">
           <nav-bar />
           <div class="flex items-center space-x-2">
-            <van-image
-              round
-              width="32px"
-              height="32px"
-              :src="
-                user
-                  ? user.photo_url
-                  : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
-              "
-            />
+            <van-image round width="32px" height="32px" :src="user
+                ? user.photo_url
+                : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
+              " />
             <!-- <div>
               mike
               <van-icon name="arrow-down" />
@@ -29,16 +21,13 @@
       <div class="text-sm py-3 text-left">{{ t('accountCenter.balance') }}</div>
       <Financial />
       <div class="flex justify-center space-x-4">
-        <button
-          class="bg-[#FF356D] text-white px-[6px] py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
-          @click="() => router.push('/recharge')"
-        >
+        <button class="bg-[#FF356D] text-white px-[6px] py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
+          @click="() => router.push('/recharge')">
           {{ t('accountCenter.recharge') }}
         </button>
         <button
           class="border border-[#E7E7E9] bg-white text-[#212121] px-[6px]py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
-          @click="() => router.push('/account/finance/operation-records')"
-        >
+          @click="() => router.push('/account/finance/operation-records')">
           {{ t('accountCenter.fundDetail') }}
         </button>
       </div>
@@ -49,12 +38,7 @@
       <h2 class="font-bold mb-2">{{ t('accountCenter.purchaseOrder') }}</h2>
       <div class="grid grid-cols-2 gap-4">
         <template v-if="orderStatusCards.length">
-          <div
-            class="order-status"
-            v-for="(item, index) in orderStatusCards"
-            :key="index"
-            @click="goPath(item.path)"
-          >
+          <div class="order-status" v-for="(item, index) in orderStatusCards" :key="index" @click="goPath(item.path)">
             <div class="flex items-center justify-between">
               <i :class="`iconfont ${item.icon}`"></i>
               <div class="num">{{ item.count }}</div>
@@ -68,12 +52,8 @@
     <div class="mt-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
       <h2 class="font-bold mb-2">{{ t('accountCenter.logistics') }}</h2>
       <div class="grid grid-cols-3 gap-4" v-if="logisticsStatusCards.length">
-        <div
-          class="text-center logis-status"
-          v-for="(item, index) in logisticsStatusCards"
-          :key="index"
-          @click="goPath(item.path)"
-        >
+        <div class="text-center logis-status" v-for="(item, index) in logisticsStatusCards" :key="index"
+          @click="goPath(item.path)">
           <i :class="`iconfont ${item.icon}`"></i>
           <div class="mt-[28px] text-[24px]">{{ item.title }}</div>
         </div>
@@ -123,15 +103,8 @@
     <div class="my-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px] contact">
       <h2 class="font-bold mb-2">{{ t('nav.contact') }}</h2>
       <div class="flex justify-around items-center">
-        <div
-          class="text-center"
-          v-for="method in contactMethods"
-          :key="method.id"
-        >
-          <i
-            :class="['iconfont', method.icon, method.colorClass]"
-            @click="handleContact(method.link)"
-          ></i>
+        <div class="text-center" v-for="method in contactMethods" :key="method.id">
+          <i :class="['iconfont', method.icon, method.colorClass]" @click="handleContact(method.link)"></i>
         </div>
       </div>
     </div>
@@ -186,7 +159,23 @@ interface Contact {
   contact: string
 }
 const handleContact = (contact: Contact['contact']): void => {
-  window.location.href = `${contact}`
+  if (window.Telegram && window.Telegram.WebApp) {
+    try {
+      window.Telegram.WebApp.openLink(`${contact}`);
+    } catch (e) {
+      // 回退方案：复制到剪贴板并提示用户
+      let msg =''
+      if(contact.startsWith('tel:')){
+        navigator.clipboard.writeText('+79959922888');
+        msg = `电话号码 ${'+79959922888'} 已复制，请打开拨号界面粘贴拨打`
+      }else{
+        navigator.clipboard.writeText('support@pakupay.com');
+        msg = `邮箱 ${'support@pakupay.com'} 已复制`
+      }
+      window.Telegram.WebApp.showAlert(msg);
+    }
+  }
+  // window.location.href = `${contact}`
 }
 
 const isLoading = ref(true)
@@ -328,7 +317,8 @@ onMounted(async () => {
   }
 }
 
-.contact > div > div {
+.contact>div>div {
+
   &:nth-child(1),
   &:nth-child(2) {
     .iconfont {
