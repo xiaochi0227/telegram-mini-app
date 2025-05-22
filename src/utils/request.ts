@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { AxiosRequestConfig, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import { Notify } from 'vant';
+import { useUser } from '@/hooks/user';
 
 console.log(import.meta.env.DEV, import.meta.env.VITE_API_BASE_URL)
 // 创建 axios 实例
@@ -24,7 +25,7 @@ service.interceptors.request.use(
       config.headers['X-Telegram-Init-Data'] = initData;
     }
 
-    config.headers['Ba-User-Token'] = '451f211a-0894-43a4-b994-a7db49181764'
+    config.headers['Ba-User-Token'] = localStorage.getItem('token')
 
     const locale = localStorage.getItem('locale') || 'russian'
 
@@ -42,10 +43,17 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     const res = response.data;
+    const { code, msg } = res
+    const { clearUser } = useUser()
+
+    if (code === 303 || code === 409) {
+      clearUser()
+      return Promise.reject();
+    }
     // 这里可以根据后端的响应结构进行相应的处理
-    if (res.code !== 1) {
+    if (code !== 1) {
       // 处理错误情况
-      Notify({type: 'danger', message: res.msg})
+      Notify({type: 'danger', message: msg})
       return Promise.resolve(res);
     }
     return res;

@@ -117,6 +117,8 @@ const handleOpeator = () => {
   if (route.meta.showBack) {
     const { user } = useUser()
 
+    console.log(user.value)
+
     if (user.value) router.back()
     else router.replace('/')
   }

@@ -107,7 +107,7 @@ export function useUser() {
       const res = await authApi.getTgChatCode(params);
 
       if (res.code !== 1) return false;
-      
+
       return true;
     } catch (error) {
       console.error('get verify code:', error);
@@ -116,13 +116,14 @@ export function useUser() {
   };
 
   // 登出
-  const logout = (): boolean => {
+  const logout = async (): boolean => {
     try {
-      // 从 localStorage 清除认证数据
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      user.value = null;
-      router.push('/login');
+      // const res = await authApi.logout()
+
+      // if (res.code !== 1) return false;
+
+      clearUser()
+
       return true;
     } catch (error) {
       console.error('Logout failed:', error);
@@ -135,6 +136,7 @@ export function useUser() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     user.value = null;
+    router ? router.push('/login') : location.href = '/login'
   };
 
   // 设置用户名
