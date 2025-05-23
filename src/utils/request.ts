@@ -18,6 +18,12 @@ service.interceptors.request.use(
       config.headers['Content-Type'] = 'application/json';
     }
 
+    // 添加时间戳参数
+    const timestamp = new Date().getTime();
+    config.url = config.url?.includes('?') 
+      ? `${config.url}&_t=${timestamp}`
+      : `${config.url}?_t=${timestamp}`;
+
     // 从 Telegram WebApp 获取 initData
     const initData = window.Telegram?.WebApp?.initData;
     

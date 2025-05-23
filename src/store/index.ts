@@ -21,7 +21,7 @@ export interface Theme {
 
 export const useAppStore = defineStore('app', {
   state: () => ({
-    tg_user_id: '',
+    tg_user_id: '5822362402',
     user: null as User | null,
     theme: {
       backgroundColor: '#ffffff',

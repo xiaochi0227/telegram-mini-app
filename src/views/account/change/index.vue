@@ -10,7 +10,7 @@
 
     <div class="flex-1 px-[32px] overflow-y-auto">
       <div
-        class="flex justify-between items-center mb-4 bg-white rounded-[12px] shadow-md px-[40px] py-[30px]"
+        class="flex justify-between items-center mb-4 bg-white rounded-[12px] shadow-md px-[40px] py-[30px] cursor-pointer"
         v-for="(item, index) of list"
         :key="index"
         @click="handleChangeAccount(item)"
@@ -38,7 +38,7 @@
       </div>
 
       <div
-        class="flex gap-[32px] items-center mb-4 bg-white rounded-[12px] px-[40px] py-[30px] border-dashed border-[4px]"
+        class="flex gap-[32px] items-center mb-4 bg-white rounded-[12px] px-[40px] py-[30px] border-dashed border-[4px] cursor-pointer"
         @click="goLogin"
       >
         <div
@@ -114,6 +114,8 @@ const handleChangeAccount = async (item) => {
   if (is_current) return
 
   item.loading = true
+
+  await authApi.logout()
 
   await tgLogin({ tg_user_id, user_id })
 
