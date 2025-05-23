@@ -54,6 +54,7 @@
             class="mt-4 mb-[28px]"
             :loading="btnLoading"
             :auto-submit="false"
+            :confirm-text="t('cart.payment')"
             @submit="handlePay"
             :title="t('payment.payPassword')"
             v-else

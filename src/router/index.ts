@@ -329,16 +329,6 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/account/purchase/purchase-ads',
-    name: 'PurchaseAds',
-    component: () => import('../views/account/purchase/purchase-ads.vue'),
-    meta: {
-      title: 'orderDetail.adsInfo',
-      showBack: true,
-      requiresAuth: true
-    },
-  },
-  {
     path: '/account/purchase/purchase-voucher',
     name: 'PurchaseVoucher',
     component: () => import('../views/account/purchase/purchase-voucher.vue'),
