@@ -5,7 +5,7 @@
         <i class="iconfont icon-Back" v-if="route.meta.showBack"></i>
         <i class="iconfont icon-Menu" v-else @click="showPopup = true"></i>
       </template>
-      <span class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px]">
+      <span class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px]" v-if="route.name!='Home'">
         {{ navTitle }}
       </span>
     </div>

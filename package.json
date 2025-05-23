@@ -11,16 +11,19 @@
   "dependencies": {
     "@types/node": "^22.15.17",
     "axios": "^1.9.0",
+    "lodash": "^4.17.21",
     "pinia": "^2.1.7",
     "postcss-pxtorem": "^6.1.0",
     "postcss-rem-to-responsive-pixel": "^6.0.2",
     "sass": "^1.88.0",
+    "swiper": "^11.2.7",
     "vant": "^3.4.3",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^6.0.8",
+    "@types/lodash": "^4.17.17",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/tsconfig": "^0.7.0",
     "@vueuse/core": "^13.2.0",

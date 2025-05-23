@@ -88,6 +88,7 @@
       </div>
     </div>
   </div>
+  <ImagePreview :images="images"  ref="imgPreview"/>
 </template>
 
 <script setup lang="ts">
@@ -96,7 +97,7 @@ import NavBar from '@/components/nav-bar/index.vue';
 import { logisticsApi } from '@/api';
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router';
-import { ImagePreview } from 'vant';
+import ImagePreview from "@/components/ImagePreview/index.vue"
 const router = useRouter();
 const route = useRoute();
 const { t } = useI18n()
@@ -120,7 +121,7 @@ interface Order {
 
 const order = ref<Order>({
   tracking_no: '',
-  tracking_status:0,
+  tracking_status: 0,
   tracking_status_str: '',
   add_time: '',
   shipment_place: '',
@@ -128,9 +129,9 @@ const order = ref<Order>({
   total_price: 0,
   pay_type_str: '',
   pay_time: '',
-  estimated_time:'',
-  allocation_time:'',
-  signed_for_time:'',
+  estimated_time: '',
+  allocation_time: '',
+  signed_for_time: '',
 });
 const bill_image = ref('');
 const getOrderDetail = async () => {
@@ -139,20 +140,23 @@ const getOrderDetail = async () => {
   isLoading.value = false;
 };
 
+const images = ref([])
+const imgPreview = ref(null)
+const handleImagePreview = (imageList: string[]): void => {
+  images.value = imageList
+  imgPreview.value.openPreview(0)
+
+
+};
+
 const getBillImage = async () => {
   if (bill_image.value) {
-    ImagePreview({
-      images: [bill_image.value], // 图片数组，支持多张
-      startPosition: 0,   // 初始位置（第几张）
-    });
+    handleImagePreview([bill_image.value])
     return
   }
   const res = await logisticsApi.getBillImage({ id })
   bill_image.value = res.data || {};
-  ImagePreview({
-    images: [bill_image.value], // 图片数组，支持多张
-    startPosition: 0,   // 初始位置（第几张）
-  });
+  handleImagePreview([bill_image.value])
 };
 getOrderDetail()
 

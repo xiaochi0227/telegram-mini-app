@@ -11,8 +11,10 @@
           <van-tab v-for="item in tabs" :title="item.title" :key="item.id">
             <van-empty image-size="160" :description="t('noData')" v-if="isEmpty" />
             <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-else class="pt-[80px]">
-              <van-list v-model:loading="loading" :loading-text="`${t('loading')}...`" :finished="finished" :finished-text="finishedText" @load="onLoad">
-                <div v-for="item in list" :key="item.add_time" class="bg-white rounded-lg shadow px-[20px] pt-[24px] pb-[40px] mt-[24px]  text-[#515360] space-y-2">
+              <van-list v-model:loading="loading" :loading-text="`${t('loading')}...`" :finished="finished"
+                :finished-text="finishedText" @load="onLoad">
+                <div v-for="item in list" :key="item.add_time"
+                  class="bg-white rounded-lg shadow px-[20px] pt-[24px] pb-[40px] mt-[24px]  text-[#515360] space-y-2">
                   <!-- 时间 -->
                   <div class="flex items-center">
                     <i class="iconfont icon-Time mr-[16px]"></i>
@@ -49,7 +51,8 @@
                     <template v-else>
                       <div class="text-[#004CE0] font-bold">
                         {{ item.change_type === 3 ? '+' : '-' }}
-                        {{ item.change_money ? `${item.currency_type == 1 ? 'USD $' : 'CNY ￥'}${item.change_money}` : '' }}
+                        {{ item.change_money ? `${item.currency_type == 1 ? 'USD $' : 'CNY ￥'}${item.change_money}` : ''
+                        }}
                       </div>
                     </template>
                   </div>
@@ -78,6 +81,7 @@ import NavBar from '@/components/nav-bar/index.vue';
 import BackTop from '@/components/back-top/index.vue'
 import { useRoute } from 'vue-router';
 import { ref } from 'vue';
+import debounce from "lodash/debounce";
 import { useI18n } from 'vue-i18n';
 import { balanceApi } from '@/api';
 const route = useRoute();
@@ -119,7 +123,12 @@ const onChange = (index: number) => {
   finished.value = false;
   list.value = [];
   loading.value = true;
-  onLoad();
+  const debouncedOnLoad = debounce(() => {
+    onLoad();
+  }, 500);
+  
+  debouncedOnLoad();
+
 };
 const onLoad = () => {
   setTimeout(async () => {
@@ -138,6 +147,8 @@ const onLoad = () => {
     if (active.value === 1) {
       params = {
         ...params,
+        add_time: [],
+        serial_no: '',
       };
       res = await balanceApi.getRechargeRecords(params);
     } else if (active.value === 0) {

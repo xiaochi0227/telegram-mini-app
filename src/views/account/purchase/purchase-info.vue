@@ -30,7 +30,7 @@
                   @click="handleImagePreview(item.exception_images || [])">
                   <i class="iconfont icon-Picture text-gray-500 mr-[8px]"></i>
                   <p class="text-sm text-gray-500 flex-1" v-if="item.is_exception">{{ t('orderDetail.exceptionVoucher')
-                    }}
+                  }}
                   </p>
                   <i class="iconfont icon-Right text-gray-500"></i>
                 </div>
@@ -83,6 +83,7 @@
       </div>
     </div>
   </div>
+  <ImagePreview :images="images"  ref="imgPreview"/>
 </template>
 
 <script setup lang="ts">
@@ -91,10 +92,7 @@ import NavBar from '@/components/nav-bar/index.vue';
 import { orderApi } from '@/api';
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router';
-import { ImagePreview } from 'vant';
-
-
-const router = useRouter();
+import ImagePreview from "@/components/ImagePreview/index.vue"
 const route = useRoute();
 const { t } = useI18n()
 
@@ -120,15 +118,14 @@ interface Order {
     receipt_images?: string[];
   }>;
 }
-
-
+const images = ref([])
+const imgPreview = ref(null)
 const handleImagePreview = (imageList: string[]): void => {
-  ImagePreview({
-    images: imageList, // 图片数组，支持多张
-    startPosition: 0,   // 初始位置（第几张）
-  });
-};
+  images.value = imageList
+  imgPreview.value.openPreview(0)
 
+
+};
 
 const order = ref<Order>({ buy_order: [] });
 
