@@ -592,5 +592,7 @@
 	"loading":"加载中",
 	"noData":"暂无数据",
 	"transaction":"交易ID",
-	"register.allowSendMsg": "请允许机器人发送消息"
+	"register.allowSendMsg": "请允许机器人发送消息",
+	"order.cancelOrder": "取消采购",
+  "order.orderAgain": "重新采购"
 }

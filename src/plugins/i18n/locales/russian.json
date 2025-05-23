@@ -575,5 +575,7 @@
 	"loading":"Загрузка",
 	"noData":"Данных нет",
 	"transaction":"ID транзакции",
-	"register.allowSendMsg": "Разрешите боту отправлять сообщения"
+	"register.allowSendMsg": "Разрешите боту отправлять сообщения",
+	"order.cancelOrder": "Отменить закупку",
+  "order.orderAgain": "Закупить повторно"
 }
