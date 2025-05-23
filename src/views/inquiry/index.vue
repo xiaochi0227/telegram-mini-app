@@ -203,12 +203,13 @@
 import NavBar from '@/components/nav-bar/index.vue'
 import PhoneInput from '@/components/phone-input/index.vue'
 import { ref, onActivated } from 'vue'
-import { FormInstance, Toast } from 'vant'
+import { FormInstance, Toast, Notify } from 'vant'
 import type { UploaderFileListItem } from 'vant/es/uploader/types'
 import { useI18n } from 'vue-i18n'
 import { inquiryApi } from '@/api'
 import { useInquiryStore } from '@/store/inquiry'
 import { useRouter } from 'vue-router'
+import { useUser } from '@/hooks/user'
 
 interface Product {
   uploading: boolean
@@ -232,6 +233,7 @@ interface FormData {
 
 const router = useRouter()
 const { t } = useI18n()
+const { user } = useUser()
 const inquiryStore = useInquiryStore()
 
 const productFormRefs = ref<FormInstance[]>([])
@@ -419,6 +421,13 @@ const resetForm = () => {
 // 表单提交
 const handleSubmit = async () => {
   try {
+    // 检查用户是否登录
+    if (!user.value) {
+      Notify({ type: 'danger', message: t('inquiry.loginRequired') })
+      router.push('/login')
+      return
+    }
+
     // 验证所有商品表单
     const productsValid = await validateAllProducts()
 
