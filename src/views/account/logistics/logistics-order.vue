@@ -85,10 +85,11 @@
       <div
         class="border border-[#FF356D] flex items-center justify-center text-[#FF356D] w-full h-[80px] rounded-[24px]">
         <span>{{ t('logistics.viewInvoice') }}</span>
+        <van-loading type="spinner" size="16px"  v-if="billLoading" class="ml-[4px]"/>
       </div>
     </div>
   </div>
-  <ImagePreview :images="images"  ref="imgPreview"/>
+  <ImagePreview :images="images" ref="imgPreview" />
 </template>
 
 <script setup lang="ts">
@@ -104,6 +105,7 @@ const { t } = useI18n()
 
 const id = route.params.id
 const isLoading = ref(true);
+const billLoading = ref(false)
 interface Order {
   tracking_no: string;
   tracking_status: number;
@@ -140,24 +142,52 @@ const getOrderDetail = async () => {
   isLoading.value = false;
 };
 
-const images = ref([])
+const images = ref<string[]>([]) // 添加类型注解
 const imgPreview = ref(null)
+
+// 处理图片预览
 const handleImagePreview = (imageList: string[]): void => {
+  if (!imageList.length || !imgPreview.value) return // 添加空值判断
+
   images.value = imageList
-  imgPreview.value.openPreview(0)
+  imgPreview.value?.openPreview(0) // 使用可选链操作符
+}
 
-
-};
-
+// 获取账单图片
 const getBillImage = async () => {
+  // 如果已有图片数据，直接预览
   if (bill_image.value) {
     handleImagePreview([bill_image.value])
     return
   }
-  const res = await logisticsApi.getBillImage({ id })
-  bill_image.value = res.data || {};
-  handleImagePreview([bill_image.value])
-};
+
+  // 防止重复请求
+  if (billLoading.value) return
+
+  try {
+    billLoading.value = true
+
+    // 获取图片数据
+    const { data } = await logisticsApi.getBillImage({ id })
+    if (!data) return // 无数据时直接返回
+
+    bill_image.value = data
+
+    // 使用Promise包装图片加载
+    await new Promise<void>((resolve, reject) => {
+      const img = new Image()
+      img.src = data
+      img.onload = () => resolve()
+      img.onerror = () => reject(new Error("图片加载失败"))
+    })
+
+    handleImagePreview([data])
+  } catch (error) {
+    console.error("获取账单图片失败:", error)
+  } finally {
+    billLoading.value = false // 确保loading状态被重置
+  }
+}
 getOrderDetail()
 
 

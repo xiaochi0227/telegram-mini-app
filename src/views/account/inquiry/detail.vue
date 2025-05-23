@@ -131,6 +131,7 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import { Dialog } from 'vant';
 import NavBar from '@/components/nav-bar/index.vue'
 import { carApi, inquiryApi } from '@/api'
 import { useI18n } from 'vue-i18n'
@@ -284,7 +285,9 @@ const handleContact = (contact: Contact['contact']): void => {
         navigator.clipboard.writeText('support@pakupay.com');
         msg = `邮箱 ${'support@pakupay.com'} 已复制`
       }
-      window.Telegram.WebApp.showAlert(msg);
+      Dialog.alert({
+        message: msg,
+      })
     }
   }
   // window.location.href = `${contact}`

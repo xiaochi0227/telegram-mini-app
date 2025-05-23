@@ -6,8 +6,8 @@
           <nav-bar />
           <div class="flex items-center space-x-2">
             <van-image round width="32px" height="32px" :src="user
-                ? user.photo_url
-                : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
+              ? user.photo_url
+              : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
               " />
             <!-- <div>
               mike
@@ -113,6 +113,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { Dialog } from 'vant';
 import { useRouter } from 'vue-router'
 import NavBar from '@/components/nav-bar/index.vue'
 import Financial from './components/Financial.vue'
@@ -161,7 +162,7 @@ interface Contact {
 const handleContact = (contact: Contact['contact']): void => {
   // 检查是否在 Telegram WebApp 环境中
   const isTelegramWebApp = window.Telegram && window.Telegram.WebApp;
-  
+
   try {
     if (isTelegramWebApp) {
       // 尝试使用 Telegram WebApp API
@@ -174,7 +175,7 @@ const handleContact = (contact: Contact['contact']): void => {
     // 如果上述方法都失败，使用回退方案
     let msg = '';
     let textToCopy = '';
-    
+
     if (contact.startsWith('tel:')) {
       textToCopy = '+79959922888';
       msg = `电话号码 ${textToCopy} 已复制，请打开拨号界面粘贴拨打`;
@@ -190,10 +191,14 @@ const handleContact = (contact: Contact['contact']): void => {
     try {
       navigator.clipboard.writeText(textToCopy);
       // 使用原生 alert 作为最后的回退方案
-      alert(msg);
+      Dialog.alert({
+        message: msg,
+      })
     } catch (clipboardError) {
       // 如果复制到剪贴板也失败，直接显示消息
-      alert(msg);
+      Dialog.alert({
+        message: msg,
+      })
     }
   }
 }

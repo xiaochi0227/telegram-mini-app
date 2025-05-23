@@ -1,15 +1,11 @@
 <template>
   <div class="flex flex-col h-[100vh] overflow-hidden">
-    <div
-      class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]"
-    >
+    <div class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
       <nav-bar />
     </div>
     <div class="px-[32px] flex-1 overflow-y-auto">
       <div class="px-[24px] mb-[28px] bg-white rounded-[12px] shadow-sm">
-        <div
-          class="flex justify-between items-center py-[20px] text-[28px] font-[600] border-b border-[#F4F4F4]"
-        >
+        <div class="flex justify-between items-center py-[20px] text-[28px] font-[600] border-b border-[#F4F4F4]">
           <span>{{ t('orderConfirm.orderNo') }}：</span>
           <span>{{ order_no }}</span>
         </div>
@@ -24,38 +20,25 @@
           {{ t('orderConfirm.contactSales') }}
         </p>
 
-        <div
-          class="py-[10px] mb-3 text-center text-[28px] border border-[#E7E7E9] rounded-[12px]"
-          @click="handleContact('https://t.me/@pakupay')"
-        >
+        <div class="py-[10px] mb-3 text-center text-[28px] border border-[#E7E7E9] rounded-[12px]"
+          @click="handleContact('https://t.me/@pakupay')">
           <i class="iconfont icon-telegram text-[#28A7E7] mr-1"></i>
           <span>PAKUPAY</span>
         </div>
 
-        <div
-          class="py-[10px] text-center text-[28px] border border-[#E7E7E9] rounded-[12px]"
-          @click="handleContact('tel:+79959922888')"
-        >
+        <div class="py-[10px] text-center text-[28px] border border-[#E7E7E9] rounded-[12px]"
+          @click="handleContact('tel:+79959922888')">
           <i class="iconfont icon-Phone text-[#FF356D] mr-1"></i>
           <span>+7 995 992-28-88</span>
         </div>
       </div>
 
       <!-- 商品信息 -->
-      <van-cell
-        :title="t('order.goodsInfo')"
-        is-link
-        class="view-detail mb-[28px]"
-        :to="`/goods?entry=${decryptedData.entry}`"
-      />
+      <van-cell :title="t('order.goodsInfo')" is-link class="view-detail mb-[28px]"
+        :to="`/goods?entry=${decryptedData.entry}`" />
 
       <!-- 地址信息 -->
-      <van-cell
-        :title="t('orderDetail.adsInfo')"
-        is-link
-        class="view-detail mb-[28px]"
-        to="/address"
-      />
+      <van-cell :title="t('orderDetail.adsInfo')" is-link class="view-detail mb-[28px]" to="/address" />
     </div>
   </div>
 </template>
@@ -63,6 +46,7 @@
 <script setup lang="ts">
 import NavBar from '@/components/nav-bar/index.vue'
 import { computed, ref } from 'vue'
+import { Dialog } from 'vant';
 import { useRoute } from 'vue-router'
 import { decryptParams } from '@/utils/encryption'
 import { inquiryApi } from '@/api'
@@ -89,15 +73,17 @@ const handleContact = (contact: Contact['contact']): void => {
       window.Telegram.WebApp.openLink(`${contact}`);
     } catch (e) {
       // 回退方案：复制到剪贴板并提示用户
-      let msg =''
-      if(contact.startsWith('tel:')){
+      let msg = ''
+      if (contact.startsWith('tel:')) {
         navigator.clipboard.writeText('+79959922888');
         msg = `电话号码 ${'+79959922888'} 已复制，请打开拨号界面粘贴拨打`
-      }else{
+      } else {
         navigator.clipboard.writeText('support@pakupay.com');
         msg = `邮箱 ${'support@pakupay.com'} 已复制`
       }
-      window.Telegram.WebApp.showAlert(msg);
+      Dialog.alert({
+        message: msg,
+      })
     }
   }
   // window.location.href = `${contact}`

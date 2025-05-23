@@ -97,7 +97,9 @@
 
   --van-notify-line-height: 40px !important;
 }
-
+.van-dialog__message{
+  line-height: normal
+}
 a {
   font-weight: 500;
   color: #646cff;

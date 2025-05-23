@@ -26,11 +26,11 @@
         <img :src="subtittle" class="text-3 absolute left-[44px] top-[340px] w-[506px]">
         <div class="contact absolute left-[44px]  top-[440px] space-y-[24px]">
           <img :src="contactText" class="h-[64px]">
-          <p class="flex items-center space-x-[10px]" @click="handleContact('+79959922888')">
+          <p class="flex items-center space-x-[10px]" @click="handleContact('tel:+79959922888')">
             <i class="iconfont icon-Phone text-[#FF356D]"></i>
             <img src="@/assets/images/home/home-contact-1.png" class="h-[36px]">
           </p>
-          <p class="flex items-center space-x-[10px]" @click="handleContact('+8617774072288')">
+          <p class="flex items-center space-x-[10px]" @click="handleContact('tel:+8617774072288')">
             <i class="iconfont icon-Phone text-[#FF356D]"></i>
             <img src="@/assets/images/home/home-contact-2.png" class="h-[36px]">
           </p>
@@ -98,6 +98,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { Dialog } from 'vant';
 import { useAppStore } from '@/store';
 import { useI18n } from 'vue-i18n'
 import NavBar from '@/components/nav-bar/index.vue'
@@ -233,6 +234,7 @@ interface Contact {
   contact: string
 }
 const handleContact = (contact: Contact['contact']): void => {
+
   if (window.Telegram && window.Telegram.WebApp) {
     try {
       window.Telegram.WebApp.openLink(`${contact}`);
@@ -240,13 +242,16 @@ const handleContact = (contact: Contact['contact']): void => {
       // 回退方案：复制到剪贴板并提示用户
       let msg = ''
       if (contact.startsWith('tel:')) {
-        navigator.clipboard.writeText('+79959922888');
-        msg = `电话号码 ${'+79959922888'} 已复制，请打开拨号界面粘贴拨打`
+        const phoneNumber = contact.replace("tel:", "");
+        navigator.clipboard.writeText(phoneNumber);
+        msg = `电话号码 ${phoneNumber} 已复制，请打开拨号界面粘贴拨打`
       } else {
         navigator.clipboard.writeText('support@pakupay.com');
         msg = `邮箱 ${'support@pakupay.com'} 已复制`
       }
-      window.Telegram.WebApp.showAlert(msg);
+      Dialog.alert({
+        message: msg,
+      })
     }
   }
   // window.location.href = `${contact}`
