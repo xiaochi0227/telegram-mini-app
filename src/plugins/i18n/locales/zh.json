@@ -595,5 +595,6 @@
 	"transaction":"交易ID",
 	"register.allowSendMsg": "请允许机器人发送消息",
 	"order.cancelOrder": "取消采购",
-  "order.orderAgain": "重新采购"
+  "order.orderAgain": "重新采购",
+	"inquiry.infoRequired": "请将信息填写完整"
 }
