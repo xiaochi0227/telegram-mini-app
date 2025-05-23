@@ -32,6 +32,24 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/h5-login',
+    name: 'H5Login',
+    component: () => import('../views/h5/login/index.vue'),
+    meta: {
+      title: 'header.back',
+      showBack: true
+    },
+  },
+  {
+    path: '/h5-register',
+    name: 'H5Register',
+    component: () => import('../views/h5/register/index.vue'),
+    meta: {
+      title: 'header.back',
+      showBack: true
+    },
+  },
+  {
     path: '/inquiry',
     name: 'Inquiry',
     component: () => import('../views/inquiry/index.vue'),

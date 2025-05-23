@@ -1,0 +1,143 @@
+import { ref, computed, readonly } from 'vue';
+import { useRouter } from 'vue-router';
+import type { LoginParams, RegisterParams } from '@/api/types';
+import { h5AuthApi } from '@/api';
+
+export interface User {
+  id: string;
+  username: string;
+  nickname: string;
+  email: string;
+  mobile: string;
+  token?: string;
+}
+
+export function useH5User() {
+  const router = useRouter();
+  const user = ref<User | null>(null);
+  const loading = ref(true);
+
+  // 初始化检查用户登录状态
+  const checkAuth = () => {
+    try {
+      const token = localStorage.getItem('token');
+      const storedUser = localStorage.getItem('user');
+
+      if (token && storedUser) {
+        user.value = JSON.parse(storedUser);
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      // 清除可能损坏的数据
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  // 立即执行检查
+  checkAuth();
+
+  // 登录
+  const login = async (params: LoginParams): Promise<boolean> => {
+    try {
+      const res = await h5AuthApi.login(params);
+
+      if (res.code !== 1) return false;
+      const { userInfo } = res.data;
+
+      // 存储认证数据到 localStorage
+      localStorage.setItem('token', userInfo.token);
+      localStorage.setItem('user', JSON.stringify(userInfo));
+
+      user.value = userInfo;
+      return true;
+    } catch (error) {
+      console.error('Login failed:', error);
+      return false;
+    }
+  };
+
+  // 注册
+  const register = async (params: RegisterParams): Promise<boolean> => {
+    try {
+      const res = await h5AuthApi.register(params);
+
+      if (res.code !== 1) return false;
+      const { userInfo } = res.data;
+
+      // 存储认证数据到 localStorage
+      localStorage.setItem('token', userInfo.token);
+      localStorage.setItem('user', JSON.stringify(userInfo));
+
+      user.value = userInfo;
+      return true;
+    } catch (error) {
+      console.error('Registration failed:', error);
+      return false;
+    }
+  };
+
+  // 获取验证码
+  const getVerificationCode = async (params: any, type): Promise<boolean> => {
+    try {
+      const res = type == 1 ? await h5AuthApi.getEmailCode(params) : h5AuthApi.getSmsCode(params);
+
+      if (res.code !== 1) return false;
+
+      return true;
+    } catch (error) {
+      console.error('get verify code:', error);
+      return false;
+    }
+  };
+
+  // 登出
+  const logout = async (): boolean => {
+    try {
+      const res = await h5AuthApi.logout()
+
+      if (res.code !== 1) return false;
+
+      clearUser()
+
+      return true;
+    } catch (error) {
+      console.error('Logout failed:', error);
+      return false;
+    }
+  };
+
+  // 清除用户数据
+  const clearUser = (): void => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    user.value = null;
+    router ? router.push('/login') : location.href = '/login'
+  };
+
+  // 设置用户名
+  const setUserName = (username: string): void => {
+    if (!user.value) return;
+
+    const updatedUser = { ...user.value, nickname: username };
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    user.value = updatedUser;
+  };
+
+  // 暴露只读的用户状态
+  const currentUser = computed(() => readonly(user.value));
+
+  return {
+    user: currentUser,
+    loading: readonly(loading),
+    login,
+    register,
+    logout,
+    clearUser,
+    setUserName,
+    checkAuth,
+    getVerificationCode
+  };
+}
