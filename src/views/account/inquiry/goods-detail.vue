@@ -13,7 +13,7 @@
         :show-indicators="true"
       >
         <van-swipe-item v-for="(img, idx) in good.images" :key="idx">
-          <img :src="img" class="w-full h-48 object-cover" />
+          <img :src="img" class="w-full h-48 object-contain" />
         </van-swipe-item>
       </van-swipe>
       <!-- 商品信息 -->

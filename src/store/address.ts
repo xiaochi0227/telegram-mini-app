@@ -42,6 +42,9 @@ export const useAddressStore = defineStore('address', {
     },
 
     toggleAddressActive(addressId: string) {
+      this.addressList.forEach(item => {
+        item.active = false
+      })
       const address = this.addressList.find(addr => addr.id == addressId)
       if (address) {
         address.active = !address.active
