@@ -183,13 +183,7 @@
         </div>
         <div
           class="flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px] text-[#212121]"
-          v-if="order.address_data && order.address_data.length" @click="
-            () =>
-              router.push({
-                path: '/account/purchase/purchase-ads',
-                query: { id },
-              })
-          ">
+          v-if="order.address_data && order.address_data.length" @click="handleAddress">
           <div>{{ t('orderDetail.adsInfo') }}</div>
           <i class="iconfont icon-Right"></i>
         </div>
@@ -231,9 +225,11 @@ import { orderApi } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { encryptParams } from '@/utils/encryption'
+import { useOrderStore } from '../../../store/order';
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
+const { setAddressList } = useOrderStore()
 
 const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id
 const isLoading = ref(true)
@@ -310,6 +306,13 @@ const getOrderDetail = async () => {
   order.value = res.data || {}
   isLoading.value = false
 }
+
+// 地址跳转
+const handleAddress = () => {
+  setAddressList(order.value.address_data)
+  router.push('/address')
+}
+
 getOrderDetail()
 
 watchEffect(() => {
