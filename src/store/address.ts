@@ -24,15 +24,16 @@ export const useAddressStore = defineStore('address', {
       }
     },
 
+    // 有edit_id就是编辑 
     // 判断 shippingAddress 中是否有这个地址。有的话覆盖。没有的话就新增
-    setAddress(address: Address | null) {
+    setAddress(address: Address | null, edit_id) {
       if (!address) {
         return;
       }
 
-      const existingIndex = this.shippingAddress.findIndex(addr => addr.id == address.id);
-      
-      if (existingIndex !== -1) {
+      const existingIndex = this.shippingAddress.findIndex(addr => addr.id == edit_id);
+
+      if (edit_id && existingIndex !== -1) {
         // If address exists, update it
         this.shippingAddress[existingIndex] = { ...address };
       } else {
@@ -58,6 +59,15 @@ export const useAddressStore = defineStore('address', {
     // 设置确认地址页面的地址信息
     setShippingAddressList(addresses: Address[]) {
       this.shippingAddress = addresses
+    },
+
+    // 删除下单页面地址
+    removeAddress(address: Address) {
+      const index = this.shippingAddress.findIndex(item => item.id == address.id)
+
+      if (index < 0) return
+
+      this.shippingAddress.splice(index, 1)
     },
 
     // 获取默认地址

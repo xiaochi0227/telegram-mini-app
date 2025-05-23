@@ -40,13 +40,13 @@
             >
               {{ t('address.default') }}
             </div>
-            <p class="text-[#212121] text-[30px] font-[500]">
-              {{ address.name }}
-            </p>
             <p
-              class="text-[#212121] text-[28px]"
+              class="text-[#212121] text-[30px] font-[500]"
               :class="{ 'mt-[50px]': address.is_default }"
             >
+              {{ address.name }}
+            </p>
+            <p class="text-[#212121] text-[28px]">
               {{ address.country_name }} &nbsp;
               {{ address.province_name }} &nbsp; {{ address.city_name }} &nbsp;
               {{ address.detail_address }}&nbsp;
@@ -140,7 +140,7 @@ const handleSelectAddress = () => {
   }
 
   const selected_address = selected_list[0]
-  addressStore.setAddress(selected_address)
+  addressStore.setAddress(selected_address, selectId.value)
   router.back()
 }
 
