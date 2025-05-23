@@ -85,6 +85,7 @@
                   class="mt-[28px]"
                   v-model="item.product_num"
                   :min="1"
+                  :max="10000"
                   @change="() => handleChangeQuantity(item)"
                 />
 
