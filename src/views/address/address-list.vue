@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col h-full">
-    <div class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]">
+    <div
+      class="nav-header mx-[32px] px-[20px] mb-[24px] bg-[#fff] rounded-b-[12px]"
+    >
       <nav-bar />
 
       <div class="py-[24px] border-t border-[#F4F4F4]">
@@ -39,9 +41,12 @@
               {{ t('address.default') }}
             </div>
             <p
-              class="text-[#212121] text-[28px]"
+              class="text-[#212121] text-[30px] font-[500]"
               :class="{ 'mt-[50px]': address.is_default }"
             >
+              {{ address.name }}
+            </p>
+            <p class="text-[#212121] text-[28px]">
               {{ address.country_name }} &nbsp;
               {{ address.province_name }} &nbsp; {{ address.city_name }} &nbsp;
               {{ address.detail_address }}&nbsp;
@@ -70,7 +75,9 @@
       </div>
 
       <!-- 添加地址按钮 -->
-      <div class="px-[20px] mx-[32px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow">
+      <div
+        class="px-[20px] mx-[32px] py-[32px] z-50 bg-[#FFFFFF] rounded-t-xl shadow"
+      >
         <van-button
           class="font-bold"
           color="#FF356D"
@@ -131,9 +138,9 @@ const handleSelectAddress = () => {
     Notify({ type: 'warning', message: t('checkout.onlyOneAddress') })
     return
   }
-  
+
   const selected_address = selected_list[0]
-  addressStore.setAddress(selected_address)
+  addressStore.setAddress(selected_address, selectId.value)
   router.back()
 }
 

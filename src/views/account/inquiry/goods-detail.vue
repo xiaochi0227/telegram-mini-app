@@ -13,7 +13,7 @@
         :show-indicators="true"
       >
         <van-swipe-item v-for="(img, idx) in good.images" :key="idx">
-          <img :src="img" class="w-full h-48 object-cover" />
+          <img :src="img" class="w-full h-48 object-contain" />
         </van-swipe-item>
       </van-swipe>
       <!-- 商品信息 -->
@@ -27,14 +27,14 @@
         <span class="font-bold">{{ t('inquiriesDetails.quantity') }}：</span>
         <span> {{ good.product_num }} </span>
       </div>
-      <div class="text-[#212121] text-[28px] mt-[16px]">
-        <span class="font-bold">{{ t('reference.link') }}：</span>
-        <a :href="link" class="text-blue-500 underline" target="_blank">
+      <div class="flex text-[#212121] text-[28px] mt-[16px]">
+        <span class="font-bold">{{ t('inquiry.productLink') }}：</span>
+        <a :href="good.reference_url" class="flex-1 text-blue-500 underline truncate inline-block max-w-full" target="_blank">
           {{ good.reference_url }}
         </a>
       </div>
       <div class="text-[#212121] text-[28px] font-bold mt-[16px]">
-        {{ t('order.goodsDesc') }}：
+        {{ t('inquiriesDetails.goodsDesc') }}：
       </div>
       <div class="text-[#212121] text-[28px] whitespace-pre-line">
         {{ good.desc }}

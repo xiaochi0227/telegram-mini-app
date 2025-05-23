@@ -1,7 +1,7 @@
 import { ref, computed, readonly } from 'vue';
 import { useRouter } from 'vue-router';
-import type { TgLoginParams, LoginParams, RegisterParams, TgCodeParams } from '@/api/types';
-import { authApi } from '@/api/auth';
+import type { LoginParams, RegisterParams } from '@/api/types';
+import { h5AuthApi } from '@/api';
 
 export interface User {
   id: string;
@@ -12,7 +12,7 @@ export interface User {
   token?: string;
 }
 
-export function useUser() {
+export function useH5User() {
   const router = useRouter();
   const user = ref<User | null>(null);
   const loading = ref(true);
@@ -39,32 +39,10 @@ export function useUser() {
   // 立即执行检查
   checkAuth();
 
-  //选择登录对应的pakupay账号
-  // 进入后先调用该接口判断是否之前登陆过，登陆过就默认登录并放入登录信息
-  const tgLogin = async (params: TgLoginParams): Promise<boolean> => {
-    try {
-      const res = await authApi.tgLogin(params);
-
-      if (res.code !== 1 || !res.data || !res.data.userInfo) return false;
-
-      const { userInfo } = res.data;
-
-      // 存储认证数据到 localStorage
-      localStorage.setItem('token', userInfo.token);
-      localStorage.setItem('user', JSON.stringify(userInfo));
-
-      user.value = userInfo;
-      return true;
-    } catch (error) {
-      console.error('Login failed:', error);
-      return false;
-    }
-  };
-
   // 登录
   const login = async (params: LoginParams): Promise<boolean> => {
     try {
-      const res = await authApi.login(params);
+      const res = await h5AuthApi.login(params);
 
       if (res.code !== 1) return false;
       const { userInfo } = res.data;
@@ -84,7 +62,7 @@ export function useUser() {
   // 注册
   const register = async (params: RegisterParams): Promise<boolean> => {
     try {
-      const res = await authApi.register(params);
+      const res = await h5AuthApi.register(params);
 
       if (res.code !== 1) return false;
       const { userInfo } = res.data;
@@ -102,9 +80,9 @@ export function useUser() {
   };
 
   // 获取验证码
-  const getVerificationCode = async (params: TgCodeParams): Promise<boolean> => {
+  const getVerificationCode = async (params: any, type): Promise<boolean> => {
     try {
-      const res = await authApi.getTgChatCode(params);
+      const res = type == 1 ? await h5AuthApi.getEmailCode(params) : h5AuthApi.getSmsCode(params);
 
       if (res.code !== 1) return false;
 
@@ -118,7 +96,7 @@ export function useUser() {
   // 登出
   const logout = async (): boolean => {
     try {
-      const res = await authApi.logout()
+      const res = await h5AuthApi.logout()
 
       if (res.code !== 1) return false;
 
@@ -148,22 +126,6 @@ export function useUser() {
     user.value = updatedUser;
   };
 
-  // 设置用户
-  const setUser = (newUser: User | null | ((prev: User | null) => User | null)): void => {
-    if (typeof newUser === 'function') {
-      const updatedUser = newUser(user.value);
-      user.value = updatedUser;
-      if (updatedUser) {
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-      }
-    } else {
-      user.value = newUser;
-      if (newUser) {
-        localStorage.setItem('user', JSON.stringify(newUser));
-      }
-    }
-  };
-
   // 暴露只读的用户状态
   const currentUser = computed(() => readonly(user.value));
 
@@ -175,9 +137,7 @@ export function useUser() {
     logout,
     clearUser,
     setUserName,
-    setUser,
     checkAuth,
-    tgLogin,
     getVerificationCode
   };
 }

@@ -9,8 +9,42 @@
     </van-sticky>
 
     <div class="w-full px-[32px] mt-16">
+      <div
+        class="flex justify-center items-center bg-[#EDEDED] p-[4px] rounded-full h-[96px] text-[28px] text-[#666666]"
+      >
+        <div
+          class="px-4 flex-1 rounded-full account-tab"
+          v-for="(item, index) in tabs"
+          :key="index"
+          :class="{ active: active == item.value }"
+          @click="active = item.value"
+        >
+          <span class="whitespace-nowrap">{{ item.name }}</span>
+        </div>
+      </div>
+
       <van-form @submit="onRegister">
-        <phone-input v-model="form.username" class="mb-4" />
+        <phone-input
+          v-model="form.phone"
+          class="mb-4"
+          v-if="active == '2'"
+        />
+
+        <van-field
+          v-else
+          v-model="form.email"
+          name="email"
+          type="email"
+          :placeholder="t('inquiry.emailPlaceholder')"
+          :rules="[
+            { required: true, message: t('inquiry.emailPlaceholder') },
+            {
+              pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+              message: t('login.registerEmailInvalid'),
+            },
+          ]"
+          class="mb-4"
+        />
 
         <van-field
           v-model="form.ver_code"
@@ -21,10 +55,6 @@
         >
           <template #button>
             <div class="flex justify-center items-center h-full px-[30px]">
-              <i
-                class="iconfont icon-telegram text-[#28A7E7]"
-                v-if="countdown == 0"
-              ></i>
               <van-button
                 size="small"
                 type="primary"
@@ -105,14 +135,17 @@ import { ref } from 'vue'
 import { Notify } from 'vant'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useUser } from '@/hooks/user'
-import { useAppStore } from '../../store/index'
+import { useH5User } from '@/hooks/h5User'
 
 const router = useRouter()
 const { t } = useI18n()
-const { register, getVerificationCode } = useUser()
-const { tg_user_id } = useAppStore()
+const { register, getVerificationCode } = useH5User()
 
+const active = ref('2')
+const tabs = ref([
+  { name: t('login.registerPhone'), value: '2' },
+  { name: t('login.registerEmail'), value: '1' },
+])
 const showPassword = ref(false)
 const loading = ref(false)
 const disabled = ref(false)
@@ -120,7 +153,8 @@ const disabled = ref(false)
 const form = ref({
   account_type: 2,
   country_code: '7',
-  username: '',
+  phone: '',
+  email: '',
   password: '',
   ver_code: '', // 新增
 })
@@ -131,9 +165,11 @@ const agree = ref(false)
 const sending = ref(false)
 
 const sendCode = async () => {
-  const { username } = form.value
-  if (!form.value.username) {
-    Notify({ type: 'danger', message: t('reg.phoneRequired') })
+  const { phone, email } = form.value
+  const username = active.value == 2 ? phone : email
+
+  if (!username) {
+    Notify({ type: 'danger', message: active.value == 2 ? t('reg.phoneRequired'): t('login.emailRequired') })
     return
   }
 
@@ -141,9 +177,9 @@ const sendCode = async () => {
   // 这里调用发送验证码的接口
   const res = await getVerificationCode({
     username,
-    tg_user_id,
     country_code: '7',
-  })
+    type: 1,
+  }, active.value)
 
   sending.value = false
 
@@ -175,7 +211,7 @@ const onRegister = async () => {
 
   loading.value = true
 
-  const res = await register({ ...form.value, tg_user_id })
+  const res = await register({ ...form.value })
 
   loading.value = false
 
@@ -187,27 +223,23 @@ const onRegister = async () => {
 
 function onLogin() {
   // 跳转到注册页
-  router.replace('/login')
+  router.replace('/h5-login')
 }
-
-// 是否允许机器人给用户发信息
-const checkAllowWriteToPm = () => {
-  // 从 Telegram WebApp 获取 initData
-  const webApp = window.Telegram?.WebApp
-  // 解析 Telegram 注入的 initData
-  const initData = new URLSearchParams(webApp.initData)
-  const allow_write_to_pm = JSON.parse(initData.get('allow_write_to_pm')) 
-
-  if (!allow_write_to_pm) {
-    disabled.value = true;
-    Notify({type: 'danger', message: t('register.allowSendMsg') })
-  }
-}
-
-checkAllowWriteToPm()
 </script>
 
 <style scoped lang="scss">
+.account-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+
+  &.active {
+    background-color: #fff;
+  }
+}
+
 .van-form {
   padding-top: 40px;
 

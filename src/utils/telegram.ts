@@ -32,7 +32,7 @@ declare global {
   }
 }
 
-export async function initTelegramWebApp(): Promise<boolean> {
+export async function initTelegramWebApp(): boolean {
   const webApp = window.Telegram?.WebApp;
   if (!webApp) {
     console.error('Telegram WebApp is not available');
@@ -43,18 +43,7 @@ export async function initTelegramWebApp(): Promise<boolean> {
   webApp.ready();
   webApp.expand();
 
-  return new Promise((resolve) => {
-    // 监听数据变化（适用于动态注入场景）
-    webApp.onEvent('viewportChanged', () => {
-      console.log('initData:', webApp.initData);
-      resolve(true);
-    });
-
-    // 设置超时保护
-    setTimeout(() => {
-      resolve(false);
-    }, 5000);
-  });
+  return true
 }
 
 // 注意：获取手机号需要通过 Bot API 实现，这里只提供获取用户基本信息的函数 

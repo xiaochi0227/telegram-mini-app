@@ -575,5 +575,8 @@
 	"receiptVoucher":"Складская накладная",
 	"loading":"Загрузка",
 	"noData":"Данных нет",
-	"transaction":"交易ID"
+	"transaction":"ID транзакции",
+	"register.allowSendMsg": "Разрешите боту отправлять сообщения",
+	"order.cancelOrder": "Отменить закупку",
+  "order.orderAgain": "Закупить повторно"
 }

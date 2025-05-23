@@ -30,7 +30,7 @@
                   : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
               "
             />
-            <span class="ml-3 text-[28px] font-bold text-[#515360]">
+            <span class="ml-3 text-[28px] font-bold text-[#515360] max-w-[300px] truncate">
               {{ getName() }}
             </span>
             <van-icon name="arrow" class="ml-2" color="#515360" />
@@ -86,7 +86,10 @@ const navTitle = computed(() => route.meta.title || '标题')
 const showPopup = ref(false)
 
 const getName = () => {
+  if (!pakupayUser.value) return ''
+
   const username = pakupayUser.value.username
+  
   if (username.includes('@')) {
     return username
   }
@@ -115,12 +118,7 @@ const handleOpeator = () => {
   if (props.hideIcon) return 
 
   if (route.meta.showBack) {
-    const { user } = useUser()
-
-    console.log(user.value)
-
-    if (user.value) router.back()
-    else router.replace('/')
+    router.back()
   }
   else showPopup.value = true
 }

@@ -11,6 +11,7 @@
         :key="address.id"
         class="mt-[24px] bg-white rounded-[14px] p-[24px] shadow-sm overflow-hidden"
       >
+        <p>{{ address.name }}</p>
         <p class="text-[#212121] text-[28px]">
           {{ address.country_name }} &nbsp; {{ address.province_name }} &nbsp;
           {{ address.city_name }} &nbsp; {{ address.detail_address }}&nbsp;

@@ -22,6 +22,9 @@
         class="mt-[24px] bg-white rounded-[14px] p-[24px] shadow-sm overflow-hidden"
       >
         <div class="relative">
+          <p class="text-[#212121] text-[30px] font-[500]">
+            {{ address.name }}
+          </p>
           <p class="text-[#212121] text-[28px]">
             {{ address.country_name }} &nbsp; {{ address.province_name }} &nbsp;
             {{ address.city_name }} &nbsp; {{ address.detail_address }}&nbsp;
@@ -36,10 +39,17 @@
           </p>
 
           <!-- 编辑按钮 -->
-          <i
-            class="iconfont icon-Edit text-[#FF356D]"
-            @click.stop="handleEditAddress(address)"
-          />
+          <div class="edit-btn flex gap-3">
+            <i
+              class="iconfont icon-Delete text-[#FF356D]"
+              @click.stop="handleRemove(address)"
+              v-if="addressStore.shippingAddress.length"
+            />
+            <i
+              class="iconfont icon-Edit text-[#FF356D]"
+              @click.stop="handleEditAddress(address)"
+            />
+          </div>
         </div>
 
         <van-cell
@@ -75,7 +85,9 @@
           <span class="text-[28px] text-[#333333] font-[600]">{{
             t('cart.estimatedTotal')
           }}</span>
-          <span class="text-[#004CE0] text-[36px] font-[600] min-w-[60%] text-right">
+          <span
+            class="text-[#004CE0] text-[36px] font-[600] min-w-[60%] text-right"
+          >
             CNY ￥{{ orderInfo.total_price }}
           </span>
         </div>
@@ -142,7 +154,12 @@
       </div>
 
       <!-- 商品信息 -->
-      <van-cell :title="t('order.goodsInfo')" is-link class="view-detail mb-[28px]" :to="`/goods?entry=${decryptedData.entry}`" />
+      <van-cell
+        :title="t('order.goodsInfo')"
+        is-link
+        class="view-detail mb-[28px]"
+        :to="`/goods?entry=${decryptedData.entry}`"
+      />
     </div>
 
     <div
@@ -189,7 +206,7 @@ const { setProducts } = useOrderStore()
 const decryptedData = ref({})
 const orderInfo = ref({})
 const balanceInfo = ref({})
-const btnLoading= ref(false)
+const btnLoading = ref(false)
 
 onBeforeRouteLeave((to, from, next) => {
   const { path } = to
@@ -219,6 +236,11 @@ const handleEditAddress = (address) => {
       cid: address.id,
     },
   })
+}
+
+// 删除地址
+const handleRemove = (address) => {
+  addressStore.removeAddress(address)
 }
 
 // 汇率信息
@@ -302,7 +324,7 @@ const getDetail = async () => {
   entry == 5 && addressStore.setShippingAddressList(address_data)
 
   // 如果是新下单，则取默认地址
-  if ( entry != 4 && entry != 5) {
+  if (entry != 4 && entry != 5) {
     addressStore.fetchDefaultAddress()
   }
 }
@@ -400,11 +422,18 @@ init()
   font-size: 26px;
   color: #373d49;
 }
-.icon-Edit {
+.edit-btn {
   position: absolute;
-  right: 48px;
+  right: 24px;
   bottom: 0px;
-  font-size: 38px;
+
+  .iconfont {
+    font-size: 38px;
+
+    &.icon-Delete {
+      font-size: 40px;
+    }
+  }
 }
 .view-detail {
   padding: 24px 28px;

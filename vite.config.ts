@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     server: {
+      host: '0.0.0.0', // 监听所有网络接口
       proxy: {
         '/api': {
           target: env.VITE_API_BASE_URL,

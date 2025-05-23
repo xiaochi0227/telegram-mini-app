@@ -25,9 +25,18 @@
 
         <div class="px-[24px] mb-[28px] py-4 bg-white rounded-[12px] shadow-sm">
           <div class="flex justify-between items-center font-[600]">
+            <span class="text-[28px]">{{ t('order.orderAmount') }}：</span>
+            <span class="text-[32px] text-[#004CE0]">
+              CNY ￥{{ balanceInfo?.total_price }}
+            </span>
+          </div>
+        </div>
+
+        <div class="px-[24px] mb-[28px] py-4 bg-white rounded-[12px] shadow-sm">
+          <div class="flex justify-between items-center font-[600]">
             <span class="text-[28px]">{{ t('accountCenter.balance') }}：</span>
             <span class="text-[32px] text-[#004CE0]">
-              ￥{{ balanceInfo?.rmb_balance }}
+              CNY ￥{{ balanceInfo?.rmb_balance }}
             </span>
           </div>
 
@@ -47,6 +56,7 @@
             ref="passwordInput"
             class="mb-[28px]"
             :loading="btnLoading"
+            :confirm-text="t('cart.payment')"
             :auto-submit="false"
             @submit="handlePay"
             title=""

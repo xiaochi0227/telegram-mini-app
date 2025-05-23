@@ -14,7 +14,7 @@
           :key="idx"
           class="relative mb-3 last:mb-0 rounded-lg h-[400px] flex items-center justify-center"
         >
-          <img :src="img.url" class="object-cover w-full h-full rounded-lg" />
+          <img :src="img.url" class="object-contain w-full h-full rounded-lg" />
          
           <van-icon
             name="cross"

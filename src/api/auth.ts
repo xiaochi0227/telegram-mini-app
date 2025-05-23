@@ -28,5 +28,5 @@ export const authApi = {
   register: (params: RegisterParams) => http.post<ApiResponse<void>>('/tgUser/register', params),
 
   // 用户退出
-  logout: () => http.post<ApiResponse<void>>('/auth/logout'),
+  logout: () => http.post<ApiResponse<void>>('/user/logout'),
 };

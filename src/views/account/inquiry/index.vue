@@ -15,12 +15,6 @@
             <span class="flex-1">{{ selectedLabel }}</span>
             <van-icon name="arrow-down" class="text-[#9EA1AA]" />
           </div>
-          <van-action-sheet
-            v-model:show="showActionSheet"
-            :actions="actions"
-            @select="onSelect"
-            :cancel-text="t('address.cancel')"
-          />
         </div>
       </div>
     </van-sticky>
@@ -45,16 +39,18 @@
             </p>
 
             <div class="flex justify-between items-center mb-[8px]">
-              <span class="text-[#212121] text-[28px]">{{
-                t('myInquiries.add_time')
-              }}</span>
-              <span class="text-[#515360] text-[24px]">{{
-                item.add_time
-              }}</span>
+              <span class="text-[#212121] text-[28px]">
+                {{ t('myInquiries.add_time') }}
+              </span>
+              <span class="text-[#515360] text-[24px]">
+                {{ item.add_time }}
+              </span>
             </div>
             <div class="flex justify-between items-center">
               <span class="text-[#212121] text-[28px]">
-                {{ t('myInquiries.product_count') }}/{{ t('order.aleadyQuota') }}
+                {{ t('myInquiries.product_count') }}/{{
+                  t('order.aleadyQuota')
+                }}
               </span>
               <span class="text-[#515360] text-[24px]">
                 {{ item.product_count }}/{{ item.quotation_num }}
@@ -66,6 +62,14 @@
     </div>
 
     <back-top />
+
+    <van-popup v-model:show="showActionSheet" round position="bottom">
+      <van-picker
+        :columns="actions"
+        @cancel="showActionSheet = false"
+        @confirm="onSelect"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -99,15 +103,15 @@ const showActionSheet = ref(false)
 const selectedLabel = ref(t('finance.all'))
 const orderStatus = ref('')
 const actions = [
-  { name: t('common.all'), value: '' },
-  { name: t('common.pendingQuotation'), value: 1 },
-  { name: t('common.inQuotation'), value: 2 },
-  { name: t('common.completedQuotation'), value: 3 },
+  { text: t('common.all'), value: '' },
+  { text: t('common.pendingQuotation'), value: 1 },
+  { text: t('common.inQuotation'), value: 2 },
+  { text: t('common.completedQuotation'), value: 3 },
 ]
 
 // 状态选择
 const onSelect = (action: any) => {
-  selectedLabel.value = action.name
+  selectedLabel.value = action.text
   orderStatus.value = action.value
   showActionSheet.value = false
   onRefresh()
@@ -159,6 +163,21 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /* 可根据需要自定义样式 */
+:deep(.van-picker-column__wrapper) {
+  font-size: 28px !important;
+}
+
+:deep(.van-picker__toolbar) {
+  height: 80px !important;
+
+  .van-haptics-feedback {
+    font-size: 28px;
+  }
+
+  .van-picker__confirm {
+    color: #ff356d;
+  }
+}
 </style>
