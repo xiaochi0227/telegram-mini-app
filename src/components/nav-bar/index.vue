@@ -118,12 +118,7 @@ const handleOpeator = () => {
   if (props.hideIcon) return 
 
   if (route.meta.showBack) {
-    const { user } = useUser()
-
-    console.log(user.value)
-
-    if (user.value) router.back()
-    else router.replace('/')
+    router.back()
   }
   else showPopup.value = true
 }

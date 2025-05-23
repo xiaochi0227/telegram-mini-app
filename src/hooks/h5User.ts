@@ -114,7 +114,7 @@ export function useH5User() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     user.value = null;
-    router ? router.push('/login') : location.href = '/login'
+    router ? router.push('/') : location.href = '/'
   };
 
   // 设置用户名

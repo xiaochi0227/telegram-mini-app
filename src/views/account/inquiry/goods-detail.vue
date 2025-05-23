@@ -28,13 +28,13 @@
         <span> {{ good.product_num }} </span>
       </div>
       <div class="flex text-[#212121] text-[28px] mt-[16px]">
-        <span class="font-bold">{{ t('reference.link') }}：</span>
+        <span class="font-bold">{{ t('inquiry.productLink') }}：</span>
         <a :href="good.reference_url" class="flex-1 text-blue-500 underline truncate inline-block max-w-full" target="_blank">
           {{ good.reference_url }}
         </a>
       </div>
       <div class="text-[#212121] text-[28px] font-bold mt-[16px]">
-        {{ t('order.goodsDesc') }}：
+        {{ t('inquiriesDetails.goodsDesc') }}：
       </div>
       <div class="text-[#212121] text-[28px] whitespace-pre-line">
         {{ good.desc }}

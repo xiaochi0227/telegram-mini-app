@@ -52,10 +52,21 @@
                     <p class="text-[20px] text-[#515360] mt-[14px]">
                       {{ t('inquiriesDetails.unitPprice') }}
                     </p>
-                    <p class="text-[28px] text-[#004CE0] font-bold">
+                    <p class="text-[24px] text-[#A5A8B9] font-bold">
                       {{ t('cart.price') }}{{ item.unit_price }}
                     </p>
                     <p class="text-[20px] text-[#515360] mt-[14px]">
+                      {{ t('inquiriesDetails.total') }}
+                    </p>
+                    <p class="text-[28px] text-[#004CE0] font-[500]">
+                      {{ t('cart.price') }} &nbsp;￥{{
+                        (
+                          item.unit_price *
+                          item.product_num
+                        ).toFixed(2)
+                      }}
+                    </p>
+                    <!-- <p class="text-[20px] text-[#515360] mt-[14px]">
                       {{ t('cart.serviceFee') }}
                     </p>
                     <p class="text-[28px] text-[#A5A8B9] font-[500]">
@@ -66,7 +77,7 @@
                           item.service_ratio
                         ).toFixed(2)
                       }}
-                    </p>
+                    </p> -->
                   </div>
                 </div>
 
