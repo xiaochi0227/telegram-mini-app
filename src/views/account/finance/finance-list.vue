@@ -12,7 +12,7 @@
             <van-empty image-size="160" :description="t('noData')" v-if="isEmpty" />
             <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-else class="pt-[80px]">
               <van-list v-model:loading="loading" :loading-text="`${t('loading')}...`" :finished="finished"
-                :finished-text="finishedText" @load="onLoad">
+                :finished-text="finishedText" @load="onLoad(currentRequestId)">
                 <div v-for="item in list" :key="item.add_time"
                   class="bg-white rounded-lg shadow px-[20px] pt-[24px] pb-[40px] mt-[24px]  text-[#515360] space-y-2">
                   <!-- 时间 -->
@@ -81,7 +81,6 @@ import NavBar from '@/components/nav-bar/index.vue';
 import BackTop from '@/components/back-top/index.vue'
 import { useRoute } from 'vue-router';
 import { ref } from 'vue';
-import debounce from "lodash/debounce";
 import { useI18n } from 'vue-i18n';
 import { balanceApi } from '@/api';
 const route = useRoute();
@@ -116,71 +115,70 @@ const list = ref<ListItem[]>([]);
 const loading = ref(false);
 const finished = ref(false);
 const refreshing = ref(false);
+let currentRequestId = 0; // 请求标识
+let currentActiveTab = active.value; // 当前激活的Tab
 const onChange = (index: number) => {
+  // 更新当前激活的Tab
+  currentActiveTab = index;
   pagination.value.page = 1;
   pagination.value.total = 0;
   active.value = index;
   finished.value = false;
   list.value = [];
   loading.value = true;
-  const debouncedOnLoad = debounce(() => {
-    onLoad();
-  }, 500);
-  
-  debouncedOnLoad();
+  currentRequestId++
+  onLoad(currentRequestId);
 
 };
-const onLoad = () => {
-  setTimeout(async () => {
-    if (refreshing.value) {
-      pagination.value.page = 1;
-      pagination.value.total = 0;
-      list.value = [];
-      refreshing.value = false;
-    }
+const onLoad = async (requestId: number) => {
+  if (refreshing.value) {
+    pagination.value.page = 1;
+    pagination.value.total = 0;
+    list.value = [];
+    refreshing.value = false;
+  }
 
-    let params = {
-      page: pagination.value.page,
-      limit: pagination.value.limit,
+  let params = {
+    page: pagination.value.page,
+    limit: pagination.value.limit,
+  };
+  let res = null
+  if (currentActiveTab === 1) {
+    params = {
+      ...params,
+      add_time: [],
+      serial_no: '',
     };
-    let res = null
-    if (active.value === 1) {
-      params = {
-        ...params,
-        add_time: [],
-        serial_no: '',
-      };
-      res = await balanceApi.getRechargeRecords(params);
-    } else if (active.value === 0) {
-      params = {
-        ...params,
-        change_type_arr: [2, 3, 5],
-      };
-      res = await balanceApi.getWithdrawRecords(params);
-    }
+    res = await balanceApi.getRechargeRecords(params);
+  } else if (currentActiveTab === 0) {
+    params = {
+      ...params,
+      change_type_arr: [2, 3, 5],
+    };
+    res = await balanceApi.getWithdrawRecords(params);
+  }
 
+  if (requestId !== currentRequestId) return;
 
+  if (res.code !== 1) return;
+  if (res.data.list.length === 0 && list.value.length === 0) {
+    isEmpty.value = true;
+    finishedText.value = '';
+    finished.value = true;
+    return;
+  } else {
+    isEmpty.value = false;
+    finishedText.value = t('no more');
+  }
+  const { list: data = [], total = 0 } = res.data || {};
+  pagination.value.total = total;
+  list.value = [...list.value, ...data];
+  pagination.value.page += 1;
+  loading.value = false;
 
-    if (res.code !== 1) return;
-    if (res.data.list.length === 0 && list.value.length === 0) {
-      isEmpty.value = true;
-      finishedText.value = '';
-      finished.value = true;
-      return;
-    } else {
-      isEmpty.value = false;
-      finishedText.value = t('no more');
-    }
-    const { list: data = [], total = 0 } = res.data || {};
-    pagination.value.total = total;
-    list.value = [...list.value, ...data];
-    pagination.value.page += 1;
-    loading.value = false;
-
-    if (list.value.length >= total) {
-      finished.value = true;
-    }
-  }, 200);
+  if (list.value.length >= total) {
+    finished.value = true;
+  }
 };
 
 const onRefresh = () => {
@@ -190,7 +188,7 @@ const onRefresh = () => {
   // 重新加载数据
   // 将 loading 设置为 true，表示处于加载状态
   loading.value = true;
-  onLoad();
+  onLoad(currentRequestId);
 };
 </script>
 
