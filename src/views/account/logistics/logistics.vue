@@ -11,7 +11,7 @@
         @click="showPicker = true"
       >
         <div>{{ result }}</div>
-        <i class="iconfont icon-Right"></i>
+        <van-icon name="arrow-down" class="text-[#9EA1AA]" />
       </div>
     </div>
 

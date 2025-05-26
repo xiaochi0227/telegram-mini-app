@@ -22,15 +22,15 @@
           <div class="flex items-center cursor-pointer" @click="goAccountInfo">
             <van-image
               round
-              width="32px"
-              height="32px"
+              width="28px"
+              height="28px"
               :src="
                 user
                   ? user.photo_url
-                  : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
+                  : Default
               "
             />
-            <span class="ml-3 text-[28px] font-bold text-[#515360] max-w-[300px] truncate">
+            <span class="ml-[16px] text-[28px] font-bold text-[#515360] max-w-[280px] truncate">
               {{ getName() }}
             </span>
             <van-icon name="arrow" class="ml-2" color="#515360" />
@@ -67,7 +67,7 @@ import { useI18n } from 'vue-i18n'
 import { useAppStore } from '../../store/index'
 import { useUser } from '@/hooks/user'
 import { formattedPhone } from '@/utils/format'
-
+import Default from '@/assets/images/default.png'
 const props = withDefaults(
   defineProps<{
     hideIcon?: boolean // loading

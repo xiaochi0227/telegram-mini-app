@@ -1,5 +1,5 @@
 <template>
-  <div class="account px-[1rem] h-full overflow-y-auto" v-loading="isLoading">
+  <div class="account px-[32px] h-full overflow-y-auto" v-loading="isLoading">
     <van-sticky>
       <div class="bg-white px-[20px]">
         <div class="border-b border-[#f4f4f4] flex justify-between items-center h-[100px]">
@@ -7,7 +7,7 @@
           <div class="flex items-center space-x-2">
             <van-image round width="32px" height="32px" :src="user
               ? user.photo_url
-              : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
+              : Default
               " />
             <!-- <div>
               mike
@@ -35,7 +35,10 @@
 
     <!-- Orders Section -->
     <div class="mt-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
-      <h2 class="font-bold mb-2">{{ t('accountCenter.purchaseOrder') }}</h2>
+      <h2 class="font-bold mb-[32px] flex items-center justify-between"  @click="goPath('/account/inquiry')">
+        <span>{{ t('accountCenter.purchaseOrder') }}</span>
+        <van-icon name="arrow" class="text-[#212121]" />
+      </h2>
       <div class="grid grid-cols-2 gap-4">
         <template v-if="orderStatusCards.length">
           <div class="order-status" v-for="(item, index) in orderStatusCards" :key="index" @click="goPath(item.path)">
@@ -43,19 +46,22 @@
               <i :class="`iconfont ${item.icon}`"></i>
               <div class="num">{{ item.count }}</div>
             </div>
-            <div class="pt-[16px] text-[24px]">{{ item.title }}</div>
+            <div class="pt-[16px] text-[28px]">{{ item.title }}</div>
           </div>
         </template>
       </div>
     </div>
     <!-- Logistics Section -->
     <div class="mt-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
-      <h2 class="font-bold mb-2">{{ t('accountCenter.logistics') }}</h2>
+      <h2 class="font-bold mb-[32px] flex items-center justify-between" @click="goPath('/account/logistics')">
+        <span>{{ t('accountCenter.logistics') }}</span>
+        <van-icon name="arrow" class="text-[#212121]" />
+      </h2>
       <div class="grid grid-cols-3 gap-4" v-if="logisticsStatusCards.length">
         <div class="text-center logis-status" v-for="(item, index) in logisticsStatusCards" :key="index"
           @click="goPath(item.path)">
           <i :class="`iconfont ${item.icon}`"></i>
-          <div class="mt-[28px] text-[24px]">{{ item.title }}</div>
+          <div class="mt-[28px] text-[28px]">{{ item.title }}</div>
         </div>
       </div>
       <div class="font-bold mt-[40px]">
@@ -120,6 +126,7 @@ import { accountApi } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '../../store/index'
 import { useContactHandler } from '@/hooks/useContactHandler';
+import Default from '@/assets/images/default.png'
 
 const { handleContact } = useContactHandler();
 
@@ -271,7 +278,7 @@ onMounted(async () => {
   box-sizing: border-box;
 
   .iconfont {
-    font-size: 32px;
+    font-size: 36px;
     color: #ff356d;
   }
 
@@ -293,7 +300,7 @@ onMounted(async () => {
   padding: 40px 0 64px;
 
   .iconfont {
-    font-size: 32px;
+    font-size: 36px;
     color: #ff356d;
   }
 }
