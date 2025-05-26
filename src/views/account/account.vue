@@ -113,13 +113,16 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { Dialog } from 'vant';
 import { useRouter } from 'vue-router'
 import NavBar from '@/components/nav-bar/index.vue'
 import Financial from './components/Financial.vue'
 import { accountApi } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '../../store/index'
+import { useContactHandler } from '@/hooks/useContactHandler';
+
+const { handleContact } = useContactHandler();
+
 const router = useRouter()
 const { t } = useI18n()
 
@@ -155,53 +158,6 @@ const contactMethods = [
     tooltip: '发送电子邮件',
   },
 ]
-
-interface Contact {
-  contact: string
-}
-const handleContact = (contact: Contact['contact']): void => {
-  // 检查是否在 Telegram WebApp 环境中
-  const isTelegramWebApp = window.Telegram && window.Telegram.WebApp;
-
-  try {
-    if (isTelegramWebApp) {
-      // 尝试使用 Telegram WebApp API
-      window.Telegram.WebApp.openLink(contact);
-    } else {
-      // 非 Telegram WebApp 环境，直接打开链接
-      window.open(contact, '_blank');
-    }
-  } catch (e) {
-    // 如果上述方法都失败，使用回退方案
-    let msg = '';
-    let textToCopy = '';
-
-    if (contact.startsWith('tel:')) {
-      textToCopy = '+79959922888';
-      msg = `电话号码 ${textToCopy} 已复制，请打开拨号界面粘贴拨打`;
-    } else if (contact.startsWith('mailto:')) {
-      textToCopy = 'support@pakupay.com';
-      msg = `邮箱 ${textToCopy} 已复制`;
-    } else {
-      textToCopy = contact;
-      msg = `链接已复制到剪贴板`;
-    }
-
-    // 尝试复制到剪贴板
-    try {
-      navigator.clipboard.writeText(textToCopy);
-      // 使用原生 alert 作为最后的回退方案
-      Dialog.alert({
-        message: msg,
-      })
-    } catch (clipboardError) {
-      // 如果复制到剪贴板也失败，直接显示消息
-      Dialog.alert({
-        message: msg,
-      })
-    }
-  }
-}
 
 const isLoading = ref(true)
 const allTotalPrice = ref(0)

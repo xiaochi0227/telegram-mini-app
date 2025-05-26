@@ -139,6 +139,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { encryptParams } from '@/utils/encryption'
 import { Notify } from 'vant'
 import { useInquiryStore } from '@/store/inquiry'
+import { useContactHandler } from '@/hooks/useContactHandler';
+
+const { handleContact } = useContactHandler();
 
 const { t } = useI18n()
 const route = useRoute()
@@ -266,31 +269,6 @@ const handleBuy = () => {
   const encrypted = encryptParams({ ...params, entry: 3 })
 
   router.push(`/shipping?query=${encodeURIComponent(encrypted)}`)
-}
-
-interface Contact {
-  contact: string;
-}
-const handleContact = (contact: Contact['contact']): void => {
-  if (window.Telegram && window.Telegram.WebApp) {
-    try {
-      window.Telegram.WebApp.openLink(`${contact}`);
-    } catch (e) {
-      // 回退方案：复制到剪贴板并提示用户
-      let msg =''
-      if(contact.startsWith('tel:')){
-        navigator.clipboard.writeText('+79959922888');
-        msg = `电话号码 ${'+79959922888'} 已复制，请打开拨号界面粘贴拨打`
-      }else{
-        navigator.clipboard.writeText('support@pakupay.com');
-        msg = `邮箱 ${'support@pakupay.com'} 已复制`
-      }
-      Dialog.alert({
-        message: msg,
-      })
-    }
-  }
-  // window.location.href = `${contact}`
 }
 
 fetchInquiryDetail()

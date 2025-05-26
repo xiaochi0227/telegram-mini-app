@@ -103,6 +103,9 @@ import { useAppStore } from '@/store';
 import { useI18n } from 'vue-i18n'
 import NavBar from '@/components/nav-bar/index.vue'
 import { useRouter } from 'vue-router'
+import { useContactHandler } from '@/hooks/useContactHandler';
+
+const { handleContact } = useContactHandler();
 
 const appStore = useAppStore();
 const user = appStore.user;
@@ -229,33 +232,6 @@ const handleShowPopup = async () => {
   }
 };
 
-
-interface Contact {
-  contact: string
-}
-const handleContact = (contact: Contact['contact']): void => {
-
-  if (window.Telegram && window.Telegram.WebApp) {
-    try {
-      window.Telegram.WebApp.openLink(`${contact}`);
-    } catch (e) {
-      // 回退方案：复制到剪贴板并提示用户
-      let msg = ''
-      if (contact.startsWith('tel:')) {
-        const phoneNumber = contact.replace("tel:", "");
-        navigator.clipboard.writeText(phoneNumber);
-        msg = `电话号码 ${phoneNumber} 已复制，请打开拨号界面粘贴拨打`
-      } else {
-        navigator.clipboard.writeText('support@pakupay.com');
-        msg = `邮箱 ${'support@pakupay.com'} 已复制`
-      }
-      Dialog.alert({
-        message: msg,
-      })
-    }
-  }
-  // window.location.href = `${contact}`
-}
 </script>
 
 <style scoped lang="scss">

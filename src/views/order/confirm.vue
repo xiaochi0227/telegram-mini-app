@@ -53,6 +53,9 @@ import { inquiryApi } from '@/api'
 import { Notify } from 'vant'
 import { useOrderStore } from '@/store/order'
 import { useI18n } from 'vue-i18n'
+import { useContactHandler } from '@/hooks/useContactHandler';
+
+const { handleContact } = useContactHandler();
 
 const { t } = useI18n()
 const route = useRoute()
@@ -63,31 +66,6 @@ const order_no = computed(() => {
 })
 
 const { setProducts, setAddressList } = useOrderStore()
-
-interface Contact {
-  contact: string;
-}
-const handleContact = (contact: Contact['contact']): void => {
-  if (window.Telegram && window.Telegram.WebApp) {
-    try {
-      window.Telegram.WebApp.openLink(`${contact}`);
-    } catch (e) {
-      // 回退方案：复制到剪贴板并提示用户
-      let msg = ''
-      if (contact.startsWith('tel:')) {
-        navigator.clipboard.writeText('+79959922888');
-        msg = `电话号码 ${'+79959922888'} 已复制，请打开拨号界面粘贴拨打`
-      } else {
-        navigator.clipboard.writeText('support@pakupay.com');
-        msg = `邮箱 ${'support@pakupay.com'} 已复制`
-      }
-      Dialog.alert({
-        message: msg,
-      })
-    }
-  }
-  // window.location.href = `${contact}`
-}
 
 // 下单页有5个入口
 // 1.购物车下单购买(传购物车选中数据ids)
