@@ -18,8 +18,8 @@
         <img :src="nationalFlag" class="w-[42px]">
         <img src="@/assets/images/home/down.png" class="w-[16px]">
       </div>
-      <div class="home-banner relative z-10">
-        <img src="@/assets/images/home/home-banner.png" calss="w-full">
+      <div class="home-banner w-full relative z-10">
+        <img src="@/assets/images/home/home-banner.png" class="w-full">
         <img :src="mainText" class="main-text absolute w-[664px] top-[100px] left-[44px] right-[44px]">
         <img src="@/assets/images/home/home-text-1.png" class="text-1 absolute w-full top-0 left-0">
         <img src="@/assets/images/home/home-text-2.png" class="text-2 absolute w-[430px] h-[26px] bottom-[220px]">
@@ -60,9 +60,9 @@
         ">{{ t('common.enquiry') }}</div>
       </div>
 
-      <div class="px-[24px] pb-[32px]">
+      <div class="px-[24px] pb-[32px] flex items-center flex-col">
         <!-- 标题 -->
-        <div class="text-center advantages rounded-t-2xl">
+        <div class="text-center advantages rounded-t-2xl w-full">
           <h1 class="main-title relative">
             <img src="@/assets/images/home/home-adv.png" class="adv-img">
             {{ t('home.advantage') }}
