@@ -203,12 +203,13 @@
 import NavBar from '@/components/nav-bar/index.vue'
 import PhoneInput from '@/components/phone-input/index.vue'
 import { ref, onActivated } from 'vue'
-import { FormInstance, Toast } from 'vant'
+import { FormInstance, Toast, Notify } from 'vant'
 import type { UploaderFileListItem } from 'vant/es/uploader/types'
 import { useI18n } from 'vue-i18n'
 import { inquiryApi } from '@/api'
 import { useInquiryStore } from '@/store/inquiry'
 import { useRouter } from 'vue-router'
+import { useUser } from '@/hooks/user'
 
 interface Product {
   uploading: boolean
@@ -385,12 +386,28 @@ const handleGoodsPicture = (fileList: UploaderFileListItem[], index) => {
 }
 
 // 验证所有商品表单
-const validateAllProducts = async () => {
-  const arr = [contactFormRef.value?.validate()]
-  arr.push(...productFormRefs.value.map((form) => form?.validate()))
+const validateAllProducts = async (): Promise<boolean> => {
+  const promises: Promise<unknown>[] = []
+  
+  // 添加联系表单验证
+  if (contactFormRef.value?.validate) {
+    promises.push(contactFormRef.value.validate())
+  }
+  
+  // 添加商品表单验证
+  productFormRefs.value.forEach((form) => {
+    if (form?.validate) {
+      promises.push(form.validate())
+    }
+  })
 
-  const results = await Promise.all(arr)
-  return results.every((result) => result === undefined)
+  try {
+    const results = await Promise.all(promises)
+    return results.every((result) => result === undefined)
+  } catch (error) {
+    console.error('Validation error:', error)
+    return false
+  }
 }
 
 // 重置基础数据
@@ -419,10 +436,21 @@ const resetForm = () => {
 // 表单提交
 const handleSubmit = async () => {
   try {
+    const { user } = useUser()
+    // 检查用户是否登录
+    if (!user.value) {
+      Notify({ type: 'danger', message: t('inquiry.loginRequired') })
+      router.push('/login')
+      return
+    }
+
     // 验证所有商品表单
     const productsValid = await validateAllProducts()
 
-    if (!productsValid) return
+    if (!productsValid) {
+      Notify({ type: 'danger', message: t('inquiry.infoRequired') })
+      return
+    }
 
     submitting.value = true
 

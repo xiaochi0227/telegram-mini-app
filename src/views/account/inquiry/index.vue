@@ -66,6 +66,7 @@
     <van-popup v-model:show="showActionSheet" round position="bottom">
       <van-picker
         :columns="actions"
+        :default-index="defaultIdx"
         @cancel="showActionSheet = false"
         @confirm="onSelect"
       />
@@ -74,12 +75,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import BackTop from '@/components/back-top/index.vue'
 import NavBar from '@/components/nav-bar/index.vue'
 import { inquiryApi } from '@/api'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 interface InquiryItem {
   id: string
@@ -89,6 +90,11 @@ interface InquiryItem {
 
 const { t } = useI18n()
 const router = useRouter()
+const route = useRoute()
+
+const status = computed(() => {
+  return route.query.status || ''
+})
 
 const list = ref<InquiryItem[]>([])
 const page = ref(1)
@@ -100,6 +106,7 @@ const refreshing = ref(false)
 
 // ActionSheet state
 const showActionSheet = ref(false)
+const defaultIdx = ref(0)
 const selectedLabel = ref(t('finance.all'))
 const orderStatus = ref('')
 const actions = [
@@ -108,6 +115,19 @@ const actions = [
   { text: t('common.inQuotation'), value: 2 },
   { text: t('common.completedQuotation'), value: 3 },
 ]
+
+// 初始化状态
+const initStatus = () => {
+  if (!status.value) return 
+
+  const index = actions.findIndex(item => item.value == status.value)
+
+  if (index < 0) return 
+
+  defaultIdx.value = index
+  selectedLabel.value = actions[index].text
+  orderStatus.value = actions[index].value
+}
 
 // 状态选择
 const onSelect = (action: any) => {
@@ -159,6 +179,7 @@ const handleDetail = (id) => {
 
 // ... 其他代码
 onMounted(() => {
+  initStatus()
   onRefresh()
 })
 </script>
