@@ -194,6 +194,8 @@ function onLogin() {
 const checkAllowWriteToPm = () => {
   // 从 Telegram WebApp 获取 initData
   const webApp = window.Telegram?.WebApp
+
+  if (!webApp || !webApp.initData) return 
   // 解析 Telegram 注入的 initData
   const initData = new URLSearchParams(webApp.initData)
   const allow_write_to_pm = JSON.parse(initData.get('allow_write_to_pm')) 

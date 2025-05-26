@@ -579,5 +579,5 @@
 	"register.allowSendMsg": "Разрешите боту отправлять сообщения",
 	"order.cancelOrder": "Отменить закупку",
   "order.orderAgain": "Закупить повторно",
-	"inquiry.infoRequired": "请将信息填写完整"
+	"inquiry.infoRequired": "Обязательные поля не заполнены"
 }
