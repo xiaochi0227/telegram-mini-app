@@ -35,7 +35,7 @@
             <img src="@/assets/images/home/home-contact-2.png" class="h-[36px]">
           </p>
           <p class="flex items-center space-x-[10px]" @click="handleContact('https://t.me/@pakupay')">
-            <i class="iconfont icon-Phone text-[#28A7E7]"></i>
+            <i class="iconfont icon-telegram text-[#28A7E7]"></i>
             <img src="@/assets/images/home/home-contact-3.png" class="h-[36px]">
           </p>
         </div>
@@ -98,7 +98,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { Dialog } from 'vant';
 import { useAppStore } from '@/store';
 import { useI18n } from 'vue-i18n'
 import NavBar from '@/components/nav-bar/index.vue'

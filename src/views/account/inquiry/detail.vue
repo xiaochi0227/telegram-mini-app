@@ -131,7 +131,6 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import { Dialog } from 'vant';
 import NavBar from '@/components/nav-bar/index.vue'
 import { carApi, inquiryApi } from '@/api'
 import { useI18n } from 'vue-i18n'

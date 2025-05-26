@@ -46,7 +46,6 @@
 <script setup lang="ts">
 import NavBar from '@/components/nav-bar/index.vue'
 import { computed, ref } from 'vue'
-import { Dialog } from 'vant';
 import { useRoute } from 'vue-router'
 import { decryptParams } from '@/utils/encryption'
 import { inquiryApi } from '@/api'
