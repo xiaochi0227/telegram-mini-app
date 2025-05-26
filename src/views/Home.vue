@@ -8,7 +8,7 @@
       <div class="bg-white px-[20px]">
         <div class="flex justify-between items-center h-[100px]">
           <img src="@/assets/images/home/logo.png" class="w-[292px] h-[36px]">
-          <nav-bar />
+          <nav-bar v-if="user?.username" />
         </div>
       </div>
     </div>
@@ -103,11 +103,12 @@ import { useI18n } from 'vue-i18n'
 import NavBar from '@/components/nav-bar/index.vue'
 import { useRouter } from 'vue-router'
 import { useContactHandler } from '@/hooks/useContactHandler';
+import { useUser } from '@/hooks/user'
 
 const { handleContact } = useContactHandler();
+const { user } = useUser() ||{}
 
 const appStore = useAppStore();
-const user = appStore.user;
 const { t, locale } = useI18n()
 const router = useRouter()
 console.log(locale.value)
