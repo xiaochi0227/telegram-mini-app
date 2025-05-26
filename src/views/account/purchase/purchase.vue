@@ -9,7 +9,7 @@
       <div class="flex justify-between items-center h-[80px] bg-white rounded-[24px] mt-[24px] px-[20px]"
         @click="showPicker = true">
         <div>{{ result }}</div>
-        <i class="iconfont icon-Right"></i>
+        <van-icon name="arrow-down" class="text-[#9EA1AA]" />
       </div>
     </div>
 
