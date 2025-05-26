@@ -21,22 +21,22 @@
                     <span class="text-[#212121]">{{ item.add_time }}</span>
                   </div>
                   <!-- 资金单号 -->
-                  <div class="flex justify-between  text-base">
+                  <div class="flex justify-between">
                     <span>{{ t('finace.fundNo') }}</span>
                     <span class="text-[#212121]">{{ item.serial_no }}</span>
                   </div>
                   <!-- 消费类型 -->
-                  <div class="flex justify-between  text-base" v-if="active === 0">
+                  <div class="flex justify-between" v-if="active === 0">
                     <span>{{ t('finace.costType') }}</span>
                     <span class="text-[#212121]">{{ item.pay_type_str }}</span>
                   </div>
                   <!-- 关联订单号 -->
-                  <div class="flex justify-between  text-base" v-if="active === 0">
+                  <div class="flex justify-between" v-if="active === 0">
                     <span>{{ t('finace.orderNo') }}</span>
                     <span class="text-[#212121]">{{ item.entity_no }}</span>
                   </div>
                   <!-- 消费记录 -->
-                  <div class="flex justify-between  text-base" v-if="active === 0">
+                  <div class="flex justify-between" v-if="active === 0">
                     <span>{{ t('finace.costAmount') }}</span>
                     <template v-if="item.change_type === 5">
                       <section v-if="item.entity_type === 6">
@@ -57,7 +57,7 @@
                     </template>
                   </div>
                   <!-- 充值记录 -->
-                  <div class="flex justify-between  text-base" v-else>
+                  <div class="flex justify-between" v-else>
                     <span>金额</span>
                     <div class="text-[#004CE0] font-bold">
                       {{ item.currency_type == 1 ? 'USD $' : 'CNY ￥' }}
