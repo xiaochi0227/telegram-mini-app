@@ -19,7 +19,7 @@
           :src="
             user
               ? user.photo_url
-              : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
+              : Default
           "
         />
         <span class="text-[28px] font-[500]">{{ getName() }}</span>
@@ -60,6 +60,7 @@ import { useI18n } from 'vue-i18n'
 import { useUser } from '@/hooks/user'
 import { useAppStore } from '@/store/index'
 import { formattedPhone } from '@/utils/format'
+import Default from '@/assets/images/default.png'
 
 const router = useRouter()
 const { t } = useI18n()
