@@ -9,13 +9,15 @@ import i18n from './plugins/i18n'
 import loadingDirective, { showGlobalLoading, hideGlobalLoading } from './directives/loading'
 // 动态设置根字体大小
 function setRootFontSize() {
+  const orientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
   const baseSize = 32 // 基础值，设计稿宽度为 375px 时的 rootValue
   const designWidth = 750 // 设计稿宽度
   const screenWidth = document.documentElement.clientWidth || window.innerWidth
-
+  
   // 根据屏幕宽度动态计算 font-size
-  const fontSize = (screenWidth / designWidth) * baseSize
-
+  let fontSize = (screenWidth / designWidth) * baseSize
+  orientation === 'landscape' && (fontSize =  26) // 如果是横屏，增加字体大小
+  // 如果是横屏，增加字体大小
   // 设置到 html 的根元素
   document.documentElement.style.fontSize = `${fontSize}px`
 }

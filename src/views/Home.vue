@@ -73,8 +73,8 @@
             <img src="@/assets/images/home/home-star.png" class="w-[28px] h-[32px] ml-[10px]">
           </p>
         </div>
-        <div class="space-y-6 ">
-          <div :class="`rounded-2xl shadow p-4 text-[#333]  container ${index == 0 ? 'mt-[-60px]' : ''}`"
+        <div class="space-y-6 w-full">
+          <div :class="`rounded-2xl shadow p-4 text-[#333]  div-wrap ${index == 0 ? 'mt-[-60px]' : ''}`"
             v-for="(item, index) in bannerLi" :key="index">
             <div class="flex mb-4">
               <img :src="item.icon" class="w-[28px] h-[32px] mt-[8px]">
@@ -278,7 +278,8 @@ button {
   padding: 88px 0 100px;
 }
 
-.container {
+.div-wrap {
+  width: 100%;
   background: #FFF3ED;
   box-shadow: 0px 2px 6px 0px #FF8845, inset 0px 10px 12px 0px rgba(255, 255, 255, 0.25), inset 0px -10px 12px 0px rgba(255, 255, 255, 0.25);
   position: sticky;
