@@ -5,10 +5,10 @@
         <nav-bar />
       </div>
     </div>
-    <PasswordInput v-model="password" @complete="handleComplete" :title="currentTitle"
-      :error="error" :errorMessage="errorMessage" ref="pwsInput" v-if="!success" />
+    <PasswordInput v-model="password" @complete="handleComplete" :title="currentTitle" :error="error"
+      :errorMessage="errorMessage" ref="pwsInput" v-if="!success" />
     <div class="flex justify-center items-center bg-white rounded-[24px] h-[400px] mt-[24px] flex-col" v-if="success">
-      <van-icon name="passed" size="64px"  color="#FF356D"/>
+      <van-icon name="passed" size="64px" color="#FF356D" />
       <div class="text-[#212121] text-[40px] font-bold mt-[40px]">{{ successText }}</div>
     </div>
   </div>
@@ -20,6 +20,7 @@ import PasswordInput from '@/components/PasswordInput/index.vue';
 import { ref, computed } from 'vue';
 import { balanceApi } from '@/api'
 import { useI18n } from 'vue-i18n'
+import { Toast } from 'vant';
 const { t } = useI18n()
 
 const pwsInput = ref<InstanceType<typeof PasswordInput> | null>(null);
@@ -37,11 +38,11 @@ const confirm_password = ref('');
 
 const titles = {
   setPassword: [t('finance.payPassword'), t('profile.confirmPassword')],
-  changePassword:[ t('profile.currentPassword'), t('profile.newPassword'),  t('profile.confirmPassword')]
+  changePassword: [t('profile.currentPassword'), t('profile.newPassword'), t('profile.confirmPassword')]
 };
 
 const successTexts = {
-  setPassword:t('finance.setSuccess'),
+  setPassword: t('finance.setSuccess'),
   changePassword: t('profile.passwordSuccess')
 };
 
@@ -75,6 +76,48 @@ const handleComplete = (value: string) => {
   }
 };
 
+const handleSetPwd = async () => {
+  try {
+    let res;
+    Toast.loading({
+      duration: 0,
+      forbidClick: true, 
+      loadingType: 'spinner',
+      message: t('profile.setting')
+    });
+    if (hasPayPassword.value) {
+      res = await balanceApi.modifyBalancePassword({
+        current_password: currentPassword.value,
+        new_password: newPassword.value,
+        repeat_password: confirm_password.value
+      });
+
+    } else {
+      await balanceApi.setBalancePassword({
+        password: newPassword.value,
+        repeat_password: confirm_password.value
+      });
+    }
+    if (res.code !== 1) {
+      Toast.clear();
+      currentStep.value = 1;
+      pwsInput.value?.clearPassword();
+      return;
+    }
+    success.value = true;
+  } catch (err) {
+    console.error('Set password failed:', err);
+  } finally {
+    // Reset state after operation
+    Toast.clear();
+    currentStep.value = 1;
+    pwsInput.value?.clearPassword();
+    currentPassword.value = '';
+    newPassword.value = '';
+    confirm_password.value = '';
+  }
+};
+
 const handlePasswordChangeFlow = async (value: string) => {
   switch (currentStep.value) {
     case 1:
@@ -95,17 +138,7 @@ const handlePasswordChangeFlow = async (value: string) => {
       } else {
         // All steps completed, ready to submit
         confirm_password.value = value;
-        const res = await balanceApi.modifyBalancePassword({
-          current_password: currentPassword.value,
-          new_password: newPassword.value,
-          repeat_password: confirm_password.value
-        });
-        if(res.code !== 1) {
-          currentStep.value = 1;
-          pwsInput.value?.clearPassword();
-          return;
-        }
-        success.value = true;
+        handleSetPwd();
       }
       break;
   }
@@ -121,21 +154,12 @@ const handleNewPasswordFlow = async (value: string) => {
     case 2:
       if (value !== newPassword.value) {
         error.value = true;
-        errorMessage.value =  t('resetPassword.passwordNotMatch');
+        errorMessage.value = t('resetPassword.passwordNotMatch');
         pwsInput.value?.clearPassword();
       } else {
         // Ready to submit new password
         confirm_password.value = value;
-        await balanceApi.setBalancePassword({
-          password: newPassword.value,
-          repeat_password: confirm_password.value
-        });
-        if(res.code !== 1) {
-          currentStep.value = 1;
-          pwsInput.value?.clearPassword();
-          return;
-        }
-        success.value = true;
+        handleSetPwd()
       }
       break;
   }

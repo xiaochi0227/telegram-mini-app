@@ -17,7 +17,7 @@
 
     <van-empty image-size="160" :description="t('noData')" v-if="isEmpty" />
     
-    <div class="flex-1 px-[32px] overflow-y-auto scroll-container" v-else>
+    <div class="flex-1 px-[32px] overflow-y-auto scroll-container mt-[24px]" v-else>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
@@ -27,7 +27,7 @@
           @load="onLoad"
         >
           <div
-            class="bg-white rounded-[24px] shadow py-4 px-[20px] mt-[24px]"
+            class="bg-white rounded-[24px] shadow py-4 px-[20px] mb-[24px]"
             v-for="item in list"
             :key="item.id"
             @click="handleDetail(item.id)"

@@ -257,6 +257,7 @@
 	"profile.enter": "请输入",
 	"profile.tips":
 		"提示：由于您使用的第三方登录，需要到账户设置中绑定邮箱或手机后，才能创建登录密码。",
+	"profile.setting": "设置中",
 	"profile.currentPassword": "当前密码",
 	"profile.currentPasswordPlaceholder": "请输入当前密码",
 	"profile.newPassword": "新密码",
