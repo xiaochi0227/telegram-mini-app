@@ -13,7 +13,7 @@
           <div class='flex justify-between items-center h-[100px]'>
             <div>{{ t('finance.availableCredit') }}</div>
             <div class="font-bold text-[#004CE0] text-[48px]" v-if='tabs[active].value'>
-              <span class="text-[#004CE0] pl-[6px] text-[24px]">¥</span>
+              <span class="text-[#004CE0] pl-[6px] text-[28px]">¥</span>
               {{ tabs[active].value }}
             </div>
           </div>
