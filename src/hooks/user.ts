@@ -115,6 +115,24 @@ export function useUser() {
     }
   };
 
+  // 不退到登录
+  const justLogout = async (): boolean => {
+    try {
+      const res = await authApi.logout()
+
+      if (res.code !== 1) return false;
+
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      user.value = null;
+      
+      return true;
+    } catch (error) {
+      console.error('Logout failed:', error);
+      return false;
+    }
+  };
+
   // 登出
   const logout = async (): boolean => {
     try {
@@ -174,6 +192,7 @@ export function useUser() {
     register,
     logout,
     clearUser,
+    justLogout,
     setUserName,
     setUser,
     checkAuth,

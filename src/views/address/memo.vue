@@ -19,7 +19,7 @@
         <!-- 下单 -->
         <van-button
           class="font-bold"
-          color="#FF356D"
+          color="#FF5E2B"
           round
           block
           size="large"

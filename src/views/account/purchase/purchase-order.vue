@@ -50,7 +50,7 @@
               order.order_status == 5) &&
             order.pay_status == 3
           ">
-            <div class="w-full text-center bg-[#FF356D] h-[90px] leading-[90px] rounded-[24px] text-[#fff] my-[36px]"
+            <div class="w-full text-center bg-[#FF5E2B] h-[90px] leading-[90px] rounded-[24px] text-[#fff] my-[36px]"
               @click="handlePayment">
               {{ t('order.payEndMoney') }}
             </div>
@@ -85,7 +85,7 @@
 
           <div v-if="order.consumption_record && order.consumption_record.length > 1">
             <div class="dashed w-full h-[4px]"></div>
-            <div class="pt-[24px] text-center text-[#FF356D] underline" @click="() =>
+            <div class="pt-[24px] text-center text-[#FF5E2B] underline" @click="() =>
               router.push({
                 path: '/account/purchase/payInfo',
                 query: { id },
@@ -210,7 +210,7 @@
     <!-- 重新下单 -->
     <div v-if="order.order_status == -1"
       class="flex bottom-0 mx-[1rem] inset-x-[32px] justify-between items-center bg-white rounded-t-[24px] mt-[24px] shadow-[0_-2px_5px_0_#DBDBDB] h-[164px] px-[20px]">
-      <div class="bg-[#FF356D] flex items-center justify-center text-[#fff] w-full h-[80px] rounded-[24px]"
+      <div class="bg-[#FF5E2B] flex items-center justify-center text-[#fff] w-full h-[80px] rounded-[24px]"
         @click="handleReorder">
         <span>{{ t('orderDetail.reorderAgain') }}</span>
       </div>

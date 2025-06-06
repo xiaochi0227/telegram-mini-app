@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4921907 */
-  src: url('iconfont.woff2?t=1747818428795') format('woff2'),
-       url('iconfont.woff?t=1747818428795') format('woff'),
-       url('iconfont.ttf?t=1747818428795') format('truetype');
+  src: url('iconfont.woff2?t=1749116746824') format('woff2'),
+       url('iconfont.woff?t=1749116746824') format('woff'),
+       url('iconfont.ttf?t=1749116746824') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,46 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Inquiries:before {
+  content: "\e62b";
+}
+
+.icon-User:before {
+  content: "\e62c";
+}
+
+.icon-head-transport:before {
+  content: "\e632";
+}
+
+.icon-diqiu:before {
+  content: "\e668";
+}
+
+.icon-peitongrenyuan:before {
+  content: "\e62a";
+}
+
+.icon-dunpai:before {
+  content: "\e83d";
+}
+
+.icon-huojian:before {
+  content: "\e664";
+}
+
+.icon-Vector:before {
+  content: "\e602";
+}
+
+.icon-Russia:before {
+  content: "\e628";
+}
+
+.icon-China:before {
+  content: "\e629";
 }
 
 .icon-Menu:before {

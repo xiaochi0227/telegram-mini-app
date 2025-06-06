@@ -221,7 +221,7 @@ const onRefresh = () => {
     }
 
     .van-tab--active {
-      --van-tab-active-text-color: #FF356D;
+      --van-tab-active-text-color: #FF5E2B;
     }
 
     .van-tabs__line {

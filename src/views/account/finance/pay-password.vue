@@ -8,7 +8,7 @@
     <PasswordInput v-model="password" @complete="handleComplete" :title="currentTitle" :error="error"
       :errorMessage="errorMessage" ref="pwsInput" v-if="!success" />
     <div class="flex justify-center items-center bg-white rounded-[24px] h-[400px] mt-[24px] flex-col" v-if="success">
-      <van-icon name="passed" size="64px" color="#FF356D" />
+      <van-icon name="passed" size="64px" color="#FF5E2B" />
       <div class="text-[#212121] text-[40px] font-bold mt-[40px]">{{ successText }}</div>
     </div>
   </div>
@@ -93,7 +93,7 @@ const handleSetPwd = async () => {
       });
 
     } else {
-      await balanceApi.setBalancePassword({
+      res = await balanceApi.setBalancePassword({
         password: newPassword.value,
         repeat_password: confirm_password.value
       });

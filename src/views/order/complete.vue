@@ -21,7 +21,7 @@
         block
         size="large"
         type="primary"
-        color="#FF356D"
+        color="#FF5E2B"
         round
         @click="goOrderDetail"
       >
@@ -31,7 +31,7 @@
         block
         plain
         size="large"
-        color="#FF356D"
+        color="#FF5E2B"
         round
         @click="goHome"
       >

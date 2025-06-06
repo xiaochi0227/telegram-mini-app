@@ -69,7 +69,7 @@
         <van-button
           round
           block
-          color="#FF356D"
+          color="#FF5E2B"
           size="large"
           type="primary"
           native-type="submit"
@@ -101,7 +101,7 @@ import { useAppStore } from '../../store/index'
 
 const router = useRouter()
 const { t } = useI18n()
-const { login } = useUser()
+const { user, login, justLogout } = useUser()
 const { tg_user_id } = useAppStore()
 
 const active = ref('2')
@@ -144,6 +144,8 @@ const onLogin = async () => {
   }
 
   loading.value = true
+
+  user.value && await justLogout()
 
   const res = await login(params)
 

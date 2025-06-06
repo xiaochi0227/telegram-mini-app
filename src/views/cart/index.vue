@@ -15,7 +15,7 @@
           <!-- 全选 -->
           <van-checkbox
             v-model="checkAll"
-            checked-color="#FF356D"
+            checked-color="#FF5E2B"
             @click="toggleAll"
             class="mb-[36px]"
           >
@@ -26,7 +26,7 @@
           <div class="good-item" v-for="item in cartStore.items" :key="item.id">
             <div class="flex items-start">
               <van-checkbox
-                checked-color="#FF356D"
+                checked-color="#FF5E2B"
                 :model-value="selectedRowKeys.includes(item.id)"
                 @click="() => onSelectItem(item.id)"
                 :name="item.id"
@@ -126,7 +126,7 @@
         <!-- 购买按钮 -->
         <van-button
           class="font-bold"
-          color="#FF356D"
+          color="#FF5E2B"
           round
           block
           size="large"
@@ -203,7 +203,7 @@ const handleRemove = (id) => {
     message: t('cart.confirmRemove'),
     confirmButtonText: t('resetPassword.confirm'),
     cancelButtonText: t('address.cancel'),
-    confirmButtonColor: '#FF356D',
+    confirmButtonColor: '#FF5E2B',
   })
     .then(() => {
       removeItem(id)

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :style="appStyle" v-loading="loading">
+  <div class="app" :style="appStyle" v-loading="loading">
     <div class="flex-1 overflow-hidden">
       <router-view v-slot="{ Component, route }">
         <keep-alive>
@@ -17,11 +17,12 @@
         :name="item.name"
         :to="item.path"
       >
+      <span class="text-[24px]" :style="{ color: item.name == active ? '#151618' : '#DADADA' }">{{ item.text }}</span>
         <template #icon>
           <i
             class="iconfont"
             :class="item.icon"
-            :style="{ color: item.name == active ? '#FF356D' : '#DADADA' }"
+            :style="{ color: item.name == active ? '#151618' : '#DADADA' }"
           ></i>
         </template>
       </van-tabbar-item>
@@ -32,9 +33,10 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useAppStore } from './store'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 const store = useAppStore()
 const theme = computed(() => store.theme)
 const loading = ref(false)
@@ -50,24 +52,28 @@ const active = computed(() => {
 
 const tabbar = reactive([
   {
-    name: 'home',
+    name: 'index',
     icon: 'icon-Home',
-    path: '/',
+    path: '/index',
+    text: '首页',
   },
   {
     name: 'inquiry',
-    icon: 'icon-Inquiry',
+    icon: 'icon-Inquiries',
     path: '/inquiry',
+    text: '询价',
   },
   {
     name: 'cart',
     icon: 'icon-Basket',
     path: '/cart',
+    text: '购物车',
   },
   {
     name: 'user',
-    icon: 'icon-Account',
+    icon: 'icon-User',
     path: '/account/center',
+    text: '账户中心',
   },
 ])
 
@@ -79,8 +85,8 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-#app {
-  height: 100vh;
+.app {
+  height: 100%;
   width: 100vw;
   overflow: hidden;
   display: flex;
@@ -90,12 +96,16 @@ onMounted(async () => {
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s, color 0.3s;
   background-color: #f9fafc !important;
-
+  border-top: 2px solid #ededed;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+  :deep(.van-tabbar-item){
+    line-height: 32px!important;
+  }
   :deep(.van-tabbar-item__icon) {
     margin-bottom: 0 !important;
 
     .iconfont {
-      font-size: 50px !important;
+      font-size: 42px !important;
     }
   }
 }

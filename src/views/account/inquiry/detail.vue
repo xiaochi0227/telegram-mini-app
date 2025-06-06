@@ -15,10 +15,10 @@
           <h2 class="font-bold mb-2">{{ t('footer.online') }}</h2>
           <div class="flex justify-center items-center gap-14">
             <div class="text-center">
-              <i class="iconfont icon-telegram text-[#28A7E7]" @click="handleContact('https://t.me/@pakupay')"></i>
+              <i class="iconfont icon-telegram text-[#28A7E7]" @click="handleContact('https://t.me/pakupay')"></i>
             </div>
             <div class="text-center">
-              <i class="iconfont icon-Phone text-[#FF356D]" @click="handleContact('tel:+79959922888')"></i>
+              <i class="iconfont icon-Phone text-[#FF5E2B]" @click="handleContact('tel:+79959922888')"></i>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
           <!-- 全选 -->
           <van-checkbox
             v-model="checkAll"
-            checked-color="#FF356D"
+            checked-color="#FF5E2B"
             @click="toggleAll"
             class="mb-[36px]"
           >
@@ -38,7 +38,7 @@
           <div class="good-item" v-for="item in goodsList" :key="item.id">
             <div class="flex items-start">
               <van-checkbox
-                checked-color="#FF356D"
+                checked-color="#FF5E2B"
                 :model-value="selectedRowKeys.includes(item.id)"
                 @click="() => onSelectItem(item)"
                 :name="item.id"
@@ -103,7 +103,7 @@
         <!-- 购买按钮 -->
         <van-button
           class="flex-1 font-bold"
-          color="#FF356D"
+          color="#FF5E2B"
           round
           block
           size="large"
@@ -114,7 +114,7 @@
         </van-button>
         <van-button
           class="flex-1 font-bold"
-          color="#FF356D"
+          color="#FF5E2B"
           plain
           round
           block

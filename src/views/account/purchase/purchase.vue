@@ -39,7 +39,7 @@
             <!-- 分隔线 -->
             <!-- <div class="border-t border-[#F4F4F4] my-4"></div> -->
             <!-- 发货单按钮 -->
-            <!-- <div class="text-center underline text-[#FF356D] font-bold">
+            <!-- <div class="text-center underline text-[#FF5E2B] font-bold">
             发货单
           </div> -->
             <div v-if="
@@ -48,7 +48,7 @@
                 item.order_status == 5) &&
               item.pay_status == 3
             ">
-              <div class="w-full text-center bg-[#FF356D] h-[90px] leading-[90px] rounded-[24px] text-[#fff] my-[36px]"
+              <div class="w-full text-center bg-[#FF5E2B] h-[90px] leading-[90px] rounded-[24px] text-[#fff] my-[36px]"
                 @click.stop="handlePayment(item.id)">
                 {{ t('order.payEndMoney') }}
               </div>
@@ -228,7 +228,7 @@ const handleDetail = (record) => {
   }
 
   .van-picker__confirm {
-    color: #ff356d;
+    color: #FF5E2B;
   }
 }
 </style>

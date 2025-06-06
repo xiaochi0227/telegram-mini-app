@@ -69,7 +69,7 @@
             <!-- 分隔线 -->
             <!-- <div class="border-t border-[#F4F4F4] my-4"></div> -->
             <!-- 发货单按钮 -->
-            <!-- <div class="text-center underline text-[#FF356D] font-bold">
+            <!-- <div class="text-center underline text-[#FF5E2B] font-bold">
             发货单
           </div> -->
           </div>
@@ -225,7 +225,7 @@ const handleDetail = (id: number) => {
   }
 
   .van-picker__confirm {
-    color: #ff356d;
+    color: #FF5E2B;
   }
 }
 </style>

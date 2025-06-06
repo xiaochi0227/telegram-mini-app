@@ -4,7 +4,7 @@
       <nav-bar />
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-4">
+    <div class="bg-white rounded-xl shadow-lg w-full p-4">
       <!-- 图片轮播 -->
       <van-swipe
         class="rounded-lg overflow-hidden mb-4"
@@ -36,7 +36,7 @@
       <div class="text-[#212121] text-[28px] font-bold mt-[16px]">
         {{ t('inquiriesDetails.goodsDesc') }}：
       </div>
-      <div class="text-[#212121] text-[28px] whitespace-pre-line">
+      <div class="text-[#212121] text-[28px] whitespace-pre-line break-all break-words">
         {{ good.desc }}
       </div>
     </div>

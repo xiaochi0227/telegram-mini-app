@@ -15,7 +15,7 @@
           <div class="py-[40px]">
             <van-count-down
               :time="calculateRemaining"
-              class="mt-2 mb-[40px] text-center !text-[#FF356D] !text-[48px] font-[500]"
+              class="mt-2 mb-[40px] text-center !text-[#FF5E2B] !text-[48px] font-[500]"
             />
             <p class="mb-4 text-[28px] text-[#515360] text-center">
               {{ t('order.timer') }}
@@ -46,7 +46,7 @@
           >
             <span class="text-[#ED2323]">{{ t('payment.insufficientBalance') }}</span>
 
-            <span class="mt-1 text-[#FF356D] underline" @click="handleExcharge">
+            <span class="mt-1 text-[#FF5E2B] underline" @click="handleExcharge">
               {{ t('payment.exchangeToRmb') }}
             </span>
           </div>
@@ -65,8 +65,9 @@
 
           <div class="flex justify-end items-center">
             <span
-              class="mr-4 text-[#FF356D] underline text-[28px]"
+              class="mr-4 text-[#FF5E2B] underline text-[28px]"
               v-if="!hasPayPassword"
+              @click="() => router.push('/account/finance/pay-password')"
             >
               {{ t('finance.payPassword') }}
             </span>

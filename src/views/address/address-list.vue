@@ -8,7 +8,7 @@
       <div class="py-[24px] border-t border-[#F4F4F4]">
         <van-button
           plain
-          color="#FF356D"
+          color="#FF5E2B"
           round
           block
           size="small"
@@ -28,7 +28,7 @@
             :key="address.id"
             class="relative bg-white rounded-[14px] p-[24px] shadow-sm overflow-hidden border-2 border-transparent"
             :class="{
-              '!border-[#FF356D]': address.active,
+              '!border-[#FF5E2B]': address.active,
             }"
             @click="addressStore.toggleAddressActive(address.id)"
           >
@@ -64,7 +64,7 @@
 
             <!-- 编辑按钮 -->
             <i
-              class="iconfont icon-Edit text-[#FF356D]"
+              class="iconfont icon-Edit text-[#FF5E2B]"
               @click.stop="handleEditAddress(address)"
             />
           </div>
@@ -80,7 +80,7 @@
       >
         <van-button
           class="font-bold"
-          color="#FF356D"
+          color="#FF5E2B"
           round
           block
           size="large"

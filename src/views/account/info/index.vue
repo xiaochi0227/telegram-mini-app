@@ -31,7 +31,7 @@
         plain
         round
         block
-        color="#FF356D"
+        color="#FF5E2B"
         size="large"
         type="primary"
         @click="goChangeAccount"
@@ -42,7 +42,7 @@
       <van-button
         round
         block
-        color="#FF356D"
+        color="#FF5E2B"
         size="large"
         type="primary"
         @click="handleLogout"

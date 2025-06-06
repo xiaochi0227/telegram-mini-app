@@ -43,7 +43,7 @@
               t('payment.insufficientBalance')
             }}</span>
 
-            <span class="mt-1 text-[#FF356D] underline" @click="handleExcharge">
+            <span class="mt-1 text-[#FF5E2B] underline" @click="handleExcharge">
               {{ t('payment.exchangeToRmb') }}
             </span>
           </div>
@@ -62,7 +62,7 @@
 
           <div class="flex justify-end items-center">
             <span
-              class="mr-4 text-[#FF356D] underline text-[28px]"
+              class="mr-4 text-[#FF5E2B] underline text-[28px]"
               v-if="!hasPayPassword"
             >
               {{ t('finance.payPassword') }}

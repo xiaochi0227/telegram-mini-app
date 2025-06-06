@@ -119,6 +119,7 @@
             :placeholder="t('inquiry.descPlaceholder')"
             rows="7"
             autosize
+            maxlength="500"
             class="mb-4 no-required"
           />
         </van-form>
@@ -129,7 +130,7 @@
         block
         plain
         round
-        color="#FF356D"
+        color="#FF5E2B"
         size="small"
         type="primary"
         icon="plus"
@@ -187,7 +188,7 @@
       <van-button
         round
         block
-        color="#FF356D"
+        color="#FF5E2B"
         size="large"
         type="primary"
         @click="handleSubmit"
@@ -508,11 +509,11 @@ onActivated(() => {
   border-radius: 12px;
   font-weight: 500;
   font-size: 28px;
-  color: #ff356d;
-  border: 1px solid #ff356d;
+  color: #FF5E2B;
+  border: 1px solid #FF5E2B;
 
   :deep(.van-icon) {
-    color: #ff356d;
+    color: #FF5E2B;
   }
 }
 
@@ -534,7 +535,7 @@ onActivated(() => {
 
     &::before {
       content: '*';
-      color: #ff356d;
+      color: #FF5E2B;
       margin-right: 4px;
     }
   }
@@ -556,6 +557,7 @@ onActivated(() => {
 
     textarea {
       padding-top: 20px;
+      line-height: 40px;
     }
   }
 

@@ -13,6 +13,7 @@
         class="flex justify-between items-center mb-4 bg-white rounded-[12px] shadow-md px-[40px] py-[30px] cursor-pointer"
         v-for="(item, index) of list"
         :key="index"
+        :disabled="item.disabled"
         @click="handleChangeAccount(item)"
       >
         <div class="flex gap-[32px] items-center">
@@ -56,7 +57,7 @@
       <van-button
         round
         block
-        color="#FF356D"
+        color="#FF5E2B"
         size="large"
         type="primary"
         @click="handleLogout"
@@ -76,6 +77,7 @@ import { useUser } from '@/hooks/user'
 import { useAppStore } from '@/store'
 import { authApi } from '@/api/auth'
 import { formattedPhone } from '@/utils/format'
+import { Notify } from 'vant'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -109,9 +111,11 @@ const handleLogout = () => {
 
 // 切换账号
 const handleChangeAccount = async (item) => {
-  const { id: user_id, is_current } = item
+  const { id: user_id, is_current, disabled } = item
 
-  if (is_current) return
+  if (disabled || is_current) return
+
+  list.value.forEach(item => item.disabled = true)
 
   item.loading = true
 
@@ -120,6 +124,7 @@ const handleChangeAccount = async (item) => {
   await tgLogin({ tg_user_id, user_id })
 
   item.loading = false
+  list.value.forEach(item => item.disabled = false)
   getAccountList()
 }
 

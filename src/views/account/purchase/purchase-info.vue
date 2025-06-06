@@ -15,7 +15,7 @@
       >
         <div class="flex justify-between items-center mb-[10px]">
           <p class="font-bold">{{ item.product_name }}</p>
-          <!-- <p :class="`text-[${item.is_exception ? '#ED2323' : '#FF356D'}] text-[24px]`">{{ item.status_str }}</p> -->
+          <!-- <p :class="`text-[${item.is_exception ? '#ED2323' : '#FF5E2B'}] text-[24px]`">{{ item.status_str }}</p> -->
         </div>
         <div class="space-y-[24px]">
           <template v-if="item.is_exception">
@@ -51,11 +51,11 @@
             <div class="text-[24px] space-y-[8px]">
               <div class="flex items-center justify-between">
                 <p>{{ t('orderDetail.updateTime') }}：{{ item.normal_time }}</p>
-                <p class="text-[#FF356D]">
+                <p class="text-[#FF5E2B]">
                   {{ item.is_normal ? t('orderDetail.isNormal') : '' }}
                 </p>
               </div>
-              <p class="text-[#FF356D]">
+              <p class="text-[#FF5E2B]">
                 <span> [{{ item.normal_memo }}] </span>
               </p>
             </div>
@@ -72,7 +72,7 @@
                       : item.last_update_time
                   }}
                 </p>
-                <p class="text-[#FF356D]">
+                <p class="text-[#FF5E2B]">
                   {{
                     item.status != -1
                       ? item.status == -2

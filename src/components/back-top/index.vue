@@ -1,7 +1,7 @@
 <template>
   <!-- 返回顶部按钮 -->
   <div
-    class="fixed bottom-20 right-[32px] z-50 flex justify-center items-center w-[80px] h-[80px] bg-[#FF356D] rounded-full text-[#fff] opacity-[0.9]"
+    class="fixed bottom-20 right-[32px] z-50 flex justify-center items-center w-[80px] h-[80px] bg-[#FF5E2B] rounded-full text-[#fff] opacity-[0.9]"
     v-show="showBackTop"
 		@click="scrollToTop"
   >

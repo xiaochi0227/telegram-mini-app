@@ -5,7 +5,7 @@
     </div>
 
     <!-- 详情卡片 -->
-    <div class="bg-white rounded-xl shadow-lg w-full max-w-md mx-auto p-[28px]">
+    <div class="bg-white rounded-xl shadow-lg w-full mx-auto p-[28px]">
       <div class="flex justify-between mb-2 text-[28px] font-[500]">
         <span class="text-[#515360]">{{t('myInquiries.order_no')}}</span>
         <span class="text-[#212121]">{{ inquiry.order_no }}</span>

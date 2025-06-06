@@ -1,7 +1,7 @@
 <template>
 
   <!-- 图片预览遮罩层 -->
-  <div class="h-full fixed z-9 left-0 right-0 top-0 bottom-0  bg-[rgba(0,0,0,.8)] flex items-center justify-center"
+  <div class="h-full fixed z-9 left-0 right-0 top-0 bottom-0  bg-[rgba(0,0,0,.8)] flex items-center justify-center imgView"
     v-if="showPreview" @click="closePreview">
     <div class="close-btn z-10 absolute top-[20px] right-[20px]" @click="closePreview">
       <van-icon name="cross" size="24" color="#fff" />
@@ -90,6 +90,9 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
+.imgView{
+  padding-top: var(--tg-content-safe-area-inset-top)
+}
 :deep(.swiper) {
   .swiper-slide {
     display: flex;

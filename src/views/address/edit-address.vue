@@ -117,7 +117,7 @@
         <div class="flex items-center mb-4 pl-2">
           <van-checkbox
             v-model="form.is_default"
-            checked-color="#FF356D"
+            checked-color="#FF5E2B"
             class="mr-2"
           />
           <span class="text-[#515360] text-[24px]">{{
@@ -133,7 +133,7 @@
         <van-button
           native-type="submit"
           class="font-bold"
-          color="#FF356D"
+          color="#FF5E2B"
           round
           block
           size="large"
@@ -321,7 +321,7 @@ onMounted(() => {
 
     &::before {
       content: '*';
-      color: #ff356d;
+      color: #FF5E2B;
       margin-right: 4px;
     }
   }

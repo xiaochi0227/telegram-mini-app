@@ -19,7 +19,9 @@
       </div>
     </van-sticky>
 
-    <div class="scroll-container px-[32px] overflow-y-auto">
+    <van-empty image-size="160":description="t('noData')" v-if="!loading && isEmpty" />
+
+    <div class="scroll-container px-[32px] overflow-y-auto" v-else>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
@@ -95,6 +97,10 @@ const route = useRoute()
 const status = computed(() => {
   return route.query.status || ''
 })
+
+const isEmpty = computed(() => {
+  return !list.value.length
+}) 
 
 const list = ref<InquiryItem[]>([])
 const page = ref(1)
@@ -198,7 +204,7 @@ onMounted(() => {
   }
 
   .van-picker__confirm {
-    color: #ff356d;
+    color: #FF5E2B;
   }
 }
 </style>

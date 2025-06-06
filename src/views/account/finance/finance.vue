@@ -9,7 +9,7 @@
       <div class=" font-bold py-3 text-left">{{ t('accountCenter.balance') }}</div>
       <Financial />
       <div class="flex justify-center space-x-4">
-        <button class="bg-[#FF356D] text-white px-[2px] py-[4px] rounded-[12px] w-[300px] h-[80px] text-[24px]"
+        <button class="bg-[#FF5E2B] text-white px-[2px] py-[4px] rounded-[12px] w-[300px] h-[80px] text-[24px]"
           @click="() => router.push('/recharge')">
           {{ t('accountCenter.recharge') }}
         </button>

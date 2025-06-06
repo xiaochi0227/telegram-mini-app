@@ -78,7 +78,7 @@
   /* picker */
   --van-picker-toolbar-height: 60px !important;
   --van-picker-cancel-action-color: #333 !important;
-  --van-picker-confirm-action-color: #FF356D !important;
+  --van-picker-confirm-action-color: #FF5E2B !important;
   --van-picker-action-padding: 20px !important;
 
   /* loading */
@@ -94,6 +94,7 @@
   --van-tag-line-height: 40px !important;
   
   --van-list-text-line-height: 64px !important;
+  --van-pull-refresh-head-height: 100px !important;
 
   --van-notify-line-height: 40px !important;
 }
@@ -114,7 +115,14 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  height: 100vh;
+  padding-top: var(--tg-safe-area-inset-top);
+}
+
+#app {
+  height: 100%;
+  padding-top: var(--tg-content-safe-area-inset-top);
+  padding-bottom: var(--tg-safe-area-inset-bottom);
 }
 
 h1 {

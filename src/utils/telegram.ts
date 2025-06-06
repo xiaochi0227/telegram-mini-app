@@ -43,6 +43,10 @@ export async function initTelegramWebApp(): boolean {
   webApp.ready();
   webApp.expand();
 
+  if (webApp.platform && webApp.platform == 'ios') {
+    webApp.requestFullscreen();
+  }
+
   return true
 }
 

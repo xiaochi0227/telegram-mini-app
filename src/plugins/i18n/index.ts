@@ -5,7 +5,7 @@ import russian from './locales/russian.json'
 const i18n = createI18n({
   legacy: false,
   globalInjection: true,
-  locale: localStorage.getItem('locale') || 'zh',
+  locale: localStorage.getItem('locale') || 'russian',
   fallbackLocale: 'russian',
   messages: {
     zh,

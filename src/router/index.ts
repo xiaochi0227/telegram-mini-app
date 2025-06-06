@@ -14,6 +14,15 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/index',
+    name: 'Index',
+    component: () => import('../views/index.vue'),
+    meta: {
+      title: 'Index',
+      active: 'index'
+    },
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('../views/login/index.vue'),
@@ -26,24 +35,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/register',
     name: 'Register',
     component: () => import('../views/register/index.vue'),
-    meta: {
-      title: 'header.back',
-      showBack: true
-    },
-  },
-  {
-    path: '/h5-login',
-    name: 'H5Login',
-    component: () => import('../views/h5/login/index.vue'),
-    meta: {
-      title: 'header.back',
-      showBack: true
-    },
-  },
-  {
-    path: '/h5-register',
-    name: 'H5Register',
-    component: () => import('../views/h5/register/index.vue'),
     meta: {
       title: 'header.back',
       showBack: true
@@ -429,6 +420,11 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/invalid',
+    name: 'Invalid',
+    component: () => import('../views/Invalid.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFound.vue'),
@@ -445,9 +441,11 @@ const router = createRouter({
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
-  to.meta.title = i18n.global.t(to.meta.title as string) || to.meta.title;
-  // 设置页面标题
-  document.title = `${to.meta.title} - Telegram Mini App`;
+  if (to.meta.title) {
+    to.meta.title = i18n.global.t(to.meta.title as string) || to.meta.title;
+    // 设置页面标题
+    document.title = `${to.meta.title} - Paykupay`;
+  }
 
   // 检查是否需要认证
   if (to.meta.requiresAuth) {

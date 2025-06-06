@@ -83,7 +83,7 @@
     <div @click="getBillImage"
       class="flex mx-[32px] justify-between items-center bg-white rounded-t-[24px] mt-[24px]  shadow-[0_-2px_5px_0_#DBDBDB] h-[164px] px-[20px]">
       <div
-        class="border border-[#FF356D] flex items-center justify-center text-[#FF356D] w-full h-[80px] rounded-[24px]">
+        class="border border-[#FF5E2B] flex items-center justify-center text-[#FF5E2B] w-full h-[80px] rounded-[24px]">
         <span>{{ t('logistics.viewInvoice') }}</span>
         <van-loading type="spinner" size="16px"  v-if="billLoading" class="ml-[4px]"/>
       </div>

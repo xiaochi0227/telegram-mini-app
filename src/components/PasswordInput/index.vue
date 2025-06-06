@@ -34,7 +34,7 @@
     <!-- 确认按钮（当autoSubmit为false时显示） -->
     <van-button
       v-if="!autoSubmit"
-      color="#FF356D"
+      color="#FF5E2B"
       round
       block
       size="large"

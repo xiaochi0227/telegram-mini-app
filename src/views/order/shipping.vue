@@ -41,12 +41,12 @@
           <!-- 编辑按钮 -->
           <div class="edit-btn flex gap-3">
             <i
-              class="iconfont icon-Delete text-[#FF356D]"
+              class="iconfont icon-Delete text-[#FF5E2B]"
               @click.stop="handleRemove(address)"
               v-if="addressStore.shippingAddress.length"
             />
             <i
-              class="iconfont icon-Edit text-[#FF356D]"
+              class="iconfont icon-Edit text-[#FF5E2B]"
               @click.stop="handleEditAddress(address)"
             />
           </div>
@@ -62,7 +62,7 @@
 
       <div class="my-4">
         <van-button
-          color="#FF356D"
+          color="#FF5E2B"
           plain
           block
           round
@@ -168,7 +168,7 @@
       <!-- 下单 -->
       <van-button
         class="font-bold"
-        color="#FF356D"
+        color="#FF5E2B"
         round
         block
         size="large"

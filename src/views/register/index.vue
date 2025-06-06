@@ -28,7 +28,7 @@
               <van-button
                 size="small"
                 type="primary"
-                :disabled="sending || countdown > 0"
+                :disabled="sending || countdown > 0 || disabled"
                 @click="sendCode"
               >
                 {{
@@ -55,19 +55,19 @@
           v-model="agree"
           class="mb-8"
           shape="square"
-          :checked-color="'#FF356D'"
+          :checked-color="'#FF5E2B'"
         >
           <span class="text-[#B3B3B3] text-[24px]">
             {{ t('login.agreement') }}
             <span
-              class="text-[#FF356D] underline cursor-pointer"
+              class="text-[#FF5E2B] underline cursor-pointer"
               @click.stop="openUserAgreement"
             >
               {{ t('login.agreementLink') }}
             </span>
             {{ t('login.and') }}
             <span
-              class="text-[#FF356D] underline cursor-pointer"
+              class="text-[#FF5E2B] underline cursor-pointer"
               @click.stop="openPrivacyPolicy"
             >
               {{ t('login.privacyLink') }}
@@ -77,7 +77,7 @@
         <van-button
           round
           block
-          color="#FF356D"
+          color="#FF5E2B"
           size="large"
           type="primary"
           native-type="submit"
@@ -190,19 +190,55 @@ function onLogin() {
   router.replace('/login')
 }
 
-// 是否允许机器人给用户发信息
+function parseQueryString(queryString: string): { [key: string]: string } {
+  const params: { [key: string]: string } = {}
+  if (!queryString) {
+    return params
+  }
+  const pairs = queryString.split('&')
+  for (const pair of pairs) {
+    const parts = pair.split('=')
+    const key = decodeURIComponent(parts[0])
+    const value = parts.length > 1 ? decodeURIComponent(parts[1]) : ''
+    params[key] = value
+  }
+  return params
+}
+
+const getAllowWriteToPm = () => {
+  let allow_write_to_pm = false
+  try {
+    const webApp = window.Telegram?.WebApp
+
+    if (!webApp || !webApp.initData) {
+      allow_write_to_pm = false
+      return
+    }
+    // 从 Telegram WebApp 获取 initData
+    const initDataParams = parseQueryString(webApp.initData)
+    const userStr = initDataParams['user']
+
+    if (!userStr) {
+      allow_write_to_pm = false
+      return
+    }
+
+    const userData = JSON.parse(userStr)
+    allow_write_to_pm = userData.allows_write_to_pm
+  } catch (error) {
+    allow_write_to_pm = false
+  }
+
+  return allow_write_to_pm
+}
+
 const checkAllowWriteToPm = () => {
   // 从 Telegram WebApp 获取 initData
-  const webApp = window.Telegram?.WebApp
-
-  if (!webApp || !webApp.initData) return 
-  // 解析 Telegram 注入的 initData
-  const initData = new URLSearchParams(webApp.initData)
-  const allow_write_to_pm = JSON.parse(initData.get('allow_write_to_pm')) 
-
+  const allow_write_to_pm = getAllowWriteToPm()
+  
+  disabled.value = !allow_write_to_pm
   if (!allow_write_to_pm) {
-    disabled.value = true;
-    Notify({type: 'danger', message: t('register.allowSendMsg') })
+    Notify({ type: 'danger', message: t('register.allowSendMsg') })
   }
 }
 

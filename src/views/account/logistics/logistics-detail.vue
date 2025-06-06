@@ -16,7 +16,7 @@
             <p class="text-[#212121]">{{ order.add_time }}</p>
           </div>
           <div v-if="order.transport_log && order.transport_log.length">
-            <van-steps direction="vertical" active="9999" active-color="#FF356D">
+            <van-steps direction="vertical" active="9999" active-color="#FF5E2B">
               <van-step v-for="(item, index) in order.transport_log" :key="index">
                 <p class="leading-none text-[rgba(0,0,0,0.45)] text-[24px]">{{ item.node_time }}</p>
                 <h3 class="leading-[48px] text-[#000]">{{ item.desc }}</h3>

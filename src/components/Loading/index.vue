@@ -1,15 +1,17 @@
 <template>
-  <div v-if="modelValue" class="loading-overlay">
-    <div class="loading-content">
-      <div class="loading-spinner"></div>
-      <div class="loading-text text-[24px]">{{ text }}</div>
-      <button v-if="showClose" @click="close" class="p-[8px] bg-[#FF356D] text-[#fff] text-[24px]">关闭</button>
+  <Transition name="loading">
+    <div v-if="modelValue" class="loading-overlay">
+      <div>
+        <img src="../../assets/images/loading.gif" class="w-[300px]">
+        <button v-if="showClose" @click="close" class="p-[8px] bg-[#FF5E2B] text-[#fff] text-[24px]">关闭</button>
+      </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <script setup>
 import i18n from '../../plugins/i18n';
+
 defineProps({
   text: {
     type: String,
@@ -23,13 +25,13 @@ defineProps({
     type: Boolean,
     default: true
   }
-})
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
 const close = () => {
-  emit('update:modelValue', false)
-}
+  emit('update:modelValue', false);
+};
 </script>
 
 <style scoped lang="scss">
@@ -51,8 +53,32 @@ const close = () => {
   padding: 20px;
   border-radius: 4px;
   text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* 进入和离开的过渡效果 */
+.loading-enter-active {
+  //transition: all 0.3s ease-out;
+}
+
+.loading-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.loading-enter-from,
+.loading-leave-to {
+  opacity: 0;
+}
+
+.loading-enter-from .loading-content {
+  transform: translateY(-20px) scale(0.95);
+}
+
+.loading-leave-to .loading-content {
+  transform: translateY(20px) scale(0.95);
+}
+
+/* 保留原有的旋转动画 */
 .loading-spinner {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #3498db;

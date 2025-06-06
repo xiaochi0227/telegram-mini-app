@@ -25,7 +25,7 @@
       {{ t('accountCenter.quoteUpdate') }}
     </div>
     <div class="w-full">
-      <van-button block plain size="large" color="#FF356D" round @click="back">
+      <van-button block plain size="large" color="#FF5E2B" round @click="back">
         {{ t('inquiry.continue') }}
       </van-button>
     </div>

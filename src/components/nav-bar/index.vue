@@ -1,11 +1,17 @@
 <template>
   <div>
-    <div class="flex items-center py-[32px] cursor-pointer" @click="handleOpeator">
+    <div
+      class="flex items-center py-[32px] cursor-pointer"
+      @click="handleOpeator"
+    >
       <template v-if="!hideIcon">
         <i class="iconfont icon-Back" v-if="route.meta.showBack"></i>
         <i class="iconfont icon-Menu" v-else @click="showPopup = true"></i>
       </template>
-      <span class="nav-title text-[#FF356D] font-bold text-[32px] ml-[10px]" v-if="route.name!='Home'">
+      <span
+        class="nav-title text-[#FF5E2B] font-bold text-[32px] ml-[10px]"
+        v-if="route.name != 'Home'"
+      >
         {{ navTitle }}
       </span>
     </div>
@@ -24,13 +30,11 @@
               round
               width="28px"
               height="28px"
-              :src="
-                user
-                  ? user.photo_url
-                  : Default
-              "
+              :src="user ? user.photo_url : Default"
             />
-            <span class="ml-[16px] text-[28px] font-bold text-[#515360] max-w-[280px] truncate">
+            <span
+              class="ml-[16px] text-[28px] font-bold text-[#515360] max-w-[280px] truncate"
+            >
               {{ getName() }}
             </span>
             <van-icon name="arrow" class="ml-2" color="#515360" />
@@ -49,7 +53,7 @@
                 <i
                   class="iconfont"
                   :class="item.icon"
-                  style="font-size: 24px; color: #ff356d"
+                  style="font-size: 24px; color: #FF5E2B"
                 ></i>
               </template>
             </van-cell>
@@ -89,13 +93,12 @@ const getName = () => {
   if (!pakupayUser.value) return ''
 
   const username = pakupayUser.value.username
-  
+
   if (username.includes('@')) {
     return username
   }
   return '+7 ' + formattedPhone(username)
 }
-
 
 // 菜单项数组
 const menuItems = [
@@ -115,12 +118,11 @@ function onMenuClick(item: any) {
 
 // 头部点击
 const handleOpeator = () => {
-  if (props.hideIcon) return 
+  if (props.hideIcon) return
 
   if (route.meta.showBack) {
     router.back()
-  }
-  else showPopup.value = true
+  } else showPopup.value = true
 }
 
 const goAccountInfo = () => {
@@ -142,7 +144,7 @@ const goAccountInfo = () => {
       color: #a5a8b9;
 
       &.active {
-        color: #ff356d;
+        color: #FF5E2B;
       }
 
       &:after {
@@ -151,14 +153,14 @@ const goAccountInfo = () => {
     }
   }
 }
-.icon-Menu{
-  font-size:36px;
-  color:#212121;
-  font-weight:bold;
+.icon-Menu {
+  font-size: 36px;
+  color: #212121;
+  font-weight: bold;
 }
-.icon-Back{
-  font-size:42px;
-  color:#FF356D;
-  font-weight:bold;
+.icon-Back {
+  font-size: 36px;
+  color: #FF5E2B;
+  font-weight: bold;
 }
 </style>

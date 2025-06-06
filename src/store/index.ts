@@ -3,6 +3,7 @@ import { initTelegramWebApp } from '../utils/telegram';
 import { authApi } from '@/api/auth';
 import { useUser } from '@/hooks/user';
 import { Notify } from 'vant';
+import router from '@/router';
 
 
 export interface User {
@@ -57,6 +58,12 @@ export const useAppStore = defineStore('app', {
     },
 
     async initTelegramApp() {
+      // Skip initialization for 404 and invalid pages
+      const currentRoute = router.currentRoute.value.path;
+      if (currentRoute === '/404' || currentRoute === '/invalid') {
+        return;
+      }
+
       const isInitialized = await initTelegramWebApp();
 
       if (!isInitialized) return
@@ -74,6 +81,7 @@ export const useAppStore = defineStore('app', {
 
       if (res.code != 1 && !res.data) {
         Notify({ type: 'danger', message: '用户校验未通过'})
+        router.replace('/invalid')
         return
       }
 

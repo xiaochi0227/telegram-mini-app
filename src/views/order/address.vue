@@ -27,7 +27,7 @@
         <p class="text-[28px] font-[500] mt-1">
           {{ t('checkout.packagingRequirements') }}
         </p>
-        <p class="text-[28px] mt-1">{{ address.memo }}</p>
+        <p class="text-[28px] mt-1 break-all break-words">{{ address.memo }}</p>
       </div>
     </div>
   </div>
