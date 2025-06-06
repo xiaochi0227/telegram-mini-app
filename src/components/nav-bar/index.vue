@@ -6,7 +6,7 @@
     >
       <template v-if="!hideIcon">
         <i class="iconfont icon-Back" v-if="route.meta.showBack"></i>
-        <i class="iconfont icon-Menu" v-else @click="showPopup = true"></i>
+        <!-- <i class="iconfont icon-Menu" v-else @click="showPopup = true"></i> -->
       </template>
       <span
         class="nav-title text-[#FF5E2B] font-bold text-[32px] ml-[10px]"

@@ -96,8 +96,8 @@ onMounted(async () => {
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s, color 0.3s;
   background-color: #f9fafc !important;
-  border-top: 2px solid #ededed;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+  // border-top: 2px solid #ededed;
+  // box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
   :deep(.van-tabbar-item){
     line-height: 32px!important;
   }

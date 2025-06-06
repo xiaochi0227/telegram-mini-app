@@ -73,10 +73,10 @@
           {{ t('home.noligin') }}
         </p>
         <div class="flex flex-col space-y-[16px] font-bold  w-full">
-          <button class="bg-[#FF5E2B] text-white rounded-[20px] w-full">
+          <button class="bg-[#FF5E2B] text-white rounded-[20px] w-full" @click="goPath('/login')">
             {{ t('login.title') }}
           </button>
-          <button class="bg-[#EFF1F7] text-[#151618]  rounded-[20px] w-full">
+          <button class="bg-[#EFF1F7] text-[#151618]  rounded-[20px] w-full" @click="goPath('/register')">
             {{ t('login.register') }}
           </button>
         </div>
@@ -129,7 +129,9 @@ const bannerImages = computed(() =>
     { url: new URL('@/assets/images/home/home-banner-4.png', import.meta.url).href, h3: t('home.banner4.h3'), desc: t('home.banner4.desc') },
   ]
 );
-
+const goPath = (path: string) => {
+  router.push(path)
+}
 </script>
 
 <style scoped lang="scss">

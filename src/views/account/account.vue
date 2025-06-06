@@ -1,118 +1,28 @@
 <template>
-  <div class="account flex flex-col h-full" v-loading="isLoading">
-    <van-sticky>
-      <div class="bg-white px-[20px] mx-[32px]">
-        <div class="border-b border-[#f4f4f4] flex justify-between items-center h-[100px]">
-          <nav-bar />
-          <div class="flex items-center space-x-2">
-            <van-image round width="32px" height="32px" :src="user
-              ? user.photo_url
-              : Default
-              " />
-            <!-- <div>
-              mike
-              <van-icon name="arrow-down" />
-            </div> -->
-          </div>
+  <div class="account">
+    <div class="mx-[32px] pt-[248px]">
+      <div class="flex items-center space-x-[20px]">
+        <van-image round width="64px" height="64px" :src="user
+          ? user.photo_url
+          : Default
+          " />
+        <div @click="goPath('/account/info')" class="cursor-pointer">
+          <p class="flex items-center">
+            <span class="text-[40px] text-[#151618] font-bold max-w-[360px] truncate">{{ pakupayUser.nickname }}</span>
+            <img src="../../assets/images/account/icon-right.svg" class="w-[40px] ml-[16px]">
+          </p>
+          <span class=" text-[#6D7278] pt-[8px]">
+            {{ getName() }}
+          </span>
         </div>
       </div>
-    </van-sticky>
-    <div class="flex-1 px-[32px] overflow-y-auto">
-      <div class="text-center bg-white px-[20px] pb-[32px]">
-        <div class="text-sm py-3 text-left">{{ t('accountCenter.balance') }}</div>
-        <Financial />
-        <div class="flex justify-center space-x-4">
-          <button class="bg-[#FF5E2B] text-white px-[6px] py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
-            @click="() => router.push('/recharge')">
-            {{ t('accountCenter.recharge') }}
-          </button>
-          <button
-            class="border border-[#E7E7E9] bg-white text-[#212121] px-[6px]py-2 rounded-[12px] w-[300px] h-[72px] text-[24px]"
-            @click="() => router.push('/account/finance/operation-records')">
-            {{ t('accountCenter.fundDetail') }}
-          </button>
-        </div>
-      </div>
-
-      <!-- Orders Section -->
-      <div class="mt-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
-        <h2 class="font-bold mb-[32px] flex items-center justify-between" @click="goPath('/account/purchase')">
-          <span>{{ t('accountCenter.purchaseOrder') }}</span>
-          <van-icon name="arrow" class="text-[#212121]" />
-        </h2>
-        <div class="grid grid-cols-2 gap-4">
-          <template v-if="orderStatusCards.length">
-            <div class="order-status" v-for="(item, index) in orderStatusCards" :key="index" @click="goPath(item.path)">
-              <div class="flex items-center justify-between">
-                <i :class="`iconfont ${item.icon}`"></i>
-                <div class="num">{{ item.count }}</div>
-              </div>
-              <div class="pt-[16px] text-[28px]">{{ item.title }}</div>
-            </div>
-          </template>
-        </div>
-      </div>
-      <!-- Logistics Section -->
-      <div class="mt-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]">
-        <h2 class="font-bold mb-[32px] flex items-center justify-between" @click="goPath('/account/logistics')">
-          <span>{{ t('accountCenter.logistics') }}</span>
-          <van-icon name="arrow" class="text-[#212121]" />
-        </h2>
-        <div class="grid grid-cols-3 gap-4" v-if="logisticsStatusCards.length">
-          <div class="text-center logis-status" v-for="(item, index) in logisticsStatusCards" :key="index"
-            @click="goPath(item.path)">
-            <i :class="`iconfont ${item.icon}`"></i>
-            <div class="mt-[28px] text-[28px]">{{ item.title }}</div>
+      <div class="mt-[64px] bg-[#ffffff] rounded-[24px] py-[20px] pl-[40px] pr-[24px]">
+        <div class="flex items-center justify-between h-[100px]" v-for="item in menuItems" :key="item.title" @click="goPath(item.path)">
+          <div class="flex items-center space-x-[20px]">
+            <img :src="item.icon" class="w-[40px] h-[40px]">
+            <span class=" text-[#151618]">{{ item.title }}</span>
           </div>
-        </div>
-        <div class="font-bold mt-[40px]">
-          {{ t('accountCenter.logisticsPaid') }}
-        </div>
-        <div class="text-center mt-[16px] text-[#004CE0] font-bold text-[32px]">
-          $ {{ allTotalPrice }}
-        </div>
-      </div>
-      <!-- Logistics Status -->
-      <!--div
-      class="mb-6 bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px]"
-      v-if="false"
-    >
-      <h2 class="font-bold mb-2">物流动态</h2>
-      <div class="space-y-4">
-        <div>
-          <div class="flex items-center">
-            <span
-              class="bg-[#FFF0F4] text-[#FF5E2B] px-[10px] py-[6px] rounded-[4px] text-[20px] mr-[10px]"
-              >NEW</span
-            >
-            <div class="text-gray-700">23904324</div>
-          </div>
-          <div class="text-gray-500 text-sm">
-            发货 - 预计到达港口时间: 24.02.2017
-          </div>
-        </div>
-        <div>
-          <div class="text-gray-700">23904324</div>
-          <div class="text-gray-500 text-sm">
-            到达港口 - 预计到达港口时间: 24.02.2017
-          </div>
-        </div>
-        <div>
-          <div class="text-gray-700">23904324</div>
-          <div class="text-gray-500 text-sm">
-            发货 - 预计到达港口时间: 24.02.2017
-          </div>
-        </div>
-      </div>
-    </div-->
-
-      <!-- Contact Section -->
-      <div class="my-[24px] bg-white rounded-[24px] pt-[28px] pb-[40px] px-[20px] contact">
-        <h2 class="font-bold mb-2">{{ t('nav.contact') }}</h2>
-        <div class="flex justify-around items-center">
-          <div class="text-center" v-for="method in contactMethods" :key="method.id">
-            <i :class="['iconfont', method.icon, method.colorClass]" @click="handleContact(method.link)"></i>
-          </div>
+          <img src="../../assets/images/account/icon-right.svg" class="w-[40px] h-[40px]">
         </div>
       </div>
     </div>
@@ -120,207 +30,51 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import NavBar from '@/components/nav-bar/index.vue'
-import Financial from './components/Financial.vue'
-import { accountApi } from '@/api'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '../../store/index'
-import { useContactHandler } from '@/hooks/useContactHandler';
+import { useUser } from '@/hooks/user'
+import { formattedPhone } from '@/utils/format'
 import Default from '@/assets/images/default.png'
-
-const { handleContact } = useContactHandler();
 
 const router = useRouter()
 const { t } = useI18n()
 
 const { user } = useAppStore()
+const { user: pakupayUser } = useUser()
+console.log('user', user, pakupayUser)
+const getName = () => {
+  if (!pakupayUser.value) return ''
 
-const contactMethods = [
-  {
-    id: 'telegram',
-    icon: 'icon-telegram',
-    colorClass: 'text-[#28A7E7]',
-    link: 'https://t.me/pakupay',
-    tooltip: '通过Telegram联系我们',
-  },
-  {
-    id: 'whatsapp',
-    icon: 'icon-whatsup',
-    colorClass: 'text-[#33CC33]',
-    link: 'https://wa.me/+79153050184',
-    tooltip: '通过WhatsApp联系我们',
-  },
-  {
-    id: 'phone',
-    icon: 'icon-Phone',
-    colorClass: 'text-[#FF5E2B]',
-    link: 'tel:+79959922888',
-    tooltip: '拨打客服电话',
-  },
-  {
-    id: 'email',
-    icon: 'icon-Email',
-    colorClass: 'text-[#FF5E2B]',
-    link: 'mailto:support@pakupay.com',
-    tooltip: '发送电子邮件',
-  },
-]
+  const username = pakupayUser.value.username
 
-const isLoading = ref(true)
-const allTotalPrice = ref(0)
-interface StatusCard {
-  title: string
-  count: number
-  icon: string
-  path: string
-}
-
-const orderStatusCards = ref<StatusCard[]>([])
-const logisticsStatusCards = ref<StatusCard[]>([])
-
-const ORDER_STATUS_MAP = [
-  {
-    key: 'inquiry_sheet_count',
-    titleKey: 'accountCenter.inquiry',
-    icon: 'icon-Enquiry',
-    path: '/account/inquiry?status=2',
-  },
-  {
-    key: 'confirmation_count',
-    titleKey: 'accountCenter.pendingConfirmation',
-    icon: 'icon-Confirm',
-    path: '/account/purchase?status=1',
-  },
-  {
-    key: 'need_pay_count',
-    titleKey: 'accountCenter.pendingPayment',
-    icon: 'icon-Payment',
-    path: '/account/purchase?status=2',
-  },
-  {
-    key: 'buy_order_count',
-    titleKey: 'accountCenter.procurement',
-    icon: 'icon-Purchase',
-    path: '/account/purchase?status=4',
-  },
-]
-
-const LOGISTICS_STATUS_MAP = [
-  {
-    key: 'transit_count',
-    titleKey: 'accountCenter.inTransit',
-    icon: 'icon-Transport',
-    path: '/account/logistics?status=2',
-  },
-  {
-    key: 'allocation_count',
-    titleKey: 'accountCenter.pendingAllocation',
-    icon: 'icon-Sorting',
-    path: '/account/logistics?status=3',
-  },
-  {
-    key: 'signed_for_count',
-    titleKey: 'accountCenter.signed',
-    icon: 'icon-Time',
-    path: '/account/logistics?status=4',
-  },
-]
-
-const fetchAccountIndex = async () => {
-  try {
-    const { data } = await accountApi.getAccountIndex()
-
-    // Update all total price
-    allTotalPrice.value = data.all_total_price
-
-    // Update order status cards
-    orderStatusCards.value = ORDER_STATUS_MAP.map((item) => ({
-      title: t(item.titleKey),
-      count: data[item.key] || 0,
-      icon: item.icon,
-      path: item.path,
-    }))
-
-    // Update logistics status cards
-    logisticsStatusCards.value = LOGISTICS_STATUS_MAP.map((item) => ({
-      title: t(item.titleKey),
-      count: data[item.key] || 0,
-      icon: item.icon,
-      path: item.path,
-    }))
-  } catch (error) {
-    console.error('Failed to fetch account index:', error)
-    // You might want to handle errors here, e.g., show a notification
+  if (username.includes('@')) {
+    return username
   }
+  return '+7 ' + formattedPhone(username)
 }
+
+// 菜单项数组
+const menuItems = [
+  { title: t('menu.inquiries'), icon: new URL('@/assets/images/account/icon-inquiries.svg', import.meta.url).href, path: '/account/inquiry' },
+  { title: t('menu.orders'), icon: new URL('@/assets/images/account/icon-purchase.svg', import.meta.url).href, path: '/account/purchase' },
+  { title: t('menu.logistics'), icon: new URL('@/assets/images/account/icon-logistics.svg', import.meta.url).href, path: '/account/logistics' },
+  { title: t('menu.finance'), icon: new URL('@/assets/images/account/icon-finance.svg', import.meta.url).href, path: '/account/finance' },
+]
 
 const goPath = (path: string) => {
   router.push(path)
 }
 
-onMounted(async () => {
-  await fetchAccountIndex()
-  isLoading.value = false
-})
 </script>
 
 <style scoped lang="scss">
 .account {
   font-size: 28px;
-  color: #515360;
-}
-
-.order-status {
-  border: 1px solid #e7e7e9;
-  border-radius: 24px;
-  padding: 32px;
-  height: 200px;
-  box-sizing: border-box;
-
-  .iconfont {
-    font-size: 36px;
-    color: #FF5E2B;
-  }
-
-  .num {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: #ef2424;
-    text-align: center;
-    line-height: 42px;
-    color: #fff;
-    font-size: 24px;
-  }
-}
-
-.logis-status {
-  border: 1px solid #e7e7e9;
-  border-radius: 20px;
-  padding: 40px 0 64px;
-
-  .iconfont {
-    font-size: 36px;
-    color: #FF5E2B;
-  }
-}
-
-.contact>div>div {
-
-  &:nth-child(1),
-  &:nth-child(2) {
-    .iconfont {
-      font-size: 64px;
-    }
-  }
-
-  &:nth-child(3),
-  &:nth-child(4) {
-    .iconfont {
-      font-size: 54px;
-    }
-  }
+  background: #F4F5F9 url('../../assets/images/account/icon-bg.png') no-repeat center top;
+  background-size: 100% auto;
+  height: 100vh;
 }
 </style>

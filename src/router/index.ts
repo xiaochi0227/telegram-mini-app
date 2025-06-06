@@ -10,7 +10,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Home.vue'),
     meta: {
       title: 'Home',
-      active: 'home'
     },
   },
   {
@@ -452,6 +451,13 @@ router.beforeEach((to, from, next) => {
     const { user } = useUser()
     if (!user.value) {
       next({ name: 'Login' });
+      return;
+    }
+  }
+  if (to.name === 'Home') {
+    const { user } = useUser();
+    if (user.value) {
+      next({ name: 'Index' });
       return;
     }
   }

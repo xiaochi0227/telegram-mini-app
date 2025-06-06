@@ -1,14 +1,14 @@
 <template>
-  <div class="account flex flex-col h-full" v-loading="isLoading">
+  <div class="account flex flex-col h-full">
     <van-sticky>
       <div class="bg-white px-[20px]">
         <div class="border-[#f4f4f4] flex justify-between items-center h-[100px]">
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center space-x-2" @click="goPath('/account/info')">
             <van-image round width="32px" height="32px" :src="user
               ? user.photo_url
               : Default
               " />
-            <span class="ml-[16px] text-[28px] font-bold text-[#515360] max-w-[280px] truncate">
+            <span class="ml-[16px] text-[28px] font-bold text-[#515360] max-w-[320px] truncate">
               {{ getName() }}
             </span>
           </div>
@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed,watch } from 'vue'
 import { useRouter } from 'vue-router'
 import Financial from './account/components/Financial.vue'
 import { accountApi } from '@/api'
@@ -244,7 +244,7 @@ const fetchAccountIndex = async () => {
 
     // Update order status cards
     orderStatusCards.value = ORDER_STATUS_MAP.map((item) => ({
-      title: t(item.titleKey),
+      title:t(item.titleKey),
       count: data[item.key] || 0,
       icon: item.icon,
       path: item.path,
@@ -252,7 +252,7 @@ const fetchAccountIndex = async () => {
 
     // Update logistics status cards
     logisticsStatusCards.value = LOGISTICS_STATUS_MAP.map((item) => ({
-      title: t(item.titleKey),
+      title:t(item.titleKey),
       count: data[item.key] || 0,
       icon: item.icon,
       path: item.path,
@@ -266,6 +266,11 @@ const fetchAccountIndex = async () => {
 const goPath = (path: string) => {
   router.push(path)
 }
+
+watch(locale, async (newLocale) => {
+  console.log(`Locale changed to: ${newLocale}`);
+  await fetchAccountIndex(); // Refetch data when locale changes
+});
 
 onMounted(async () => {
   await fetchAccountIndex()
